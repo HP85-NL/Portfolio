@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Harshilkumar Patel — Data Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ============================================================
+   EASY EDIT: Change colors here
+   ============================================================ */
+:root {
+  --navy:   #0B2545;
+  --orange: #E8622A;
+  --light:  #F4F6FA;
+  --white:  #FFFFFF;
+  --text:   #1C1C2E;
+  --muted:  #6B7280;
+  --card:   #FFFFFF;
+  --border: #E5E9F2;
+  --sidebar-w: 72px;
+}
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--light);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  z-index: 100;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+}
+.sidebar-logo {
+  width: 40px; height: 40px;
+  background: var(--orange);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 700;
+  font-size: 18px;
+  color: white;
+  margin-bottom: 32px;
+  flex-shrink: 0;
+}
+.nav-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  list-style: none;
+  flex: 1;
+  width: 100%;
+  padding: 0 10px;
+}
+.nav-links li a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px 6px;
+  border-radius: 12px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+.nav-links li a i { font-size: 16px; }
+.nav-links li a:hover,
+.nav-links li a.active {
+  background: rgba(232,98,42,0.2);
+  color: var(--orange);
+}
+.nav-links li a.active { background: rgba(232,98,42,0.25); }
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-height: 100vh;
+}
+
+/* ============================================================
+   LANGUAGE TOGGLE
+   ============================================================ */
+.lang-toggle {
+  position: fixed;
+  top: 20px; right: 24px;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 30px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  padding: 4px;
+  gap: 2px;
+}
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  transition: all 0.2s;
+}
+.lang-btn .flag { font-size: 16px; }
+.lang-btn.active {
+  background: var(--navy);
+  color: white;
+}
+
+/* ============================================================
+   SECTION BASE
+   ============================================================ */
+section {
+  padding: 80px 60px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+section:nth-child(even) { background: white; }
+
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 48px;
+  line-height: 1.1;
+}
+.section-title span {
+  color: var(--orange);
+  font-style: italic;
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+#home {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+  flex-direction: row;
+  align-items: center;
+  gap: 60px;
+  padding: 80px 60px;
+  min-height: 100vh;
+}
+#home::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(232,98,42,0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+#home::after {
+  content: '';
+  position: absolute;
+  bottom: -50px; left: 100px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-text { flex: 1; position: relative; z-index: 1; }
+.hero-greeting {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 400;
+  font-style: italic;
+  color: rgba(255,255,255,0.65);
+  margin-bottom: 8px;
+  display: block;
+}
+.hero-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 58px;
+  font-weight: 700;
+  color: white;
+  line-height: 1.05;
+  margin-bottom: 16px;
+}
+.hero-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 36px;
+}
+.hero-title-line {
+  width: 40px; height: 3px;
+  background: var(--orange);
+  border-radius: 2px;
+}
+.hero-title-text {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--orange);
+  letter-spacing: 0.5px;
+}
+.hero-buttons { display: flex; gap: 14px; margin-bottom: 36px; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--orange);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: #d4541f; transform: translateY(-1px); }
+.hero-socials { display: flex; gap: 12px; }
+.social-btn {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+  text-decoration: none;
+  font-size: 17px;
+  transition: all 0.2s;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.social-btn:hover { background: var(--orange); border-color: var(--orange); transform: translateY(-2px); }
+
+/* Hero photo */
+.hero-photo-wrap {
+  position: relative;
+  flex-shrink: 0;
+  z-index: 1;
+}
+.hero-photo {
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--orange);
+  display: block;
+  background: #1a3a6e;
+}
+.hero-photo-placeholder {
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  border: 4px solid var(--orange);
+  background: linear-gradient(135deg, #1a3a6e, #0B2545);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.7);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 64px;
+  font-weight: 700;
+}
+.hero-photo-placeholder small {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  margin-top: 6px;
+  opacity: 0.5;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.hero-ring {
+  position: absolute;
+  top: -10px; left: -10px; right: -10px; bottom: -10px;
+  border-radius: 50%;
+  border: 2px solid rgba(232,98,42,0.3);
+  animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.04); opacity: 0.5; }
+}
+
+/* Stats strip */
+.stats-strip {
+  background: white;
+  border-radius: 16px;
+  padding: 20px 32px;
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  margin-top: 40px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+}
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.stat-icon {
+  width: 48px; height: 48px;
+  border-radius: 10px;
+  background: var(--light);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px;
+}
+.stat-num {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+}
+.stat-label {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.stat-divider {
+  width: 1px; height: 40px;
+  background: var(--border);
+}
+
+/* ============================================================
+   ABOUT SECTION
+   ============================================================ */
+#about { background: white; }
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  align-items: start;
+}
+.about-left {}
+.about-card {
+  background: var(--light);
+  border-radius: 16px;
+  padding: 28px;
+  border-left: 4px solid var(--orange);
+}
+.about-card-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--orange);
+  margin-bottom: 6px;
+}
+.about-card-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--navy);
+  line-height: 1.5;
+}
+.about-cards { display: flex; flex-direction: column; gap: 14px; }
+.about-right p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: #374151;
+  margin-bottom: 20px;
+}
+.about-right p:first-child {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-style: italic;
+  color: var(--navy);
+  line-height: 1.7;
+  border-left: 3px solid var(--orange);
+  padding-left: 20px;
+}
+.about-cta {
+  margin-top: 8px;
+  font-weight: 600;
+  color: var(--navy) !important;
+}
+
+/* ============================================================
+   SKILLS SECTION
+   ============================================================ */
+#skills { background: var(--light); }
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.skill-tag {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  text-align: center;
+  transition: all 0.2s;
+  cursor: default;
+}
+.skill-tag:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(232,98,42,0.12);
+}
+.skill-tag.featured {
+  background: var(--navy);
+  color: white;
+  border-color: var(--navy);
+}
+.skill-tag.featured:hover {
+  background: var(--orange);
+  border-color: var(--orange);
+}
+
+/* ============================================================
+   PROJECTS SECTION
+   ============================================================ */
+#projects { background: white; }
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+}
+.project-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+  border-color: var(--orange);
+}
+.project-thumb {
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  font-weight: 800;
+  color: white;
+  letter-spacing: -2px;
+  font-family: 'Cormorant Garamond', serif;
+  position: relative;
+  overflow: hidden;
+}
+.project-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.15);
+}
+.project-badge {
+  position: absolute;
+  top: 12px; right: 12px;
+  z-index: 1;
+  background: white;
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.project-body {
+  padding: 24px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.project-domain {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--orange);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.project-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.project-desc {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.65;
+  flex: 1;
+  margin-bottom: 20px;
+}
+.project-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: 1.5px solid var(--navy);
+  color: var(--navy);
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.btn-outline:hover {
+  background: var(--navy);
+  color: white;
+}
+.tech-icon { font-size: 24px; }
+
+/* ============================================================
+   EXPERIENCE SECTION
+   ============================================================ */
+#experience { background: var(--light); }
+.timeline { position: relative; padding-left: 32px; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px; top: 8px; bottom: 8px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--orange), var(--navy));
+  border-radius: 2px;
+}
+.exp-item {
+  position: relative;
+  margin-bottom: 48px;
+}
+.exp-item::before {
+  content: '';
+  position: absolute;
+  left: -28px; top: 8px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 3px solid white;
+  box-shadow: 0 0 0 2px var(--orange);
+}
+.exp-card {
+  background: white;
+  border-radius: 16px;
+  padding: 28px 32px;
+  border: 1.5px solid var(--border);
+  transition: all 0.2s;
+}
+.exp-card:hover {
+  border-color: var(--orange);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.07);
+}
+.exp-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.exp-company {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 4px;
+}
+.exp-role {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--orange);
+}
+.exp-period {
+  background: var(--navy);
+  color: white;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.exp-card ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.exp-card ul li {
+  font-size: 14px;
+  color: #374151;
+  line-height: 1.65;
+  padding-left: 18px;
+  position: relative;
+}
+.exp-card ul li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--orange);
+  font-size: 12px;
+  top: 1px;
+}
+
+/* ============================================================
+   CERTIFICATES SECTION
+   ============================================================ */
+#certificates { background: white; }
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+}
+.cert-card {
+  background: var(--light);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid var(--border);
+  transition: all 0.25s;
+}
+.cert-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+  border-color: var(--orange);
+}
+.cert-header {
+  background: linear-gradient(135deg, var(--navy), #1a3a6e);
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.cert-issuer {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+}
+.cert-badge {
+  font-size: 28px;
+}
+.cert-body { padding: 20px 24px; }
+.cert-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.cert-date {
+  font-size: 12px;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+/* ============================================================
+   CONTACT SECTION
+   ============================================================ */
+#contact {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+}
+#contact::before {
+  content: '';
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,98,42,0.12) 0%, transparent 70%);
+}
+.contact-inner { position: relative; z-index: 1; }
+#contact .section-title { color: white; }
+#contact .section-title span { color: var(--orange); }
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 700px;
+}
+.contact-card {
+  background: rgba(255,255,255,0.07);
+  border: 1.5px dashed rgba(255,255,255,0.2);
+  border-radius: 16px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+  transition: all 0.2s;
+  position: relative;
+}
+.contact-card:hover {
+  background: rgba(232,98,42,0.15);
+  border-color: var(--orange);
+  transform: translateY(-2px);
+}
+.contact-icon-wrap {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  background: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  color: var(--navy);
+  flex-shrink: 0;
+}
+.contact-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.contact-value {
+  font-size: 13px;
+  color: rgba(255,255,255,0.6);
+  word-break: break-all;
+}
+.contact-footer {
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.contact-footer-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+}
+.contact-footer-sub {
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   FOOTER NOTE
+   ============================================================ */
+.footer-note {
+  text-align: center;
+  padding: 16px;
+  font-size: 12px;
+  color: var(--muted);
+  background: var(--light);
+  margin-left: var(--sidebar-w);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 900px) {
+  section { padding: 60px 30px; }
+  #home { flex-direction: column; text-align: center; padding: 60px 30px; }
+  .hero-buttons { justify-content: center; }
+  .hero-socials { justify-content: center; }
+  .about-grid { grid-template-columns: 1fr; }
+  .hero-name { font-size: 42px; }
+  .stats-strip { flex-wrap: wrap; gap: 20px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-footer { flex-direction: column; gap: 20px; text-align: center; }
+}
+@media (max-width: 600px) {
+  :root { --sidebar-w: 0px; }
+  .sidebar { display: none; }
+  .lang-toggle { right: 12px; }
+}
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     LEFT SIDEBAR NAVIGATION
+     ============================================================ -->
+<nav class="sidebar">
+  <div class="sidebar-logo">HP</div>
+  <ul class="nav-links">
+    <li><a href="#home" class="active" data-nav="home">
+      <i class="fas fa-house"></i>
+      <span data-i18n="nav_home">Home</span>
+    </a></li>
+    <li><a href="#about" data-nav="about">
+      <i class="fas fa-user"></i>
+      <span data-i18n="nav_about">About</span>
+    </a></li>
+    <li><a href="#skills" data-nav="skills">
+      <i class="fas fa-layer-group"></i>
+      <span data-i18n="nav_skills">Skills</span>
+    </a></li>
+    <li><a href="#projects" data-nav="projects">
+      <i class="fas fa-folder-open"></i>
+      <span data-i18n="nav_projects">Projects</span>
+    </a></li>
+    <li><a href="#experience" data-nav="experience">
+      <i class="fas fa-briefcase"></i>
+      <span data-i18n="nav_exp">Experience</span>
+    </a></li>
+    <li><a href="#certificates" data-nav="certificates">
+      <i class="fas fa-trophy"></i>
+      <span data-i18n="nav_certs">Awards</span>
+    </a></li>
+    <li><a href="#contact" data-nav="contact">
+      <i class="fas fa-envelope"></i>
+      <span data-i18n="nav_contact">Contact</span>
+    </a></li>
+  </ul>
+</nav>
+
+<!-- ============================================================
+     LANGUAGE TOGGLE
+     ============================================================ -->
+<div class="lang-toggle">
+  <button class="lang-btn active" id="btn-en" onclick="setLang('en')">
+    <span class="flag">🇬🇧</span> EN
+  </button>
+  <button class="lang-btn" id="btn-nl" onclick="setLang('nl')">
+    <span class="flag">🇳🇱</span> NL
+  </button>
+</div>
+
+<!-- ============================================================
+     MAIN CONTENT
+     ============================================================ -->
+<main class="main">
+
+  <!-- ── HERO ── -->
+  <section id="home">
+    <div class="hero-text fade-in">
+      <span class="hero-greeting" data-i18n="hero_greeting">Hello, I am</span>
+      <h1 class="hero-name">Harshilkumar Patel</h1>
+      <div class="hero-title">
+        <div class="hero-title-line"></div>
+        <span class="hero-title-text" data-i18n="hero_role">Data Analyst</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary" data-i18n-attr="href:#|text:hero_cv">
+          <i class="fas fa-download"></i>
+          <span data-i18n="hero_cv">Download CV</span>
+        </a>
+      </div>
+      <div class="hero-socials">
+        <a href="https://www.linkedin.com/in/harshil-patel-188b22..." target="_blank" class="social-btn" title="LinkedIn">
+          <i class="fab fa-linkedin-in"></i>
+        </a>
+        <a href="https://github.com/HP85-NL" target="_blank" class="social-btn" title="GitHub">
+          <i class="fab fa-github"></i>
+        </a>
+        <a href="mailto:harshil.patel150@gmail.com" class="social-btn" title="Email">
+          <i class="fas fa-envelope"></i>
+        </a>
+      </div>
+      <!-- Stats strip -->
+      <div class="stats-strip fade-in">
+        <div class="stat-item">
+          <div class="stat-icon">📊</div>
+          <div>
+            <div class="stat-num">3+</div>
+            <div class="stat-label" data-i18n="stat_projects">Projects</div>
+          </div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-icon" style="font-size:20px">🇳🇱</div>
+          <div>
+            <div class="stat-num">5+</div>
+            <div class="stat-label" data-i18n="stat_years">Years NL</div>
+          </div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-icon">🎓</div>
+          <div>
+            <div class="stat-num">MBA</div>
+            <div class="stat-label" data-i18n="stat_edu">Data Spec.</div>
+          </div>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-item">
+          <div class="stat-icon">📜</div>
+          <div>
+            <div class="stat-num">4</div>
+            <div class="stat-label" data-i18n="stat_certs">Certificates</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-photo-wrap fade-in">
+      <!-- 
+        ====================================================
+        TO ADD YOUR PHOTO:
+        Replace the div below with:
+        <img src="your-photo.jpg" class="hero-photo" alt="Harshilkumar Patel">
+        ====================================================
+      -->
+      <div class="hero-photo-placeholder">
+        HP
+        <small>Add Photo</small>
+      </div>
+      <div class="hero-ring"></div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section id="about">
+    <h2 class="section-title fade-in"><span data-i18n="about_title_italic">About</span> <span style="color:var(--navy);font-style:normal" data-i18n="about_title_plain">Me</span></h2>
+    <div class="about-grid fade-in">
+      <div class="about-left">
+        <div class="about-cards">
+          <div class="about-card">
+            <div class="about-card-label" data-i18n="about_location_label">Based In</div>
+            <div class="about-card-value">🇳🇱 Netherlands</div>
+          </div>
+          <div class="about-card">
+            <div class="about-card-label" data-i18n="about_edu_label">Education</div>
+            <div class="about-card-value" data-i18n="about_edu_val">MBA – Data Analysis Specialization</div>
+          </div>
+          <div class="about-card">
+            <div class="about-card-label" data-i18n="about_lang_label">Languages</div>
+            <div class="about-card-value">English · Nederlands (Integrated) · Gujarati</div>
+          </div>
+          <div class="about-card">
+            <div class="about-card-label" data-i18n="about_focus_label">Target Sector</div>
+            <div class="about-card-value" data-i18n="about_focus_val">Logistics · Supply Chain · Retail</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-right">
+        <p data-i18n="about_p1">Welcome to my Portfolio! I believe that data is the most undervalued asset on a company's balance sheet. But data, in its raw form, is silent. My job is to give it a voice.</p>
+        <p data-i18n="about_p2">Hi, I'm Harshil. Data is silent. I make it speak — in revenue, margins, and decisions. I don't build dashboards; I build decision engines. Most analysts tell you what happened. I tell you why, what it costs, and what to do next.</p>
+        <p data-i18n="about_p3">The impact: ₹6 Cr → ₹20 Cr revenue in 24 months. Conversion rates 7% → 18% in Dutch retail. €1.08M in margin leakage uncovered through SQL-driven analysis — projecting €1.3M Year 1 impact. My career began on factory floors — same engineering precision, upgraded tools. The principle never changed: one error in the input creates catastrophic failure in the output.</p>
+        <p data-i18n="about_p4">Fully integrated into Dutch culture — direct, transparent, consensus-driven. I align Sales, Finance, and Marketing under a Single Source of Truth.</p>
+        <p class="about-cta" data-i18n="about_cta">Let's build something that moves the needle.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SKILLS ── -->
+  <section id="skills">
+    <h2 class="section-title fade-in"><span data-i18n="skills_title_italic">Key</span> <span style="color:var(--navy);font-style:normal" data-i18n="skills_title_plain">Skills</span></h2>
+    <div class="skills-grid fade-in">
+      <div class="skill-tag featured">SQL</div>
+      <div class="skill-tag featured">Power BI</div>
+      <div class="skill-tag featured">Python</div>
+      <div class="skill-tag featured">Advanced Excel</div>
+      <div class="skill-tag" data-i18n="skill_modeling">Data Modeling (Star Schema / Dimensional)</div>
+      <div class="skill-tag" data-i18n="skill_kpi">KPI Design & Metric Governance</div>
+      <div class="skill-tag" data-i18n="skill_financial">Financial & Commercial Analysis</div>
+      <div class="skill-tag" data-i18n="skill_adhoc">Ad-Hoc Executive Insight</div>
+      <div class="skill-tag" data-i18n="skill_brd">Business Requirements & Documentation</div>
+      <div class="skill-tag" data-i18n="skill_stakeholder">Stakeholder Management</div>
+      <div class="skill-tag" data-i18n="skill_cross">Cross-Function Alignment</div>
+      <div class="skill-tag">DAX · Power Query · M</div>
+    </div>
+  </section>
+
+  <!-- ── PROJECTS ── -->
+  <section id="projects">
+    <h2 class="section-title fade-in"><span data-i18n="proj_title_italic">My</span> <span style="color:var(--navy);font-style:normal" data-i18n="proj_title_plain">Projects</span></h2>
+    <div class="projects-grid fade-in">
+
+      <!-- Project 1: Business Insights 360 -->
+      <div class="project-card">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #0B2545, #1a3a6e);">
+          <span style="z-index:1;font-size:36px;">BI 360</span>
+          <div class="project-badge" style="color:#E8622A;">Power BI</div>
+        </div>
+        <div class="project-body">
+          <div class="project-domain" data-i18n="proj1_domain">FMCG · Multi-Function</div>
+          <div class="project-name" data-i18n="proj1_name">Business Insights 360</div>
+          <div class="project-desc" data-i18n="proj1_desc">Multi-view Power BI dashboard for AtliQ Hardware covering Finance, Sales, Marketing, Supply Chain & Executive views. Built a single source of truth across all business functions with dynamic KPIs and drill-through insights.</div>
+          <div class="project-footer">
+            <a href="https://github.com/HP85-NL" target="_blank" class="btn-outline" data-i18n="proj_btn">See My Work</a>
+            <span class="tech-icon">📊</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 2: Sales & Finance Analytics -->
+      <div class="project-card">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #1d6a2e, #2d9e47);">
+          <span style="z-index:1;">S&F</span>
+          <div class="project-badge" style="color:#1d6a2e;">Excel</div>
+        </div>
+        <div class="project-body">
+          <div class="project-domain" data-i18n="proj2_domain">Computer Peripherals (FMCG)</div>
+          <div class="project-name" data-i18n="proj2_name">Sales & Finance Analytics</div>
+          <div class="project-desc" data-i18n="proj2_desc">Transformed disconnected data into a single source of truth. Unified fragmented Excel reporting using Power Pivot, DAX, and advanced modeling — delivering real-time business applications for sales and finance leadership.</div>
+          <div class="project-footer">
+            <a href="https://github.com/HP85-NL" target="_blank" class="btn-outline" data-i18n="proj_btn">See My Work</a>
+            <span class="tech-icon">📗</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Project 3: SQL Ad-Hoc BI -->
+      <div class="project-card">
+        <div class="project-thumb" style="background: linear-gradient(135deg, #1a4a7a, #2563a8);">
+          <span style="z-index:1;">SQL</span>
+          <div class="project-badge" style="color:#1a4a7a;">SQL</div>
+        </div>
+        <div class="project-body">
+          <div class="project-domain" data-i18n="proj3_domain">FMCG · Computer Peripherals</div>
+          <div class="project-name" data-i18n="proj3_name">SQL Ad-Hoc Business Intelligence</div>
+          <div class="project-desc" data-i18n="proj3_desc">SQL BI case for AtliQ Hardware: answered 10 leadership ad-hoc questions, validated KPIs, and delivered an executive dashboard + management deck. Uncovered €1.08M in margin leakage projecting €1.3M Year 1 impact.</div>
+          <div class="project-footer">
+            <a href="https://github.com/HP85-NL" target="_blank" class="btn-outline" data-i18n="proj_btn">See My Work</a>
+            <span class="tech-icon">🗄️</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── EXPERIENCE ── -->
+  <section id="experience">
+    <h2 class="section-title fade-in"><span data-i18n="exp_title_italic">My</span> <span style="color:var(--navy);font-style:normal" data-i18n="exp_title_plain">Experience</span></h2>
+    <div class="timeline fade-in">
+
+      <!-- Bever -->
+      <div class="exp-item">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-company">Bever b.v.</div>
+              <div class="exp-role" data-i18n="exp1_role">Sales & Data Analytics</div>
+            </div>
+            <div class="exp-period" data-i18n="exp1_period">Netherlands · Present</div>
+          </div>
+          <ul>
+            <li data-i18n="exp1_b1">Managed regional sales forecasting, conversion analysis, and inventory planning, supporting sales for The North Face across Amsterdam and Utrecht.</li>
+            <li data-i18n="exp1_b2">Coordinated across sales and merchandising teams to ensure timely stock replenishment and performance alignment with business goals.</li>
+            <li data-i18n="exp1_b3">Involved in target setting, performance tracking, and execution of seasonal campaigns, directly impacting regional sales success.</li>
+            <li data-i18n="exp1_b4">Optimized retail operations across high-traffic Amsterdam and Utrecht locations — achieved conversion increase from 6% to 13% and revenue growth from €6.3M to €7.2M through data-backed demand forecasting.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Techno Electromech -->
+      <div class="exp-item">
+        <div class="exp-card">
+          <div class="exp-header">
+            <div>
+              <div class="exp-company">Techno Electromech Pvt. Ltd.</div>
+              <div class="exp-role" data-i18n="exp2_role">Operations & Supply Chain</div>
+            </div>
+            <div class="exp-period" data-i18n="exp2_period">India · Jul 2015 – Dec 2019</div>
+          </div>
+          <ul>
+            <li data-i18n="exp2_b1">Spearheaded the end-to-end setup of the "Pick and Place" automation unit, from equipment selection to workflow design.</li>
+            <li data-i18n="exp2_b2">Successfully automated 80% of LED mounting, significantly reducing manual error rates and increasing production speed by 18%.</li>
+            <li data-i18n="exp2_b3">Executed a strategic shift from outsourced to in-house LED panel production — contributed to revenue growth from ₹6 Cr to ₹20 Cr and net profitability from 7% to 16%.</li>
+            <li data-i18n="exp2_b4">Identified and resolved supply chain bottlenecks through data-driven BOM optimization. Ensured 100% on-time delivery for high-tier clients with a 0% penalty rate.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CERTIFICATES ── -->
+  <section id="certificates">
+    <h2 class="section-title fade-in"><span data-i18n="cert_title_italic">Awards</span> <span style="color:var(--navy);font-style:normal" data-i18n="cert_title_plain">& Certificates</span></h2>
+    <div class="certs-grid fade-in">
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-issuer">Codebasics</div>
+          <div class="cert-badge">📗</div>
+        </div>
+        <div class="cert-body">
+          <div class="cert-name" data-i18n="cert1_name">Excel: Mother of Business Intelligence</div>
+          <div class="cert-date" data-i18n="cert1_date">📅 July 09, 2025</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-issuer">Codebasics</div>
+          <div class="cert-badge">📊</div>
+        </div>
+        <div class="cert-body">
+          <div class="cert-name" data-i18n="cert2_name">Get Job Ready: Power BI Data Analytics for All Levels 3.0</div>
+          <div class="cert-date" data-i18n="cert2_date">📅 December 02, 2025</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-issuer">Codebasics</div>
+          <div class="cert-badge">🗄️</div>
+        </div>
+        <div class="cert-body">
+          <div class="cert-name" data-i18n="cert3_name">SQL Beginner to Advanced For Data Professionals</div>
+          <div class="cert-date" data-i18n="cert3_date">📅 January 01, 2026</div>
+        </div>
+      </div>
+
+      <div class="cert-card">
+        <div class="cert-header">
+          <div class="cert-issuer">Cisco Networking Academy</div>
+          <div class="cert-badge">🔬</div>
+        </div>
+        <div class="cert-body">
+          <div class="cert-name" data-i18n="cert4_name">Introduction to Data Science</div>
+          <div class="cert-date" data-i18n="cert4_date">📅 July 04, 2025</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── CONTACT ── -->
+  <section id="contact">
+    <div class="contact-inner">
+      <h2 class="section-title fade-in"><span data-i18n="contact_title_italic">Contact</span> <span style="color:white;font-style:normal" data-i18n="contact_title_plain">Me</span></h2>
+      <div class="contact-grid fade-in">
+
+        <a href="mailto:harshil.patel150@gmail.com" class="contact-card">
+          <div class="contact-icon-wrap"><i class="fas fa-envelope" style="color:var(--orange)"></i></div>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value">harshil.patel150@gmail.com</div>
+          </div>
+        </a>
+
+        <a href="https://github.com/HP85-NL" target="_blank" class="contact-card">
+          <div class="contact-icon-wrap"><i class="fab fa-github" style="color:var(--navy)"></i></div>
+          <div>
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">github.com/HP85-NL</div>
+          </div>
+        </a>
+
+        <a href="https://www.linkedin.com/in/harshil-patel-188b22..." target="_blank" class="contact-card">
+          <div class="contact-icon-wrap"><i class="fab fa-linkedin-in" style="color:#0077b5"></i></div>
+          <div>
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">harshil-patel-188b22</div>
+          </div>
+        </a>
+
+        <a href="tel:+31616007466" class="contact-card">
+          <div class="contact-icon-wrap"><i class="fas fa-phone" style="color:var(--orange)"></i></div>
+          <div>
+            <div class="contact-label" data-i18n="contact_call">Call</div>
+            <div class="contact-value">+31 616 007 466</div>
+          </div>
+        </a>
+
+      </div>
+      <div class="contact-footer fade-in">
+        <div>
+          <div class="contact-footer-name">Harshilkumar Patel</div>
+          <div class="contact-footer-sub" data-i18n="hero_role">Data Analyst</div>
+        </div>
+        <a href="#" class="btn-primary" data-i18n-text="hero_cv">
+          <i class="fas fa-download"></i>
+          <span data-i18n="hero_cv">Download CV</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+/* ============================================================
+   TRANSLATIONS
+   ============================================================ */
+const translations = {
+  en: {
+    nav_home: "Home", nav_about: "About", nav_skills: "Skills",
+    nav_projects: "Projects", nav_exp: "Work", nav_certs: "Awards", nav_contact: "Contact",
+    hero_greeting: "Hello, I am",
+    hero_role: "Data Analyst",
+    hero_cv: "Download CV",
+    stat_projects: "Projects", stat_years: "Years NL", stat_edu: "Data Spec.", stat_certs: "Certificates",
+    about_title_italic: "About", about_title_plain: "Me",
+    about_location_label: "Based In", about_edu_label: "Education",
+    about_edu_val: "MBA – Data Analysis Specialization",
+    about_lang_label: "Languages", about_focus_label: "Target Sector",
+    about_focus_val: "Logistics · Supply Chain · Retail",
+    about_p1: "Welcome to my Portfolio! I believe that data is the most undervalued asset on a company's balance sheet. But data, in its raw form, is silent. My job is to give it a voice.",
+    about_p2: "Hi, I'm Harshil. Data is silent. I make it speak — in revenue, margins, and decisions. I don't build dashboards; I build decision engines. Most analysts tell you what happened. I tell you why, what it costs, and what to do next.",
+    about_p3: "The impact: ₹6 Cr → ₹20 Cr revenue in 24 months. Conversion rates 7% → 18% in Dutch retail. €1.08M in margin leakage uncovered through SQL-driven analysis — projecting €1.3M Year 1 impact. My career began on factory floors — same engineering precision, upgraded tools.",
+    about_p4: "Fully integrated into Dutch culture — direct, transparent, consensus-driven. I align Sales, Finance, and Marketing under a Single Source of Truth.",
+    about_cta: "Let's build something that moves the needle.",
+    skills_title_italic: "Key", skills_title_plain: "Skills",
+    skill_modeling: "Data Modeling (Star Schema / Dimensional)", skill_kpi: "KPI Design & Metric Governance",
+    skill_financial: "Financial & Commercial Analysis", skill_adhoc: "Ad-Hoc Executive Insight",
+    skill_brd: "Business Requirements & Documentation", skill_stakeholder: "Stakeholder Management",
+    skill_cross: "Cross-Function Alignment",
+    proj_title_italic: "My", proj_title_plain: "Projects",
+    proj1_domain: "FMCG · Multi-Function", proj1_name: "Business Insights 360",
+    proj1_desc: "Multi-view Power BI dashboard for AtliQ Hardware covering Finance, Sales, Marketing, Supply Chain & Executive views. Built a single source of truth with dynamic KPIs and drill-through insights.",
+    proj2_domain: "Computer Peripherals (FMCG)", proj2_name: "Sales & Finance Analytics",
+    proj2_desc: "Transformed disconnected data into a single source of truth. Unified fragmented Excel reporting using Power Pivot, DAX, and advanced modeling for sales and finance leadership.",
+    proj3_domain: "FMCG · Computer Peripherals", proj3_name: "SQL Ad-Hoc Business Intelligence",
+    proj3_desc: "SQL BI case for AtliQ Hardware: answered 10 leadership ad-hoc questions, validated KPIs, and delivered an executive dashboard. Uncovered €1.08M in margin leakage projecting €1.3M Year 1 impact.",
+    proj_btn: "See My Work",
+    exp_title_italic: "My", exp_title_plain: "Experience",
+    exp1_role: "Sales & Data Analytics", exp1_period: "Netherlands · Present",
+    exp1_b1: "Managed regional sales forecasting, conversion analysis, and inventory planning, supporting sales for The North Face across Amsterdam and Utrecht.",
+    exp1_b2: "Coordinated across sales and merchandising teams to ensure timely stock replenishment and performance alignment with business goals.",
+    exp1_b3: "Involved in target setting, performance tracking, and execution of seasonal campaigns, directly impacting regional sales success.",
+    exp1_b4: "Achieved conversion increase from 6% to 13% and revenue growth from €6.3M to €7.2M through data-backed demand forecasting and friction-point reduction.",
+    exp2_role: "Operations & Supply Chain", exp2_period: "India · Jul 2015 – Dec 2019",
+    exp2_b1: "Spearheaded the end-to-end setup of the 'Pick and Place' automation unit, from equipment selection to workflow design.",
+    exp2_b2: "Successfully automated 80% of LED mounting, significantly reducing manual error rates and increasing production speed by 18%.",
+    exp2_b3: "Executed a strategic shift from outsourced to in-house LED panel production — contributed to revenue growth from ₹6 Cr to ₹20 Cr and net profitability from 7% to 16%.",
+    exp2_b4: "Identified and resolved supply chain bottlenecks through data-driven BOM optimization. Ensured 100% on-time delivery with a 0% penalty rate.",
+    cert_title_italic: "Awards", cert_title_plain: "& Certificates",
+    cert1_name: "Excel: Mother of Business Intelligence", cert1_date: "📅 July 09, 2025",
+    cert2_name: "Get Job Ready: Power BI Data Analytics for All Levels 3.0", cert2_date: "📅 December 02, 2025",
+    cert3_name: "SQL Beginner to Advanced For Data Professionals", cert3_date: "📅 January 01, 2026",
+    cert4_name: "Introduction to Data Science", cert4_date: "📅 July 04, 2025",
+    contact_title_italic: "Contact", contact_title_plain: "Me", contact_call: "Call",
+  },
+  nl: {
+    nav_home: "Home", nav_about: "Over mij", nav_skills: "Skills",
+    nav_projects: "Projecten", nav_exp: "Werk", nav_certs: "Diploma's", nav_contact: "Contact",
+    hero_greeting: "Hallo, ik ben",
+    hero_role: "Data Analist",
+    hero_cv: "CV Downloaden",
+    stat_projects: "Projecten", stat_years: "Jaar NL", stat_edu: "Data Spec.", stat_certs: "Certificaten",
+    about_title_italic: "Over", about_title_plain: "Mij",
+    about_location_label: "Gevestigd In", about_edu_label: "Opleiding",
+    about_edu_val: "MBA – Specialisatie Data-analyse",
+    about_lang_label: "Talen", about_focus_label: "Doelsector",
+    about_focus_val: "Logistiek · Supply Chain · Retail",
+    about_p1: "Welkom op mijn portfolio! Ik geloof dat data het meest onderschatte bezit op de balans van een bedrijf is. Maar data is in ruwe vorm stil. Mijn werk is om het een stem te geven.",
+    about_p2: "Hoi, ik ben Harshil. Data is stil. Ik laat het spreken — in omzet, marges en beslissingen. Ik bouw geen dashboards; ik bouw beslissingsmachines. De meeste analisten vertellen wat er is gebeurd. Ik vertel waarom, wat het kost en wat er daarna gedaan moet worden.",
+    about_p3: "De impact: ₹6 Cr → ₹20 Cr omzet in 24 maanden. Conversieratio's van 7% → 18% in de Nederlandse retail. €1,08M aan margelekken ontdekt via SQL-analyse — met een verwacht jaar 1 effect van €1,3M.",
+    about_p4: "Volledig geïntegreerd in de Nederlandse cultuur — direct, transparant, consensusgericht. Ik breng Verkoop, Finance en Marketing samen onder één enkele bron van waarheid.",
+    about_cta: "Laten we iets bouwen dat écht het verschil maakt.",
+    skills_title_italic: "Kern", skills_title_plain: "Vaardigheden",
+    skill_modeling: "Data Modellering (Sterschema / Dimensioneel)", skill_kpi: "KPI-ontwerp & Metrisch Beheer",
+    skill_financial: "Financiële & Commerciële Analyse", skill_adhoc: "Ad-Hoc Directie-inzicht",
+    skill_brd: "Bedrijfsvereisten & Documentatie", skill_stakeholder: "Stakeholdermanagement",
+    skill_cross: "Functieoverschrijdende Afstemming",
+    proj_title_italic: "Mijn", proj_title_plain: "Projecten",
+    proj1_domain: "FMCG · Multi-Functie", proj1_name: "Business Insights 360",
+    proj1_desc: "Power BI-dashboard met meerdere weergaven voor AtliQ Hardware: Finance, Sales, Marketing, Supply Chain & Executive. Één bron van waarheid met dynamische KPI's en drill-through inzichten.",
+    proj2_domain: "Computerapparatuur (FMCG)", proj2_name: "Verkoop- & Financiële Analyse",
+    proj2_desc: "Losgekoppelde data omgezet naar één bron van waarheid. Gefragmenteerde Excel-rapportage samengevoegd met Power Pivot, DAX en geavanceerde modellering.",
+    proj3_domain: "FMCG · Computerapparatuur", proj3_name: "SQL Ad-Hoc Business Intelligence",
+    proj3_desc: "SQL BI-casus voor AtliQ Hardware: 10 directievragen beantwoord, KPI's gevalideerd en een managementdashboard geleverd. €1,08M aan margelekken ontdekt met €1,3M projectie in jaar 1.",
+    proj_btn: "Bekijk Mijn Werk",
+    exp_title_italic: "Mijn", exp_title_plain: "Ervaring",
+    exp1_role: "Verkoop & Data-analyse", exp1_period: "Nederland · Heden",
+    exp1_b1: "Regionale verkoopprognose, conversieanalyse en voorraadbeheer beheerd ter ondersteuning van The North Face-verkoop in Amsterdam en Utrecht.",
+    exp1_b2: "Samenwerking met verkoop- en merchandisingteams voor tijdige aanvulling van de voorraad en prestatieafstemming.",
+    exp1_b3: "Betrokken bij doelstelling, prestatiebewaking en uitvoering van seizoenskampagnes.",
+    exp1_b4: "Conversie verhoogd van 6% naar 13% en omzetgroei van €6,3M naar €7,2M door data-gestuurde vraagprognose.",
+    exp2_role: "Operations & Supply Chain", exp2_period: "India · Jul 2015 – Dec 2019",
+    exp2_b1: "Volledige opzet van de 'Pick and Place'-automatiseringsunit begeleid, van apparatuurselectie tot workflowontwerp.",
+    exp2_b2: "80% van LED-montage geautomatiseerd, handmatige fouten sterk verminderd en productiesnelheid met 18% verhoogd.",
+    exp2_b3: "Strategische verschuiving van uitbesteed naar eigen LED-paneelproductie — bijgedragen aan omzetgroei van ₹6 Cr naar ₹20 Cr en nettowinstmarge van 7% naar 16%.",
+    exp2_b4: "Knelpunten in de toeleveringsketen geïdentificeerd via BOM-optimalisatie. 100% tijdige levering gegarandeerd met 0% boetepercentage.",
+    cert_title_italic: "Diploma's", cert_title_plain: "& Certificaten",
+    cert1_name: "Excel: Moeder van Business Intelligence", cert1_date: "📅 9 juli 2025",
+    cert2_name: "Job Ready: Power BI Data Analytics voor Alle Niveaus 3.0", cert2_date: "📅 2 december 2025",
+    cert3_name: "SQL van Beginner tot Gevorderd voor Dataprofessionals", cert3_date: "📅 1 januari 2026",
+    cert4_name: "Introductie tot Data Science", cert4_date: "📅 4 juli 2025",
+    contact_title_italic: "Neem", contact_title_plain: "Contact Op", contact_call: "Bellen",
+  }
+};
+
+/* ============================================================
+   LANGUAGE SWITCHER
+   ============================================================ */
+let currentLang = 'en';
+
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+  document.getElementById('btn-nl').classList.toggle('active', lang === 'nl');
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.textContent = t[key];
+  });
+  document.documentElement.lang = lang;
+}
+
+/* ============================================================
+   SCROLL SPY — highlight active nav link
+   ============================================================ */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+function updateNav() {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateNav);
+
+/* ============================================================
+   SCROLL ANIMATIONS
+   ============================================================ */
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+/* ============================================================
+   SMOOTH SCROLL for nav links
+   ============================================================ */
+navLinks.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+
+</body>
+</html>
