@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Harshilkumar Patel — Data Analyst. 5+ years experience across Manufacturing, Supply Chain, Retail, and Fintech.">
+<title>Harshilkumar Patel · Data Analyst · Utrecht</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #1a2a3a;
+  --navy-light: #243447;
+  --beige: #faf8f5;
+  --beige-dark: #f0ebe5;
+  --orange: #d97757;
+  --orange-light: #e8956a;
+  --text-dark: #2c3e50;
+  --text-light: #7f8c8d;
+  --white: #ffffff;
+  --border: #e8e2d9;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { 
+  font-family: 'Inter', sans-serif; 
+  background: var(--beige);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+img { display: block; max-width: 100%; }
+
+.container { display: grid; grid-template-columns: 220px 1fr; min-height: 100vh; }
+
+/* SIDEBAR */
+.sidebar {
+  background: var(--navy);
+  color: var(--white);
+  padding: 40px 30px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 220px;
+  overflow-y: auto;
+  z-index: 100;
+}
+
+.sidebar__profile {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.sidebar__photo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 0 auto 16px;
+  border: 3px solid var(--orange);
+  display: block;
+}
+
+.sidebar__name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.sidebar__role {
+  font-size: 13px;
+  color: var(--orange);
+  margin-bottom: 20px;
+}
+
+.sidebar__langs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.lang-btn {
+  flex: 1;
+  padding: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.6);
+  transition: 200ms;
+}
+
+.lang-btn.active {
+  background: var(--orange);
+  color: var(--white);
+}
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: 200ms;
+  color: rgba(255,255,255,0.7);
+}
+
+.nav-link:hover, .nav-link.active {
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+}
+
+.nav-link.active {
+  background: var(--orange);
+}
+
+.nav-icon {
+  font-size: 18px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar__footer {
+  margin-top: auto;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.download-cv {
+  width: 100%;
+  padding: 10px;
+  background: var(--orange);
+  color: var(--white);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20px;
+  display: block;
+  transition: 200ms;
+}
+
+.download-cv:hover {
+  background: var(--orange-light);
+}
+
+.socials {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.1);
+  border-radius: 6px;
+  transition: 200ms;
+  font-size: 16px;
+}
+
+.social-link:hover {
+  background: var(--orange);
+}
+
+/* MAIN */
+.main {
+  grid-column: 2;
+  padding: 60px 80px;
+  max-width: 1200px;
+}
+
+.section {
+  margin-bottom: 80px;
+}
+
+.section-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: var(--text-dark);
+}
+
+/* HERO */
+.hero {
+  margin-bottom: 80px;
+}
+
+.hero-greeting {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 16px;
+}
+
+.hero-subtitle {
+  font-size: 16px;
+  color: var(--text-light);
+  max-width: 700px;
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 16px;
+}
+
+.btn {
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  transition: 200ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary {
+  background: var(--orange);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--orange-light);
+}
+
+.btn-secondary {
+  background: var(--white);
+  color: var(--text-dark);
+  border: 2px solid var(--border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-dark);
+}
+
+/* SKILLS */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.skill-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 24px;
+  border-left: 4px solid var(--orange);
+}
+
+.skill-card-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.skill-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  background: var(--beige-dark);
+  color: var(--text-dark);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* PROJECTS */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: 200ms;
+  border: 1px solid var(--border);
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+
+.project-card-image {
+  width: 100%;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  background: var(--navy);
+}
+
+.project-card-body {
+  padding: 20px;
+}
+
+.project-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--text-dark);
+}
+
+.project-card-desc {
+  font-size: 13px;
+  color: var(--text-light);
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tag {
+  background: var(--beige-dark);
+  color: var(--text-dark);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* EXPERIENCE */
+.exp-item {
+  background: var(--white);
+  border-left: 4px solid var(--orange);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 16px;
+}
+
+.exp-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.exp-company {
+  color: var(--orange);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.exp-period {
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.exp-location {
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.exp-desc {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.exp-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bullet {
+  font-size: 13px;
+  color: var(--text-light);
+  padding-left: 16px;
+  position: relative;
+}
+
+.bullet::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: var(--orange);
+  font-weight: bold;
+}
+
+/* EDUCATION */
+.edu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.edu-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 24px;
+  border-left: 4px solid var(--orange);
+}
+
+.edu-degree {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.edu-school {
+  font-size: 14px;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.edu-detail {
+  font-size: 13px;
+  color: var(--text-light);
+}
+
+.edu-detail strong {
+  color: var(--orange);
+  font-weight: 700;
+}
+
+/* CERTIFICATIONS */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.cert-card {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 24px;
+  border-left: 4px solid var(--orange);
+}
+
+.cert-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 4px;
+}
+
+.cert-issuer {
+  font-size: 13px;
+  color: var(--text-light);
+  margin-bottom: 12px;
+}
+
+.cert-link {
+  font-size: 13px;
+  color: var(--orange);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+/* CONTACT */
+.contact {
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 60px;
+  text-align: center;
+}
+
+.contact .section-title {
+  color: var(--white);
+}
+
+.contact-desc {
+  font-size: 16px;
+  color: rgba(255,255,255,0.8);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.7;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  margin-top: 30px;
+}
+
+.contact-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+}
+
+.contact-label {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.contact-value {
+  font-size: 15px;
+  color: var(--white);
+}
+
+/* MODAL */
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-bg.active {
+  display: flex;
+}
+
+.modal {
+  background: var(--white);
+  border-radius: 12px;
+  width: min(900px, 90vw);
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--beige-dark);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1;
+  transition: 200ms;
+}
+
+.modal-close:hover {
+  background: var(--text-light);
+  color: var(--white);
+}
+
+.modal-header {
+  padding: 40px;
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--orange);
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.modal-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.modal-body {
+  padding: 40px;
+}
+
+.carousel {
+  aspect-ratio: 16/9;
+  background: var(--navy);
+  border-radius: 8px;
+  position: relative;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  cursor: pointer;
+  transition: 200ms;
+}
+
+.carousel-nav:hover {
+  background: var(--orange);
+}
+
+.carousel-prev { left: 16px; }
+.carousel-next { right: 16px; }
+
+.modal-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-light);
+  margin-bottom: 24px;
+}
+
+.modal-desc p {
+  margin-bottom: 16px;
+}
+
+.modal-desc strong {
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.modal-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 24px 0;
+  padding: 24px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.action-btn {
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--white);
+  transition: 200ms;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.action-btn:hover {
+  border-color: var(--text-dark);
+  background: var(--beige-dark);
+}
+
+.action-btn-live {
+  background: var(--orange);
+  color: var(--white);
+  border-color: var(--orange);
+}
+
+.action-btn-live:hover {
+  background: var(--orange-light);
+  border-color: var(--orange-light);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .container { grid-template-columns: 180px 1fr; }
+  .main { padding: 40px 40px; }
+  .sidebar { width: 180px; }
+  .skills-grid { grid-template-columns: repeat(2, 1fr); }
+  .projects-grid { grid-template-columns: repeat(2, 1fr); }
+  .edu-grid { grid-template-columns: 1fr; }
+  .cert-grid { grid-template-columns: 1fr; }
+  .contact-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .container { grid-template-columns: 1fr; }
+  .sidebar { 
+    position: fixed;
+    left: -100%;
+    top: 0;
+    width: 220px;
+    height: 100%;
+    transition: left 300ms;
+    z-index: 200;
+  }
+  .sidebar.open { left: 0; }
+  .main { grid-column: 1; padding: 20px; margin-top: 60px; }
+  .mobile-menu { display: block; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .projects-grid { grid-template-columns: 1fr; }
+  .section-title { font-size: 28px; }
+  .hero-title { font-size: 32px; }
+}
+
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 40px;
+  height: 40px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 6px;
+  z-index: 150;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+</style>
+</head>
+<body>
+
+<div class="mobile-menu" id="mobileMenu">☰</div>
+<div class="sidebar" id="sidebar">
+  <div class="sidebar__profile">
+    <img src="assets/profile.png" alt="Harshilkumar Patel" class="sidebar__photo">
+    <div class="sidebar__name">Harshilkumar Patel</div>
+    <div class="sidebar__role">Data Analyst</div>
+    <div class="sidebar__langs">
+      <button class="lang-btn active" data-lang="en">EN</button>
+      <button class="lang-btn" data-lang="nl">NL</button>
+    </div>
+  </div>
+
+  <nav class="nav">
+    <a href="#about" class="nav-link active" data-nav="about"><span class="nav-icon">🏠</span><span class="nav-text">About</span></a>
+    <a href="#skills" class="nav-link" data-nav="skills"><span class="nav-icon">⚡</span><span class="nav-text">Skills</span></a>
+    <a href="#experience" class="nav-link" data-nav="experience"><span class="nav-icon">💼</span><span class="nav-text">Experience</span></a>
+    <a href="#projects" class="nav-link" data-nav="projects"><span class="nav-icon">📁</span><span class="nav-text">Projects</span></a>
+    <a href="#education" class="nav-link" data-nav="education"><span class="nav-icon">🎓</span><span class="nav-text">Education</span></a>
+    <a href="#certifications" class="nav-link" data-nav="certifications"><span class="nav-icon">🏅</span><span class="nav-text">Certifications</span></a>
+    <a href="#contact" class="nav-link" data-nav="contact"><span class="nav-icon">📧</span><span class="nav-text">Contact</span></a>
+  </nav>
+
+  <div class="sidebar__footer">
+    <a href="assets/harshil-cv.pdf" target="_blank" class="download-cv">📥 Download CV</a>
+    <div class="socials">
+      <a href="https://linkedin.com/in/harshil-patel-188b2274" target="_blank" class="social-link">in</a>
+      <a href="https://github.com/HP85-NL" target="_blank" class="social-link">gh</a>
+      <a href="mailto:harshil.patel150@gmail.com" class="social-link">✉</a>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <main class="main">
+
+    <!-- HERO / ABOUT -->
+    <section class="section" id="about">
+      <div class="hero-greeting">👋 Hello, I'm</div>
+      <h1 class="hero-title">Harshilkumar Patel</h1>
+      <p class="hero-subtitle">Data Analyst · Utrecht, Netherlands<br>5+ years transforming raw data into decisions — from Python EDA and SQL to Power BI dashboards and Excel BI systems. Open to roles in Retail, FMCG, Logistics, and Fintech.</p>
+      <div class="hero-cta">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section class="section" id="skills">
+      <div class="section-eyebrow">Technical Toolkit</div>
+      <h2 class="section-title">Skills & Tools</h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <div class="skill-card-title">📊 BI & Visualisation</div>
+          <div class="skill-chips">
+            <span class="chip">Power BI</span>
+            <span class="chip">DAX</span>
+            <span class="chip">Power Query</span>
+            <span class="chip">Tableau</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">💻 Programming</div>
+          <div class="skill-chips">
+            <span class="chip">Python</span>
+            <span class="chip">Pandas</span>
+            <span class="chip">NumPy</span>
+            <span class="chip">Seaborn</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">🗄️ Data & Databases</div>
+          <div class="skill-chips">
+            <span class="chip">SQL</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">PostgreSQL</span>
+            <span class="chip">ETL</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">📈 Analytics & ML</div>
+          <div class="skill-chips">
+            <span class="chip">XGBoost</span>
+            <span class="chip">Forecasting</span>
+            <span class="chip">Statistical Analysis</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">🔧 Automation</div>
+          <div class="skill-chips">
+            <span class="chip">n8n</span>
+            <span class="chip">Supabase</span>
+            <span class="chip">Docker</span>
+          </div>
+        </div>
+        <div class="skill-card">
+          <div class="skill-card-title">📊 Business</div>
+          <div class="skill-chips">
+            <span class="chip">Supply Chain</span>
+            <span class="chip">Finance</span>
+            <span class="chip">KPI Design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section class="section" id="experience">
+      <div class="section-eyebrow">Career History</div>
+      <h2 class="section-title">Work Experience</h2>
+      
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Sales Associate & Data Insights</div>
+            <div class="exp-company">Bever B.V.</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="exp-period">Oct 2023 — Present</div>
+            <div class="exp-location">Utrecht, NL</div>
+          </div>
+        </div>
+        <p class="exp-desc">Outdoor retail specialist combining floor sales with data-backed operations.</p>
+        <div class="exp-bullets">
+          <div class="bullet">Drove store conversion from 6–8% to 15–20%+ through data-led customer engagement</div>
+          <div class="bullet">Supported inventory planning using sales pattern analysis, contributing to revenue growth</div>
+          <div class="bullet">Recognised with performance bonus for measurable contribution to conversion</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Founder & Data Analyst</div>
+            <div class="exp-company">Patel Delivers</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="exp-period">Sep 2020 — Present</div>
+            <div class="exp-location">Utrecht, NL</div>
+          </div>
+        </div>
+        <p class="exp-desc">KvK-registered data analytics consultancy delivering end-to-end analytical solutions across Consumer Electronics, Supply Chain, and Retail.</p>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Data Analyst Intern (Virtual)</div>
+            <div class="exp-company">AtliQ Technologies</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="exp-period">Dec 2025 — Mar 2026</div>
+            <div class="exp-location">Remote</div>
+          </div>
+        </div>
+        <p class="exp-desc">Virtual internship covering Data Cleaning, Validation, and Reporting.</p>
+        <div class="exp-bullets">
+          <div class="bullet">Letter of Experience signed by Dhaval Patel, Co-Founder</div>
+          <div class="bullet">Delivered 4 capstone projects across Power BI, SQL, Python, and Excel</div>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-header">
+          <div>
+            <div class="exp-title">Operations Analyst (Production)</div>
+            <div class="exp-company">Techno Electromech Pvt. Ltd.</div>
+          </div>
+          <div style="text-align: right;">
+            <div class="exp-period">Jul 2015 — Dec 2019</div>
+            <div class="exp-location">Vadodara, India</div>
+          </div>
+        </div>
+        <p class="exp-desc">Scaled OEM LED production from 250 to 2000+ units/month through data-driven planning while supervising floor production.</p>
+        <div class="exp-bullets">
+          <div class="bullet">Increased monthly production 8x by aligning capacity to confirmed orders</div>
+          <div class="bullet">Built Excel production planning model with graphical performance reports</div>
+          <div class="bullet">Reduced production defects from 3–3.5% to under 1%</div>
+          <div class="bullet">Contributed to profitability improvement from 7% to 16%</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section class="section" id="projects">
+      <div class="section-eyebrow">Portfolio</div>
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-grid" id="projectsGrid"></div>
+    </section>
+
+    <!-- EDUCATION -->
+    <section class="section" id="education">
+      <div class="section-eyebrow">Academic Background</div>
+      <h2 class="section-title">Education</h2>
+      <div class="edu-grid">
+        <div class="edu-card">
+          <div class="edu-degree">MBA — Data Analytics</div>
+          <div class="edu-school">Wittenborg University of Applied Sciences</div>
+          <div class="edu-detail"><strong>GPA 7.9 / 10</strong> · Apeldoorn, Netherlands · 2024 — Mar 2026</div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-degree">B.Tech — Electronics & Communication Engineering</div>
+          <div class="edu-school">Dr. Bhimrao Ambedkar University</div>
+          <div class="edu-detail">India · 2010 — 2014</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICATIONS -->
+    <section class="section" id="certifications">
+      <div class="section-eyebrow">Learning & Development</div>
+      <h2 class="section-title">Certifications</h2>
+      <div class="cert-grid">
+        <div class="cert-card">
+          <div class="cert-name">Data Analysis Essentials</div>
+          <div class="cert-issuer">Codebasics · 2024</div>
+          <a href="assets/certificates/data-analysis-essential.pdf" target="_blank" class="cert-link">View Certificate →</a>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Data Analytics Job Simulation</div>
+          <div class="cert-issuer">Deloitte · Forage</div>
+          <a href="assets/certificates/deloitte-data-Analytics-Job-Simulation.pdf" target="_blank" class="cert-link">View Certificate →</a>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Introduction to Data Science</div>
+          <div class="cert-issuer">Codebasics · 2023</div>
+          <a href="assets/certificates/introduction-to-data-science.pdf" target="_blank" class="cert-link">View Certificate →</a>
+        </div>
+        <div class="cert-card">
+          <div class="cert-name">Operations & Industrial Engineering</div>
+          <div class="cert-issuer">Siemens · Forage</div>
+          <a href="assets/certificates/siemens-operations-industrial-engineer-Job-simulation.pdf" target="_blank" class="cert-link">View Certificate →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section" id="contact">
+      <div class="contact">
+        <div class="section-eyebrow" style="color: var(--orange);">Let's Connect</div>
+        <h2 class="section-title">Get In Touch</h2>
+        <p class="contact-desc">I'm actively looking for Data Analyst / Business Analyst roles in the Netherlands. Reach out via email, LinkedIn, or GitHub.</p>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-label">Email</div>
+            <div class="contact-value">harshil.patel150@gmail.com</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">LinkedIn</div>
+            <div class="contact-value">linkedin.com/in/harshil-patel</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">GitHub</div>
+            <div class="contact-value">github.com/HP85-NL</div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-label">Location</div>
+            <div class="contact-value">Utrecht, Netherlands 🇳🇱</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal" id="modal">
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-header">
+      <div class="modal-eyebrow" id="modalEyebrow"></div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+    </div>
+    <div class="modal-body">
+      <div class="carousel" id="carousel">
+        <img id="carouselImg" class="carousel-img" src="" alt="">
+        <button class="carousel-nav carousel-prev" id="carouselPrev">❮</button>
+        <button class="carousel-nav carousel-next" id="carouselNext">❯</button>
+      </div>
+      <div class="modal-desc" id="modalDesc"></div>
+      <div class="modal-stack" id="modalStack"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const PROJECTS = [
+  {id:'last-mile',folder:'last-mile-co2',slides:['thumb.png','slide1.png','slide2.png'],eyebrow:'Logistics · Industry',title:'Last-Mile Delivery Analytics',short:'€146M value from delivery failures. Python, MySQL, Power BI.',stack:['Python','MySQL','SQL','Power BI'],desc:'<p><strong>SwiftRoute NL</strong> — simulated Dutch last-mile startup analyzing 24,923 shipments. Built complete analytics platform: Python ETL → MySQL star schema → live Power BI dashboard.</p><p><strong>Key findings:</strong> 50.1% failures from "customer not home" (scheduling issue, not operational). Rotterdam worst at 11.6%. Three recommendations quantified at €146M+ annual value.</p>',github:'https://github.com/HP85-NL/Last-Mile-Delivery-Analytics-',youtube:'https://youtu.be/ycfmIJZhGf8',dashboard:'https://app.powerbi.com/view?r=eyJrIjoiNTM0NzhjZDAtNGY1NS00MzRmLWFjMDItNzg3OTJiYzcwNjg1IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9',badge:'📊 Live Dashboard'},
+  {id:'demandiq',folder:'demandiq-nl',slides:['thumb.png','slide1.png','slide2.png'],eyebrow:'Supply Chain · ML',title:'DemandIQ NL — Demand Forecasting',short:'PostgreSQL warehouse + XGBoost forecasting + live Power BI. €593K savings.',stack:['PostgreSQL','Python','XGBoost','Power BI'],desc:'<p><strong>DemandIQ NL</strong> — end-to-end FMCG demand analytics. Star schema warehouse, exploratory analysis identified Class A SKUs and seasonal patterns. XGBoost outperformed Prophet on 10 SKUs.</p><p>Inventory engine built composite stockout risk score (0–100), identifying €593K in projected annual holding cost savings across 23,311 SKU-store combinations.</p>',github:'https://github.com/HP85-NL/demandiq-nl',youtube:'',dashboard:'https://app.powerbi.com/view?r=eyJrIjoiMmIyY2MxYjUtZjhkYS00MTcxLWIzYzMtM2Q0N2E4Mzk2YjRkIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9',badge:'📊 Live Dashboard'},
+  {id:'bi360',folder:'business-insight-360',slides:['thumb.jpg','slide1.jpg','slide2.jpg'],eyebrow:'Power BI · Enterprise',title:'Business Insight 360',short:'MySQL → star schema → 50+ DAX measures → 5 dashboards. $4.97B data.',stack:['Power BI','MySQL','DAX','Power Query'],desc:'<p><strong>Business Insight 360</strong> for AtliQ Hardware. Complete pipeline: MySQL → Power Query → star schema (2 fact, 8 dimension tables) → 50+ DAX measures.</p><p>5 interactive dashboards: Finance (P&L), Sales, Marketing, Supply Chain, Executive. Key findings: $522M operational expense gap, 45.67% margin premium channel, OOS risk in Peripherals.</p>',github:'https://github.com/HP85-NL/Business-Insight-360',youtube:'https://youtu.be/4g0ii0hK_hY',dashboard:'https://app.powerbi.com/view?r=eyJrIjoiZjQwZWNmMDUtZDVlOS00MTM1LWE2YzQtYzExMmM0NjEzMWFmIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9',badge:'📊 Live Dashboard'},
+  {id:'patel-mart',folder:'supply-chain-ai',slides:['thumb.png','slide1.png','slide2.png'],eyebrow:'AI · Automation',title:'Patel Mart Supply Chain Intelligence',short:'n8n + Supabase + Quadratic AI. OTIF 28.89% → 53-point gap detected.',stack:['n8n','Docker','Supabase','PostgreSQL'],desc:'<p>Patel Mart — simulated organic food manufacturer. Built end-to-end AI pipeline: n8n (Gmail polling) → Supabase PostgreSQL warehouse → Quadratic AI live KPIs.</p><p>Replaced weekly spreadsheets with real-time dashboards. Surfaced OTIF at 28.89% vs 70%+ benchmark, 53-point gap on largest US customer, 3.79% revenue at risk.</p>',github:'https://github.com/HP85-NL/Supply-chain-intelligence-',youtube:'',dashboard:'',badge:''},
+  {id:'hospitality',folder:'hospitality-eda',slides:['thumb.png','slide1.jpg','slide2.jpg'],eyebrow:'Python · EDA',title:'Hospitality Performance Analytics',short:'134,590 bookings analyzed. ₹410–480M opportunity identified.',stack:['Python','Pandas','Matplotlib','Seaborn'],desc:'<p>Python EDA on 134,590 hotel bookings across 25 properties in 4 Indian cities. Analyzed why 20-year group losing market share to competitors.</p><p><strong>Key findings:</strong> 22-point weekday occupancy gap (missed corporate demand), Delhi pricing paradox, 25% cancellation rate. Concluded with 6 recommendations and ₹410–480M revenue opportunity.</p>',github:'https://github.com/HP85-NL/Hospitality-EDA-Python',youtube:'https://youtu.be/fMtLjwLNZ24',dashboard:'',badge:''},
+  {id:'sql-adhoc',folder:'ad-hoc-analysis-sql',slides:['thumb.png','slide1.png','slide2.png'],eyebrow:'SQL · Ad-Hoc BI',title:'SQL Ad-Hoc Business Intelligence',short:'10 leadership questions answered. Portfolio imbalance, discount risk, channel dependency.',stack:['SQL','MySQL','Excel','PowerPoint'],desc:'<p><strong>AtliQ Hardware</strong> executive ad-hoc analysis (FY2020–FY2021). Converted 10 business questions into decision-grade insights using SQL and Excel.</p><p><strong>Key findings:</strong> Portfolio growth 36.33% (245→334) with uneven expansion. Top India customers at ~29–31% discounts. Seasonality: Q1 33.72% vs Q3 9.99%. Retailer 73.21% of sales.</p>',github:'https://github.com/HP85-NL/SQL-Portfolio-AtliQ-Hardware',youtube:'https://youtu.be/Jj_ZFce7xbU',dashboard:'',badge:''},
+  {id:'sales-finance',folder:'sales-finance-analytics',slides:['thumb.png','slide1.png','slide2.png'],eyebrow:'Excel BI',title:'Sales & Finance Analytics',short:'83% manual work reduction. $180K+ margin leakage prevented.',stack:['Excel','Power Pivot','Power Query','DAX'],desc:'<p>Unified AtliQ Hardware fragmented Excel reporting. <strong>Cut reporting time 83%</strong> (12 hrs → 2 hrs). Prevented <strong>$180K+ margin leakage</strong> through automated discount governance.</p><p>Built star-schema data model with Power Pivot, DAX, Power Query. P&L reporting (monthly/quarterly/yearly), Target vs Actual, Discount Scenario Tool with approval tiers (10%/20%). Led full BA lifecycle: interviews, BRD, RACI, KPI Dictionary, UAT.</p>',github:'https://github.com/HP85-NL/Excel-Business-Intelligence_Sales_and_Finance_Reporting_Pack',youtube:'https://youtu.be/DF-YzhhnYzY',dashboard:'',badge:''}
+];
+
+const grid = document.getElementById('projectsGrid');
+PROJECTS.forEach(p => {
+  const card = document.createElement('div');
+  card.className = 'project-card';
+  card.innerHTML = `
+    <img src="assets/projects/${p.folder}/${p.slides[0]}" alt="${p.title}" class="project-card-image">
+    <div class="project-card-body">
+      <h3 class="project-card-title">${p.title}</h3>
+      <p class="project-card-desc">${p.short}</p>
+      <div class="project-tags">${p.stack.map(s => `<span class="tag">${s}</span>`).join('')}</div>
+    </div>
+  `;
+  card.addEventListener('click', () => openModal(p));
+  grid.appendChild(card);
+});
+
+const modalBg = document.getElementById('modalBg');
+const modal = document.getElementById('modal');
+const modalClose = document.getElementById('modalClose');
+let currentSlideIndex = 0;
+let currentSlides = [];
+
+function openModal(p) {
+  document.getElementById('modalEyebrow').textContent = p.eyebrow;
+  document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalDesc').innerHTML = p.desc;
+  document.getElementById('modalStack').innerHTML = p.stack.map(s => `<span class="chip">${s}</span>`).join('');
+  
+  currentSlides = p.slides;
+  currentSlideIndex = 0;
+  showSlide();
+  
+  let actions = '';
+  if (p.dashboard) actions += `<a href="${p.dashboard}" target="_blank" class="action-btn action-btn-live">📊 Live Dashboard</a>`;
+  if (p.github) actions += `<a href="${p.github}" target="_blank" class="action-btn">GitHub</a>`;
+  if (p.youtube) actions += `<a href="${p.youtube}" target="_blank" class="action-btn">YouTube</a>`;
+  document.getElementById('modalActions').innerHTML = actions;
+  
+  modalBg.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modalBg.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function showSlide() {
+  document.getElementById('carouselImg').src = `assets/projects/${PROJECTS.find(p => p.slides.includes(currentSlides[0])).folder}/${currentSlides[currentSlideIndex]}`;
+}
+
+modalClose.addEventListener('click', closeModal);
+modalBg.addEventListener('click', e => { if (e.target === modalBg) closeModal(); });
+document.getElementById('carouselPrev').addEventListener('click', () => { currentSlideIndex = (currentSlideIndex - 1 + currentSlides.length) % currentSlides.length; showSlide(); });
+document.getElementById('carouselNext').addEventListener('click', () => { currentSlideIndex = (currentSlideIndex + 1) % currentSlides.length; showSlide(); });
+
+// NAVIGATION
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+    link.classList.add('active');
+    if (document.querySelector('.sidebar').classList.contains('open')) {
+      document.querySelector('.sidebar').classList.remove('open');
+    }
+  });
+});
+
+// MOBILE MENU
+document.getElementById('mobileMenu').addEventListener('click', () => {
+  document.getElementById('sidebar').classList.toggle('open');
+});
+
+// LANGUAGE TOGGLE
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
+
+</body>
+</html>
