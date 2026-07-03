@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 4 — Uber vs Deliveroo · Harshil Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #14181f;
+    --text-primary: #ebe7df;
+    --text-muted: #a3a8b8;
+    --text-dim: #7d829a;
+    --accent: #ffc940;
+    --uber: #6aa8ff;
+    --deliveroo: #00ccbc;
+    --divider: #20242d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: radial-gradient(ellipse 1200px 800px at 50% -10%, #131824 0%, var(--bg-deep) 55%);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* HUD */
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(10,13,20,0.85) 0%, rgba(10,13,20,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+  .hud-brand, .hud-section {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+  .hud-section .num { color: var(--accent); font-weight: 500; }
+
+  /* Platform indicators bottom bar */
+  .platform-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 36px;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    padding: 0 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    z-index: 100;
+  }
+  .platform-bar .item {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--text-muted);
+  }
+  .platform-bar .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+  }
+  .platform-bar .uber .dot { background: var(--uber); }
+  .platform-bar .deliveroo .dot { background: var(--deliveroo); }
+  .platform-bar .divider { width: 1px; height: 14px; background: var(--divider); }
+
+  /* Sections */
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 40px 80px;
+    position: relative;
+  }
+  .container {
+    max-width: 1080px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* Fade primitives */
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.3s; }
+  .delay-3 { transition-delay: 0.45s; }
+  .delay-4 { transition-delay: 0.6s; }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-label::before {
+    content: '';
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  h1 .uber-t { color: var(--uber); }
+  h1 .deli-t { color: var(--deliveroo); }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  /* ─── Hero split counters ─── */
+  .hero-counters {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-top: 64px;
+  }
+  .platform-block { text-align: center; }
+  .platform-block .name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .platform-block.uber .name { color: var(--uber); }
+  .platform-block.deliveroo .name { color: var(--deliveroo); }
+  .platform-block .big {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(64px, 12vw, 144px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .platform-block.uber .big { color: var(--uber); }
+  .platform-block.deliveroo .big { color: var(--deliveroo); }
+  .platform-block .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .vs {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    color: var(--text-dim);
+    font-weight: 500;
+  }
+  .hero-window {
+    text-align: center;
+    margin-top: 56px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .hero-window .accent { color: var(--accent); }
+
+  /* ─── Two ledgers side by side ─── */
+  .ledgers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+  .ledger {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    line-height: 1.9;
+    color: var(--text-muted);
+    position: relative;
+  }
+  .ledger.uber { border-top: 2px solid var(--uber); }
+  .ledger.deliveroo { border-top: 2px solid var(--deliveroo); }
+  .ledger .head {
+    display: flex; justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .ledger .platform-name {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .ledger.uber .platform-name { color: var(--uber); }
+  .ledger.deliveroo .platform-name { color: var(--deliveroo); }
+  .ledger .file-tag {
+    color: var(--text-dim);
+    font-size: 10px;
+  }
+  .ledger .row { display: block; color: var(--text-muted); }
+  .ledger .row .lbl { color: var(--text-dim); }
+  .ledger .row .val { color: var(--text-primary); }
+  .ledger .row.emphasis .val { color: var(--accent); }
+  .ledger .caption {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid var(--divider);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  /* ─── The 21% bar chart ─── */
+  .bar-compare {
+    margin-top: 64px;
+    max-width: 720px;
+  }
+  .bar-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 100px;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 28px;
+  }
+  .bar-row .platform-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .bar-row.uber .platform-lbl { color: var(--uber); }
+  .bar-row.deliveroo .platform-lbl { color: var(--deliveroo); }
+  .bar-track {
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    position: relative;
+    overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%;
+    width: 0;
+    transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .bar-row.uber .bar-fill { background: var(--uber); width: 0; }
+  .bar-row.deliveroo .bar-fill {
+    background: linear-gradient(to right, var(--deliveroo) 0%, var(--deliveroo) 84.3%, var(--accent) 84.3%, var(--accent) 100%);
+  }
+  .in .bar-row.uber .bar-fill { width: 58.0%; } /* 5.80 / 10 */
+  .in .bar-row.deliveroo .bar-fill { width: 68.8%; } /* 6.88 / 10 */
+  .bar-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    text-align: right;
+  }
+  .bar-row.uber .bar-value { color: var(--uber); }
+  .bar-row.deliveroo .bar-value { color: var(--deliveroo); }
+  .delta-callout {
+    margin-top: 24px;
+    padding: 20px 24px;
+    background: rgba(255, 201, 64, 0.08);
+    border-left: 2px solid var(--accent);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: var(--text-primary);
+    max-width: 720px;
+  }
+  .delta-callout .num { color: var(--accent); font-weight: 500; font-family: 'Space Grotesk', sans-serif; font-size: 22px; }
+
+  /* ─── Bonus receipt ─── */
+  .receipt {
+    max-width: 520px;
+    margin-top: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 32px 36px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 2.2;
+  }
+  .receipt .r-head {
+    color: var(--deliveroo);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--divider);
+    margin-bottom: 16px;
+  }
+  .receipt .r-row { display: flex; justify-content: space-between; color: var(--text-muted); }
+  .receipt .r-row .amt { color: var(--text-primary); }
+  .receipt .r-row.highlight {
+    background: rgba(255, 201, 64, 0.12);
+    margin: 8px -12px;
+    padding: 8px 12px;
+  }
+  .receipt .r-row.highlight .lbl,
+  .receipt .r-row.highlight .amt { color: var(--accent); }
+  .receipt .r-total {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--divider);
+    display: flex; justify-content: space-between;
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+
+  /* ─── Session length bars ─── */
+  .session-compare {
+    margin-top: 64px;
+    max-width: 800px;
+  }
+  .session-row {
+    display: grid;
+    grid-template-columns: 130px 1fr 140px;
+    gap: 16px;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+  .session-row .platform-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .session-row.uber .platform-lbl { color: var(--uber); }
+  .session-row.deliveroo .platform-lbl { color: var(--deliveroo); }
+  .session-track {
+    height: 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    position: relative;
+    overflow: hidden;
+  }
+  .session-fill {
+    height: 100%;
+    width: 0;
+    transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .session-row.uber .session-fill { background: var(--uber); }
+  .session-row.deliveroo .session-fill { background: var(--deliveroo); }
+  /* Max = 3h → uber 41m = 22.8%, deliv 2h15 = 75% */
+  .in .session-row.uber .session-fill { width: 22.8%; }
+  .in .session-row.deliveroo .session-fill { width: 75.0%; }
+  .session-time {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    text-align: right;
+  }
+  .session-row.uber .session-time { color: var(--uber); }
+  .session-row.deliveroo .session-time { color: var(--deliveroo); }
+
+  /* ─── Overlap chart ─── */
+  .overlap-wrapper {
+    margin-top: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 32px 24px 24px;
+  }
+  .overlap-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 24px;
+    padding: 0 12px;
+  }
+  .overlap-head .title-mini {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .overlap-head .legend {
+    display: flex; gap: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .overlap-head .legend .item {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text-muted);
+  }
+  .overlap-head .legend .swatch { width: 12px; height: 12px; }
+  .overlap-head .legend .uber .swatch { background: var(--uber); }
+  .overlap-head .legend .deliveroo .swatch { background: var(--deliveroo); }
+  #overlapChart { width: 100%; height: 320px; display: block; }
+  .overlap-footnote {
+    margin-top: 20px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ─── Closing ─── */
+  .closing-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(32px, 5vw, 56px);
+    line-height: 1.15;
+    max-width: 800px;
+    letter-spacing: -0.015em;
+    margin-bottom: 40px;
+  }
+  .closing-line .em { color: var(--deliveroo); }
+  .closing-echo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    max-width: 600px;
+    line-height: 1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 800px) {
+    .hud { padding: 16px 20px; }
+    .hud-brand, .hud-section { font-size: 10px; }
+    section { padding: 80px 20px 60px; }
+    .platform-bar { gap: 20px; padding: 0 12px; font-size: 9px; }
+    .hero-counters { grid-template-columns: 1fr; gap: 32px; }
+    .vs { display: none; }
+    .ledgers { grid-template-columns: 1fr; gap: 20px; }
+    .bar-row, .session-row { grid-template-columns: 100px 1fr 70px; gap: 10px; }
+    .bar-row .platform-lbl, .session-row .platform-lbl { font-size: 10px; }
+    .bar-value, .session-time { font-size: 18px; }
+    #overlapChart { height: 240px; }
+  }
+
+  /* ─── Chapter navigation bar ─── */
+  .chapter-nav {
+    position: fixed;
+    bottom: 36px; left: 0; right: 0;
+    height: 44px;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 99;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .chapter-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover { color: var(--accent); }
+  .chapter-nav .home-link { color: var(--text-dim); }
+  .chapter-nav .spacer { flex: 1; }
+  @media (max-width: 720px) {
+    .chapter-nav { padding: 0 16px; font-size: 9px; height: 40px; bottom: 36px; }
+    .chapter-nav a span.label-full { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="chapter-nav">
+  <a href="chapter-3-the-economics.html">&larr; <span class="label-full">Ch.3 The Economics</span></a>
+  <div class="spacer"></div>
+  <a href="how-it-all-began.html" class="home-link">Field Notes Home</a>
+  <div class="spacer"></div>
+  <a href="chapter-5-through-the-pandemic.html"><span class="label-full">Ch.5 Through the Pandemic</span> &rarr;</a>
+</div>
+
+
+<div class="hud">
+  <div class="hud-brand">HP / Field Notes 004</div>
+  <div class="hud-section">Section <span class="num" id="secNum">01</span> / 07</div>
+</div>
+
+<div class="platform-bar">
+  <div class="item uber"><div class="dot"></div><span>Uber Eats · 3,215 trips</span></div>
+  <div class="divider"></div>
+  <div class="item deliveroo"><div class="dot"></div><span>Deliveroo · 483 orders</span></div>
+</div>
+
+<!-- ─── 1. HERO ─── -->
+<section data-sec="1">
+  <div class="container">
+    <div class="chapter-label fade-up">Chapter 04 / Uber vs Deliveroo</div>
+    <h1 class="fade-up delay-1">
+      Two apps.<br>
+      <span class="uber-t">One</span> bike.<br>
+      <span class="deli-t">One</span> question.
+    </h1>
+    <p class="lede fade-up delay-2">
+      For 3.5 months in Utrecht I carried both platforms on the same phone. Same streets, same customers, same weather. Two companies decided to pay me in completely different ways.
+    </p>
+    <div class="hero-counters fade-up delay-3">
+      <div class="platform-block uber">
+        <div class="name">Uber Eats</div>
+        <div class="big" data-count="3215">0</div>
+        <div class="sub">Trips · 14 months</div>
+      </div>
+      <div class="vs">vs</div>
+      <div class="platform-block deliveroo">
+        <div class="name">Deliveroo</div>
+        <div class="big" data-count="483">0</div>
+        <div class="sub">Orders · 3.5 months</div>
+      </div>
+    </div>
+    <div class="hero-window fade-up delay-4">
+      Overlap window: <span class="accent">01 Jul → 17 Oct 2021</span> · 51 days on both platforms
+    </div>
+  </div>
+</section>
+
+<!-- ─── 2. TWO LEDGERS ─── -->
+<section data-sec="2">
+  <div class="container">
+    <div class="chapter-label fade-up">01 / Two ledgers, two philosophies</div>
+    <h2 class="fade-up delay-1">The same job,<br>counted two different ways.</h2>
+    <p class="lede fade-up delay-2">
+      Uber's GDPR file counts <em>trips</em>. Deliveroo's invoices count <em>hours</em>. Before we even look at how much they paid, look at what each company chose to measure.
+    </p>
+    <div class="ledgers fade-up delay-3">
+      <div class="ledger uber">
+        <div class="head">
+          <span class="platform-name">Uber Eats</span>
+          <span class="file-tag">gdpr_export.csv</span>
+        </div>
+        <span class="row"><span class="lbl">trip_uuid</span> · <span class="val">a7f2…</span></span>
+        <span class="row"><span class="lbl">classification</span> · <span class="val">transport.fare.pickup</span></span>
+        <span class="row"><span class="lbl">amount</span> · <span class="val">€2.40</span></span>
+        <span class="row"><span class="lbl">classification</span> · <span class="val">transport.fare.distance</span></span>
+        <span class="row"><span class="lbl">amount</span> · <span class="val">€1.97</span></span>
+        <span class="row"><span class="lbl">classification</span> · <span class="val">intermediary.commission</span></span>
+        <span class="row emphasis"><span class="lbl">amount</span> · <span class="val">-€0.44</span></span>
+        <p class="caption">
+          One trip = 5-7 rows. Every euro tagged. Per-trip accounting.
+        </p>
+      </div>
+      <div class="ledger deliveroo">
+        <div class="head">
+          <span class="platform-name">Deliveroo</span>
+          <span class="file-tag">DELI-08.pdf</span>
+        </div>
+        <span class="row"><span class="lbl">date</span> · <span class="val">21 Aug 2021</span></span>
+        <span class="row"><span class="lbl">time in</span> · <span class="val">10:17</span></span>
+        <span class="row"><span class="lbl">time out</span> · <span class="val">13:10</span></span>
+        <span class="row"><span class="lbl">duration</span> · <span class="val">2.9h</span></span>
+        <span class="row"><span class="lbl">orders</span> · <span class="val">2</span></span>
+        <span class="row emphasis"><span class="lbl">total</span> · <span class="val">€11.56</span></span>
+        <p class="caption">
+          One session = one row. Time clocked in mattered as much as orders delivered.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 3. THE 21% ─── -->
+<section data-sec="3">
+  <div class="container">
+    <div class="chapter-label fade-up">02 / The 21% that changed everything</div>
+    <h2 class="fade-up delay-1">Same delivery.<br>Different math.</h2>
+    <p class="lede fade-up delay-2">
+      Uber paid me the fare. Deliveroo paid me the fare plus 21% BTW on top. That single accounting decision — treating me as a VAT-registered supplier — showed up in every single order.
+    </p>
+    <div class="bar-compare fade-up delay-3">
+      <div class="bar-row uber">
+        <div class="platform-lbl">Uber Eats</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+        <div class="bar-value">€5.80</div>
+      </div>
+      <div class="bar-row deliveroo">
+        <div class="platform-lbl">Deliveroo</div>
+        <div class="bar-track"><div class="bar-fill"></div></div>
+        <div class="bar-value">€6.88</div>
+      </div>
+    </div>
+    <div class="delta-callout fade-up delay-4">
+      <span class="num">+18.6%</span> · Deliveroo paid roughly a euro more per order — for the same delivery, on the same street, to the same customer.
+    </div>
+  </div>
+</section>
+
+<!-- ─── 4. THE €150 BONUS ─── -->
+<section data-sec="4">
+  <div class="container">
+    <div class="chapter-label fade-up">03 / The bonus Uber never sent</div>
+    <h2 class="fade-up delay-1">Do 50, get 150.</h2>
+    <p class="lede fade-up delay-2">
+      In August 2021 Deliveroo dropped a challenge into the app: complete 50 orders during "Superpeak" hours in one week, get €150 on top. I hit it. Uber never sent me anything like it in 14 months.
+    </p>
+    <div class="receipt fade-up delay-3">
+      <div class="r-head">Invoice DELI-7 · 01–20 Aug 2021</div>
+      <div class="r-row"><span class="lbl">Drop fees</span><span class="amt">€618.27</span></div>
+      <div class="r-row highlight">
+        <span class="lbl">BONUS · "Do 50 get 150"</span>
+        <span class="amt">€150.00</span>
+      </div>
+      <div class="r-row"><span class="lbl">Underpayment credit</span><span class="amt">€2.50</span></div>
+      <div class="r-row"><span class="lbl">Transaction fee</span><span class="amt">-€0.50</span></div>
+      <div class="r-row"><span class="lbl">BTW (21%)</span><span class="amt">€161.76</span></div>
+      <div class="r-row"><span class="lbl">Tips</span><span class="amt">€29.00</span></div>
+      <div class="r-total"><span>Total paid</span><span>€961.03</span></div>
+    </div>
+    <p class="lede fade-up delay-4" style="margin-top: 32px;">
+      That €150 was 16% of the invoice. Retention design, encoded in the paycheck.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 5. SESSION LENGTH ─── -->
+<section data-sec="5">
+  <div class="container">
+    <div class="chapter-label fade-up">04 / Two mental models of the same job</div>
+    <h2 class="fade-up delay-1">Uber sent pings.<br>Deliveroo sold shifts.</h2>
+    <p class="lede fade-up delay-2">
+      On Uber I answered a ping, delivered, waited for the next. Sessions were short bursts. On Deliveroo I clocked into a "session," stayed on for hours, and picked up whatever came in. Two completely different rhythms of the same work.
+    </p>
+    <div class="session-compare fade-up delay-3">
+      <div class="session-row uber">
+        <div class="platform-lbl">Uber Eats</div>
+        <div class="session-track"><div class="session-fill"></div></div>
+        <div class="session-time">41 min</div>
+      </div>
+      <div class="session-row deliveroo">
+        <div class="platform-lbl">Deliveroo</div>
+        <div class="session-track"><div class="session-fill"></div></div>
+        <div class="session-time">2h 15m</div>
+      </div>
+    </div>
+    <p class="lede fade-up delay-4" style="margin-top: 8px;">
+      Median session length across all my data. Uber never asked me to stay; Deliveroo assumed I would.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 6. OVERLAP DAYS ─── -->
+<section data-sec="6">
+  <div class="container">
+    <div class="chapter-label fade-up">05 / 51 days, both apps on one phone</div>
+    <h2 class="fade-up delay-1">Some days Uber won.<br>Some days Deliveroo did.</h2>
+    <p class="lede fade-up delay-2">
+      Every bar below is one day I ran both platforms. Blue is my Uber earnings, teal is Deliveroo. The mix moved every day, driven by which app was surging, which restaurants were open, which orders came in first.
+    </p>
+    <div class="overlap-wrapper fade-up delay-3">
+      <div class="overlap-head">
+        <div class="title-mini">Daily earnings · 51 overlap days · Jul-Oct 2021</div>
+        <div class="legend">
+          <div class="item uber"><div class="swatch"></div><span>Uber</span></div>
+          <div class="item deliveroo"><div class="swatch"></div><span>Deliveroo</span></div>
+        </div>
+      </div>
+      <svg id="overlapChart" viewBox="0 0 1020 320" preserveAspectRatio="none"></svg>
+      <div class="overlap-footnote">Each stacked bar = one calendar day where both platforms ran</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 7. CLOSING ─── -->
+<section data-sec="7">
+  <div class="container">
+    <div class="chapter-label fade-up">06 / What the numbers didn't decide</div>
+    <p class="closing-line fade-up delay-1">
+      Deliveroo paid me better per order, gave me bonuses Uber never sent, and treated the work like a shift instead of a ping.
+      <span class="em">Then in 2022, Deliveroo exited the Netherlands.</span>
+    </p>
+    <p class="closing-echo fade-up delay-2">
+      The platform that treated me better didn't survive. The one that counted trips instead of hours did. Platform economics is not a formula — it's a set of choices about what to measure, who to reward, and how long a company thinks it can keep doing both.
+    </p>
+    <p class="closing-echo fade-up delay-3" style="margin-top: 32px; color: var(--accent);">
+      That's the moment I understood I wasn't a delivery rider anymore. I was reading a dataset.
+    </p>
+  </div>
+</section>
+
+<script>
+  // Fade-ups
+  const fadeObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+  // Section-level 'in' class for chart animations
+  const secObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('section').forEach(s => secObs.observe(s));
+
+  // Count-ups
+  const countObs = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.count, 10);
+      const dur = 1800, start = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      function tick(now) {
+        const p = Math.min((now - start) / dur, 1);
+        el.textContent = Math.round(target * ease(p)).toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countObs.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+  // Section number HUD
+  const secNum = document.getElementById('secNum');
+  const sections = Array.from(document.querySelectorAll('section[data-sec]'));
+  function updateHud() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let active = sections[0];
+    for (const s of sections) if (s.offsetTop <= mid) active = s;
+    secNum.textContent = String(active.dataset.sec).padStart(2, '0');
+  }
+  let raf = false;
+  window.addEventListener('scroll', () => {
+    if (!raf) { raf = true; requestAnimationFrame(() => { updateHud(); raf = false; }); }
+  }, { passive: true });
+  updateHud();
+
+  // Overlap chart — draw as stacked bars in SVG
+  const overlapData = [{"date":"2021-07-01","u":30.15,"d":26.19},{"date":"2021-07-02","u":48.74,"d":81.81},{"date":"2021-07-04","u":17.8,"d":132.21},{"date":"2021-07-07","u":85.88,"d":27.07},{"date":"2021-07-08","u":64.18,"d":53.95},{"date":"2021-07-09","u":26.37,"d":102.49},{"date":"2021-07-10","u":78.8,"d":43.79},{"date":"2021-07-11","u":57.73,"d":76.12},{"date":"2021-07-14","u":68.35,"d":38.0},{"date":"2021-07-15","u":57.47,"d":70.96},{"date":"2021-07-16","u":47.74,"d":68.15},{"date":"2021-07-17","u":57.89,"d":58.32},{"date":"2021-07-18","u":64.72,"d":83.12},{"date":"2021-07-21","u":25.59,"d":16.59},{"date":"2021-07-22","u":37.08,"d":65.52},{"date":"2021-07-23","u":60.64,"d":61.79},{"date":"2021-07-24","u":55.1,"d":60.02},{"date":"2021-07-25","u":80.12,"d":50.96},{"date":"2021-07-28","u":47.73,"d":65.0},{"date":"2021-07-29","u":47.77,"d":62.47},{"date":"2021-07-30","u":59.0,"d":86.9},{"date":"2021-07-31","u":56.88,"d":81.29},{"date":"2021-08-01","u":61.81,"d":87.28},{"date":"2021-08-04","u":51.84,"d":68.88},{"date":"2021-08-05","u":58.19,"d":58.0},{"date":"2021-08-06","u":73.05,"d":57.28},{"date":"2021-08-08","u":114.31,"d":44.79},{"date":"2021-08-10","u":45.38,"d":35.1},{"date":"2021-08-11","u":71.07,"d":34.22},{"date":"2021-08-12","u":46.42,"d":72.29},{"date":"2021-08-13","u":104.3,"d":36.53},{"date":"2021-08-14","u":62.72,"d":55.26},{"date":"2021-08-15","u":76.23,"d":57.25},{"date":"2021-08-18","u":95.19,"d":31.62},{"date":"2021-08-19","u":89.54,"d":22.6},{"date":"2021-08-20","u":91.49,"d":44.45},{"date":"2021-08-21","u":106.03,"d":25.25},{"date":"2021-08-22","u":33.77,"d":30.96},{"date":"2021-08-28","u":17.31,"d":4.15},{"date":"2021-08-29","u":12.07,"d":4.38},{"date":"2021-09-03","u":16.2,"d":54.55},{"date":"2021-09-04","u":16.67,"d":12.56},{"date":"2021-09-05","u":49.15,"d":10.42},{"date":"2021-09-08","u":54.34,"d":40.61},{"date":"2021-09-12","u":80.44,"d":53.0},{"date":"2021-09-16","u":33.72,"d":4.23},{"date":"2021-09-18","u":7.39,"d":3.95},{"date":"2021-09-19","u":66.32,"d":53.45},{"date":"2021-09-26","u":88.59,"d":57.38},{"date":"2021-10-10","u":8.54,"d":6.16},{"date":"2021-10-17","u":36.04,"d":5.5}];
+
+  const svg = document.getElementById('overlapChart');
+  const W = 1020, H = 320;
+  const padL = 40, padR = 20, padT = 20, padB = 40;
+  const chartW = W - padL - padR, chartH = H - padT - padB;
+  const maxVal = Math.max(...overlapData.map(d => d.u + d.d));
+  const barW = chartW / overlapData.length * 0.75;
+  const gap = chartW / overlapData.length * 0.25;
+  const step = chartW / overlapData.length;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  // Y axis grid — 3 gridlines
+  [0, 0.5, 1].forEach(t => {
+    const y = padT + chartH * (1 - t);
+    svg.appendChild(el('line', { x1: padL, y1: y, x2: W - padR, y2: y, stroke: '#20242d', 'stroke-width': 1 }));
+    const val = Math.round(maxVal * t);
+    const label = el('text', {
+      x: padL - 8, y: y + 4,
+      'text-anchor': 'end',
+      'font-family': 'JetBrains Mono, monospace',
+      'font-size': 10,
+      fill: '#a3a8b8',
+      'letter-spacing': '0.05em',
+    });
+    label.textContent = '€' + val;
+    svg.appendChild(label);
+  });
+
+  // Month labels (dividers between July / Aug / Sep / Oct)
+  const monthBounds = {};
+  overlapData.forEach((d, i) => {
+    const m = d.date.slice(0, 7);
+    if (!(m in monthBounds)) monthBounds[m] = { start: i, end: i };
+    else monthBounds[m].end = i;
+  });
+  const monthNames = { '2021-07': 'JUL', '2021-08': 'AUG', '2021-09': 'SEP', '2021-10': 'OCT' };
+  Object.entries(monthBounds).forEach(([mkey, b]) => {
+    const cx = padL + ((b.start + b.end) / 2 + 0.5) * step;
+    const t = el('text', {
+      x: cx, y: H - padB + 22,
+      'text-anchor': 'middle',
+      'font-family': 'JetBrains Mono, monospace',
+      'font-size': 10,
+      fill: '#a3a8b8',
+      'letter-spacing': '0.15em',
+    });
+    t.textContent = monthNames[mkey];
+    svg.appendChild(t);
+  });
+
+  // Bars — animated in on section entry
+  const bars = [];
+  overlapData.forEach((d, i) => {
+    const x = padL + i * step + gap / 2;
+    const total = d.u + d.d;
+    const totalH = (total / maxVal) * chartH;
+    const uH = (d.u / maxVal) * chartH;
+    const dH = (d.d / maxVal) * chartH;
+
+    const uber = el('rect', {
+      x: x, y: padT + chartH,
+      width: barW, height: 0,
+      fill: '#6aa8ff', opacity: 0.9,
+    });
+    const deli = el('rect', {
+      x: x, y: padT + chartH,
+      width: barW, height: 0,
+      fill: '#00ccbc', opacity: 0.9,
+    });
+    svg.appendChild(uber);
+    svg.appendChild(deli);
+    bars.push({ uber, deli, uH, dH });
+  });
+
+  // Animate on section 6 entering view
+  const chartSection = document.querySelector('section[data-sec="6"]');
+  let animated = false;
+  const chartObs = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (e.isIntersecting && !animated) {
+        animated = true;
+        const dur = 1400, start = performance.now();
+        const ease = t => 1 - Math.pow(1 - t, 3);
+        function tick(now) {
+          const p = Math.min((now - start) / dur, 1);
+          const k = ease(p);
+          bars.forEach((b) => {
+            const uH = b.uH * k;
+            const dH = b.dH * k;
+            b.uber.setAttribute('y', padT + chartH - uH);
+            b.uber.setAttribute('height', uH);
+            b.deli.setAttribute('y', padT + chartH - uH - dH);
+            b.deli.setAttribute('height', dH);
+          });
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    });
+  }, { threshold: 0.3 });
+  chartObs.observe(chartSection);
+</script>
+
+</body>
+</html>

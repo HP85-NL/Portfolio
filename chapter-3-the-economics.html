@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 3 — The Economics · Harshil Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #14181f;
+    --text-primary: #ebe7df;
+    --text-muted: #a3a8b8;
+    --text-dim: #7d829a;
+    --accent: #ffc940;
+    --accent-cool: #6aa8ff;
+    --positive: #7ed957;
+    --negative: #ff5252;
+    --divider: #20242d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: radial-gradient(ellipse 1200px 800px at 50% -10%, #131824 0%, var(--bg-deep) 55%);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* HUD */
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(10,13,20,0.85) 0%, rgba(10,13,20,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+  .hud-brand, .hud-section {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+  .hud-section .num { color: var(--accent); font-weight: 500; }
+
+  /* Running total bar */
+  .total-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 36px;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 0 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    z-index: 100;
+    color: var(--text-muted);
+  }
+  .total-bar .label { color: var(--text-dim); }
+  .total-bar .val { color: var(--accent); font-weight: 500; font-size: 12px; }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 40px 80px;
+    position: relative;
+  }
+  .container { max-width: 1080px; margin: 0 auto; width: 100%; }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.3s; }
+  .delay-3 { transition-delay: 0.45s; }
+  .delay-4 { transition-delay: 0.6s; }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  h1 .accent { color: var(--accent); }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(32px, 5vw, 60px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* ─── Hero — the €18,658 reveal ─── */
+  .headline-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(96px, 18vw, 224px);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    margin-top: 24px;
+    margin-bottom: 40px;
+  }
+  .hero-context {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    max-width: 800px;
+  }
+  .hero-context .stat {
+    padding: 28px 24px 28px 0;
+    border-right: 1px solid var(--divider);
+  }
+  .hero-context .stat:last-child { border-right: none; }
+  .hero-context .stat .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .hero-context .stat .val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+
+  /* ─── Taxonomy grid — 10 line items ─── */
+  .taxonomy {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 48px;
+    max-width: 880px;
+  }
+  .tax-item {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 20px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .in .tax-item { opacity: 1; transform: translateY(0); }
+  .in .tax-item:nth-child(1) { transition-delay: 0.05s; }
+  .in .tax-item:nth-child(2) { transition-delay: 0.12s; }
+  .in .tax-item:nth-child(3) { transition-delay: 0.19s; }
+  .in .tax-item:nth-child(4) { transition-delay: 0.26s; }
+  .in .tax-item:nth-child(5) { transition-delay: 0.33s; }
+  .in .tax-item:nth-child(6) { transition-delay: 0.40s; }
+  .in .tax-item:nth-child(7) { transition-delay: 0.47s; }
+  .in .tax-item:nth-child(8) { transition-delay: 0.54s; }
+  .in .tax-item:nth-child(9) { transition-delay: 0.61s; }
+  .in .tax-item:nth-child(10) { transition-delay: 0.68s; }
+  .tax-item .type {
+    width: 4px;
+    height: 40px;
+    background: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .tax-item.income .type { background: var(--positive); }
+  .tax-item.deduction .type { background: var(--negative); }
+  .tax-item.bonus .type { background: var(--accent); }
+  .tax-item .body { flex: 1; }
+  .tax-item .name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+  .tax-item .desc {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    color: var(--text-primary);
+    font-weight: 400;
+  }
+  .tax-item .badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    flex-shrink: 0;
+  }
+  .tax-item.income .badge { background: rgba(126, 217, 87, 0.15); color: var(--positive); }
+  .tax-item.deduction .badge { background: rgba(255, 82, 82, 0.15); color: var(--negative); }
+  .tax-item.bonus .badge { background: rgba(255, 201, 64, 0.15); color: var(--accent); }
+
+  /* ─── Trip anatomy — receipt style ─── */
+  .receipt-anatomy {
+    margin-top: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 32px 36px;
+    max-width: 560px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .receipt-anatomy .r-head {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--divider);
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .receipt-anatomy .r-head .id { color: var(--text-dim); }
+  .r-line {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 13px;
+    color: var(--text-muted);
+    opacity: 0;
+    transform: translateX(-12px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .in .r-line { opacity: 1; transform: translateX(0); }
+  .in .r-line:nth-child(1) { transition-delay: 0.1s; }
+  .in .r-line:nth-child(2) { transition-delay: 0.3s; }
+  .in .r-line:nth-child(3) { transition-delay: 0.5s; }
+  .in .r-line:nth-child(4) { transition-delay: 0.7s; }
+  .in .r-line:nth-child(5) { transition-delay: 0.9s; }
+  .in .r-line:nth-child(6) { transition-delay: 1.1s; }
+  .r-line .lbl { color: var(--text-muted); }
+  .r-line .val { color: var(--text-primary); font-weight: 500; }
+  .r-line.deduct .val { color: var(--negative); }
+  .r-line.total {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--divider);
+    font-size: 16px;
+    color: var(--accent);
+  }
+  .r-line.total .lbl,
+  .r-line.total .val { color: var(--accent); font-weight: 500; }
+
+  /* ─── The proportional breakdown (Sankey-like) ─── */
+  .breakdown-viz {
+    margin-top: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 32px 32px 24px;
+  }
+  .breakdown-legend {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .breakdown-legend .item {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text-muted);
+  }
+  .breakdown-legend .sw {
+    width: 12px; height: 12px;
+  }
+  .breakdown-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .br-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 130px;
+    gap: 16px;
+    align-items: center;
+  }
+  .br-row .b-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .br-track {
+    height: 26px;
+    background: rgba(20, 24, 31, 0.5);
+    position: relative;
+    overflow: hidden;
+  }
+  .br-fill {
+    height: 100%;
+    width: 0;
+    transition: width 1.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .br-value {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: right;
+    color: var(--text-primary);
+  }
+  .br-row.income .b-lbl { color: var(--positive); }
+  .br-row.income .br-fill { background: var(--positive); }
+  .br-row.bonus .b-lbl { color: var(--accent); }
+  .br-row.bonus .br-fill { background: var(--accent); }
+  .br-row.deduct .b-lbl { color: var(--negative); }
+  .br-row.deduct .br-fill { background: var(--negative); }
+  .br-row.deduct .br-value { color: var(--negative); }
+  .breakdown-total {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 24px;
+    margin-top: 8px;
+    border-top: 1px solid var(--divider);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .breakdown-total .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    align-self: center;
+  }
+  .breakdown-total .val {
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+
+  /* ─── The pickup reveal ─── */
+  .reveal-block {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 48px;
+    align-items: center;
+  }
+  .reveal-side .big-share {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(80px, 14vw, 160px);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 16px;
+  }
+  .reveal-side .share-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+  .reveal-explain {
+    font-size: 18px;
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-weight: 300;
+  }
+  .reveal-explain strong { color: var(--accent); font-weight: 500; }
+
+  /* ─── Commission block ─── */
+  .commission-viz {
+    margin-top: 40px;
+    max-width: 800px;
+  }
+  .cv-row {
+    display: grid;
+    grid-template-columns: 200px 1fr 120px;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .cv-row:last-child { border-bottom: none; }
+  .cv-lbl {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  .cv-lbl .sub {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 4px;
+    font-weight: 400;
+  }
+  .cv-desc {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .cv-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    text-align: right;
+    letter-spacing: -0.01em;
+  }
+  .cv-row.taken .cv-val { color: var(--negative); }
+  .cv-row.kept .cv-val { color: var(--positive); }
+
+  /* Closing */
+  .closing-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(28px, 4.5vw, 48px);
+    line-height: 1.25;
+    max-width: 820px;
+    letter-spacing: -0.015em;
+    margin-bottom: 36px;
+  }
+  .closing-line .em { color: var(--accent); }
+  .closing-echo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    max-width: 620px;
+    line-height: 1.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; transition: none; }
+    .tax-item, .r-line { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 900px) {
+    .taxonomy { grid-template-columns: 1fr; }
+    .reveal-block { grid-template-columns: 1fr; gap: 32px; }
+    .cv-row { grid-template-columns: 1fr 100px; gap: 12px; }
+    .cv-desc { grid-column: 1 / -1; margin-top: -8px; }
+  }
+  @media (max-width: 720px) {
+    .hud { padding: 16px 20px; }
+    .hud-brand, .hud-section { font-size: 10px; }
+    section { padding: 80px 20px 60px; }
+    .total-bar { gap: 12px; padding: 0 12px; font-size: 9px; }
+    .receipt-anatomy { padding: 22px 20px; }
+    .breakdown-viz { padding: 20px 16px; }
+    .br-row { grid-template-columns: 100px 1fr 80px; gap: 8px; }
+    .br-row .b-lbl { font-size: 9px; }
+    .br-value { font-size: 13px; }
+    .hero-context .stat { padding: 20px 16px 20px 0; }
+    .hero-context .stat .val { font-size: 22px; }
+  }
+
+  /* ─── Chapter navigation bar ─── */
+  .chapter-nav {
+    position: fixed;
+    bottom: 36px; left: 0; right: 0;
+    height: 44px;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 99;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .chapter-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover { color: var(--accent); }
+  .chapter-nav .home-link { color: var(--text-dim); }
+  .chapter-nav .spacer { flex: 1; }
+  @media (max-width: 720px) {
+    .chapter-nav { padding: 0 16px; font-size: 9px; height: 40px; bottom: 36px; }
+    .chapter-nav a span.label-full { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="chapter-nav">
+  <a href="chapter-2-three-cities.html">&larr; <span class="label-full">Ch.2 Three Cities</span></a>
+  <div class="spacer"></div>
+  <a href="how-it-all-began.html" class="home-link">Field Notes Home</a>
+  <div class="spacer"></div>
+  <a href="chapter-4-uber-vs-deliveroo.html"><span class="label-full">Ch.4 Uber vs Deliveroo</span> &rarr;</a>
+</div>
+
+
+<div class="hud">
+  <div class="hud-brand">HP / Field Notes 003</div>
+  <div class="hud-section">Section <span class="num" id="secNum">01</span> / 07</div>
+</div>
+
+<div class="total-bar">
+  <span class="label">Running total</span>
+  <span class="val" id="runVal">€0</span>
+  <span class="label">·</span>
+  <span>3,215 trips · 23,486 line items · 441 days</span>
+</div>
+
+<!-- 1. Hero -->
+<section data-sec="1" data-total="0">
+  <div class="container">
+    <div class="chapter-label fade-up">Chapter 03 / The Economics</div>
+    <h1 class="fade-up delay-1">
+      What was I<br>
+      <span class="accent">actually paid</span><br>
+      for?
+    </h1>
+    <p class="lede fade-up delay-2">
+      Fourteen months of delivery. One number came out at the end. This chapter is what that number was actually made of — every euro, every deduction, every choice Uber made about how to value the work.
+    </p>
+    <div class="headline-number fade-up delay-3">€<span data-count="18658">0</span></div>
+    <div class="hero-context fade-up delay-4">
+      <div class="stat">
+        <div class="lbl">Total earnings</div>
+        <div class="val">€18,658.34</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Line items</div>
+        <div class="val">23,486</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Per trip avg</div>
+        <div class="val">€5.80</div>
+      </div>
+      <div class="stat">
+        <div class="lbl">Per day avg</div>
+        <div class="val">€42.31</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. The taxonomy — ten line items -->
+<section data-sec="2" data-total="0">
+  <div class="container">
+    <div class="chapter-label fade-up">01 / The Anatomy</div>
+    <h2 class="fade-up delay-1">Ten categories.<br>Every euro tagged.</h2>
+    <p class="lede fade-up delay-2">
+      When Uber sent my data, they had classified every single euro into one of ten line-item types. Some were payments to me. Some were deductions. Some were the same line, wearing different labels.
+    </p>
+    <div class="taxonomy fade-up delay-3">
+      <div class="tax-item income">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">transport.fare.pickup</div>
+          <div class="desc">Flat fee for accepting an order</div>
+        </div>
+        <div class="badge">Income</div>
+      </div>
+      <div class="tax-item income">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">transport.fare.distance</div>
+          <div class="desc">Per-kilometer variable fee</div>
+        </div>
+        <div class="badge">Income</div>
+      </div>
+      <div class="tax-item income">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">transport.fare.dropoff</div>
+          <div class="desc">Flat fee for delivering the order</div>
+        </div>
+        <div class="badge">Income</div>
+      </div>
+      <div class="tax-item bonus">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">intermediary.incentive.surge</div>
+          <div class="desc">Non-commissionable demand bonus</div>
+        </div>
+        <div class="badge">Bonus</div>
+      </div>
+      <div class="tax-item bonus">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">transport.misc.tip</div>
+          <div class="desc">Non-commissionable customer tip</div>
+        </div>
+        <div class="badge">Bonus</div>
+      </div>
+      <div class="tax-item deduction">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">intermediary.commission</div>
+          <div class="desc">Uber's cut</div>
+        </div>
+        <div class="badge">Deducted</div>
+      </div>
+      <div class="tax-item deduction">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">transport.tax.vat</div>
+          <div class="desc">VAT collected & remitted</div>
+        </div>
+        <div class="badge">Deducted</div>
+      </div>
+      <div class="tax-item deduction">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">transport.fare.batch_discount</div>
+          <div class="desc">Reduction for batched orders</div>
+        </div>
+        <div class="badge">Deducted</div>
+      </div>
+      <div class="tax-item income">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">transport.fare.adjustment</div>
+          <div class="desc">Manual corrections & fixes</div>
+        </div>
+        <div class="badge">Income</div>
+      </div>
+      <div class="tax-item income">
+        <div class="type"></div>
+        <div class="body">
+          <div class="name">intermediary.eats.supplement</div>
+          <div class="desc">Rare rider supplement</div>
+        </div>
+        <div class="badge">Income</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3. One trip decomposed -->
+<section data-sec="3" data-total="6">
+  <div class="container">
+    <div class="chapter-label fade-up">02 / One Trip, Decomposed</div>
+    <h2 class="fade-up delay-1">What Uber wrote<br>when I completed<br>a single delivery.</h2>
+    <p class="lede fade-up delay-2">
+      One trip, on my screen, was a single number. In the GDPR export it was six or seven rows. Here's what the ledger recorded the moment I dropped off an order.
+    </p>
+    <div class="receipt-anatomy fade-up delay-3">
+      <div class="r-head">
+        <span>Trip #a7f2e9…</span>
+        <span class="id">Utrecht · 18:47</span>
+      </div>
+      <div class="r-line"><span class="lbl">transport.fare.pickup</span><span class="val">+ €2.40</span></div>
+      <div class="r-line"><span class="lbl">transport.fare.distance</span><span class="val">+ €1.97</span></div>
+      <div class="r-line"><span class="lbl">transport.fare.dropoff</span><span class="val">+ €1.00</span></div>
+      <div class="r-line"><span class="lbl">intermediary.incentive.surge</span><span class="val">+ €1.85</span></div>
+      <div class="r-line deduct"><span class="lbl">intermediary.commission</span><span class="val">− €0.44</span></div>
+      <div class="r-line deduct"><span class="lbl">transport.tax.vat</span><span class="val">− €0.09</span></div>
+      <div class="r-line total"><span class="lbl">Net to rider</span><span class="val">€6.69</span></div>
+    </div>
+    <p class="lede fade-up delay-4" style="margin-top: 32px;">
+      Six lines of accounting for what felt, on the bike, like one delivery. Multiply by 3,215.
+    </p>
+  </div>
+</section>
+
+<!-- 4. The full breakdown -->
+<section data-sec="4" data-total="18658">
+  <div class="container">
+    <div class="chapter-label fade-up">03 / Where €18,658 Came From</div>
+    <h2 class="fade-up delay-1">The full<br>arithmetic.</h2>
+    <p class="lede fade-up delay-2">
+      Every one of those ten categories, aggregated across 14 months. This is the actual composition of what Uber deposited into my bank account.
+    </p>
+    <div class="breakdown-viz fade-up delay-3">
+      <div class="breakdown-legend">
+        <div class="item"><div class="sw" style="background: var(--positive)"></div>Base fare income</div>
+        <div class="item"><div class="sw" style="background: var(--accent)"></div>Bonus / tips (non-commissionable)</div>
+        <div class="item"><div class="sw" style="background: var(--negative)"></div>Uber's deductions</div>
+      </div>
+      <div class="breakdown-rows">
+        <div class="br-row income"><div class="b-lbl">Pickup fees</div><div class="br-track"><div class="br-fill" data-w="100"></div></div><div class="br-value">€8,100</div></div>
+        <div class="br-row income"><div class="b-lbl">Distance fees</div><div class="br-track"><div class="br-fill" data-w="78.1"></div></div><div class="br-value">€6,326</div></div>
+        <div class="br-row income"><div class="b-lbl">Dropoff fees</div><div class="br-track"><div class="br-fill" data-w="39.7"></div></div><div class="br-value">€3,213</div></div>
+        <div class="br-row bonus"><div class="b-lbl">Surge bonuses</div><div class="br-track"><div class="br-fill" data-w="29.0"></div></div><div class="br-value">€2,351</div></div>
+        <div class="br-row bonus"><div class="b-lbl">Customer tips</div><div class="br-track"><div class="br-fill" data-w="11.2"></div></div><div class="br-value">€906</div></div>
+        <div class="br-row deduct"><div class="b-lbl">Commission</div><div class="br-track"><div class="br-fill" data-w="17.5"></div></div><div class="br-value">− €1,414</div></div>
+        <div class="br-row deduct"><div class="b-lbl">Batch discount</div><div class="br-track"><div class="br-fill" data-w="7.1"></div></div><div class="br-value">− €576</div></div>
+        <div class="br-row deduct"><div class="b-lbl">VAT on commission</div><div class="br-track"><div class="br-fill" data-w="3.7"></div></div><div class="br-value">− €297</div></div>
+      </div>
+      <div class="breakdown-total">
+        <span class="lbl">Net to rider · 3,215 trips</span>
+        <span class="val">€18,658</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. The pickup reveal -->
+<section data-sec="5" data-total="18658">
+  <div class="container">
+    <div class="chapter-label fade-up">04 / The Fee I Never Noticed</div>
+    <h2 class="fade-up delay-1">The biggest single<br>line item wasn't distance.</h2>
+    <div class="reveal-block fade-up delay-2">
+      <div class="reveal-side">
+        <div class="big-share">€8,100</div>
+        <div class="share-lbl">Pickup fees<br>43% of total earnings</div>
+      </div>
+      <div class="reveal-side">
+        <p class="reveal-explain">
+          <strong>Pickup was flat €2.40 per trip.</strong> Uber paid it the moment I accepted an order — before I moved a pedal.
+        </p>
+        <p class="reveal-explain" style="margin-top: 20px; color: var(--text-muted); font-size: 16px;">
+          Distance paid €6,326. Dropoff paid €3,213. Surge paid €2,351. But the largest single component of what Uber paid me was the flat fee for *showing up*, not for the kilometers I actually rode.
+        </p>
+      </div>
+    </div>
+    <p class="lede fade-up delay-3" style="margin-top: 48px;">
+      This is why the 4km trip felt worse than the 3km trip. The distance fee grew slowly. The €3.40 fixed base — pickup plus dropoff — was the same either way.
+    </p>
+  </div>
+</section>
+
+<!-- 6. What Uber took, what I kept -->
+<section data-sec="6" data-total="18658">
+  <div class="container">
+    <div class="chapter-label fade-up">05 / What Uber Took (and Didn't)</div>
+    <h2 class="fade-up delay-1">The commission logic<br>had one loophole.</h2>
+    <p class="lede fade-up delay-2">
+      Uber took a commission on base fare — pickup + distance + dropoff. But two categories were classified as "non-commissionable" — surge and tips. Every euro from those went straight into my pocket, untouched.
+    </p>
+    <div class="commission-viz fade-up delay-3">
+      <div class="cv-row taken">
+        <div class="cv-lbl">Commission on fare<span class="sub">Taken from base earnings</span></div>
+        <div class="cv-desc">Uber's cut of every pickup, distance, and dropoff fee — plus VAT on that cut.</div>
+        <div class="cv-val">− €1,711</div>
+      </div>
+      <div class="cv-row kept">
+        <div class="cv-lbl">Surge income kept<span class="sub">100% to rider · non-commissionable</span></div>
+        <div class="cv-desc">Every surge bonus (1,072 trips) went to me in full. Uber did not take a cut.</div>
+        <div class="cv-val">€2,351</div>
+      </div>
+      <div class="cv-row kept">
+        <div class="cv-lbl">Tips kept<span class="sub">100% to rider · non-commissionable</span></div>
+        <div class="cv-desc">Every customer tip (353 trips) went to me in full. Uber did not take a cut.</div>
+        <div class="cv-val">€906</div>
+      </div>
+    </div>
+    <p class="lede fade-up delay-4" style="margin-top: 32px;">
+      A rider who chased surge and earned tips could tilt the ledger in their favor. Nobody told me this. It was buried in a classification tag: <span style="color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 14px;">non_commissionable</span>.
+    </p>
+  </div>
+</section>
+
+<!-- 7. Closing -->
+<section data-sec="7" data-total="18658">
+  <div class="container">
+    <div class="chapter-label fade-up">06 / What I Never Saw</div>
+    <p class="closing-line fade-up delay-1">
+      On the bike, I saw one number per trip.
+      <span class="em">In the ledger, every trip was a small structured decision Uber had made about how to value the work.</span>
+    </p>
+    <p class="closing-echo fade-up delay-2">
+      Ten categories. Three types of income. Two hidden bonuses. One commission structure. All of it running quietly under the "€6.75" that flashed on my screen when the delivery closed.
+    </p>
+    <p class="closing-echo fade-up delay-3" style="margin-top: 32px; color: var(--accent);">
+      This is what a data analyst does — read the shape of a system through the way it counts money.
+    </p>
+  </div>
+</section>
+
+<script>
+  const fadeObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+  const secObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('section').forEach(s => secObs.observe(s));
+
+  // Count-ups
+  const countObs = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.count, 10);
+      const dur = 2000, start = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      function tick(now) {
+        const p = Math.min((now - start) / dur, 1);
+        el.textContent = Math.round(target * ease(p)).toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countObs.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+  // Breakdown bars — animate widths from data-w attr on view
+  const barObs = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.querySelectorAll('.br-fill').forEach(f => {
+        f.style.width = f.dataset.w + '%';
+      });
+      barObs.unobserve(e.target);
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.breakdown-viz').forEach(b => barObs.observe(b));
+
+  // HUD: section number + running total
+  const secNum = document.getElementById('secNum');
+  const runVal = document.getElementById('runVal');
+  const sections = Array.from(document.querySelectorAll('section[data-sec]'));
+  let curTotal = 0;
+
+  function animateTotal(target) {
+    if (target === curTotal) return;
+    const from = curTotal, delta = target - from;
+    const dur = 1200, start = performance.now();
+    const ease = t => 1 - Math.pow(1 - t, 3);
+    function tick(now) {
+      const p = Math.min((now - start) / dur, 1);
+      curTotal = Math.round(from + delta * ease(p));
+      runVal.textContent = '€' + curTotal.toLocaleString('en-US');
+      if (p < 1) requestAnimationFrame(tick);
+      else curTotal = target;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  let lastTotal = 0;
+  function updateHud() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let active = sections[0];
+    for (const s of sections) if (s.offsetTop <= mid) active = s;
+    secNum.textContent = String(active.dataset.sec).padStart(2, '0');
+    const t = parseInt(active.dataset.total, 10);
+    if (t !== lastTotal) { animateTotal(t); lastTotal = t; }
+  }
+  let raf = false;
+  window.addEventListener('scroll', () => {
+    if (!raf) { raf = true; requestAnimationFrame(() => { updateHud(); raf = false; }); }
+  }, { passive: true });
+  updateHud();
+</script>
+
+</body>
+</html>

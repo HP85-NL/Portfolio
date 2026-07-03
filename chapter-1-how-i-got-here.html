@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 1 — How I Got Here · Harshil Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #14181f;
+    --text-primary: #ebe7df;
+    --text-muted: #a3a8b8;
+    --text-dim: #7d829a;
+    --accent: #ffc940;
+    --accent-cool: #6aa8ff;
+    --divider: #20242d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: radial-gradient(ellipse 1200px 800px at 50% -10%, #131824 0%, var(--bg-deep) 55%);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* HUD */
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(10,13,20,0.85) 0%, rgba(10,13,20,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+  .hud-brand, .hud-when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+  .hud-when .accent { color: var(--accent); }
+
+  /* Timeline bottom bar */
+  .timeline-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 36px;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    z-index: 100;
+  }
+  .timeline-bar .stage {
+    flex: 1;
+    padding: 0 16px;
+    color: var(--text-dim);
+    position: relative;
+    transition: color 0.6s ease;
+    border-right: 1px solid var(--divider);
+  }
+  .timeline-bar .stage:last-child { border-right: none; }
+  .timeline-bar .stage.active { color: var(--accent); }
+  .timeline-bar .stage.passed { color: var(--text-muted); }
+  .timeline-bar .stage::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    transform: translate(-2px, -50%);
+    transition: background 0.6s ease;
+  }
+  .timeline-bar .stage.active::before { background: var(--accent); }
+  .timeline-bar .stage.passed::before { background: var(--text-muted); }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 40px 80px;
+    position: relative;
+  }
+  .container { max-width: 920px; margin: 0 auto; width: 100%; }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.3s; }
+  .delay-3 { transition-delay: 0.45s; }
+  .delay-4 { transition-delay: 0.6s; }
+  .delay-5 { transition-delay: 0.75s; }
+  .delay-6 { transition-delay: 0.9s; }
+  .delay-7 { transition-delay: 1.05s; }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(48px, 8vw, 112px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  h1 .accent { color: var(--accent); }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 28px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 560px;
+    line-height: 1.7;
+  }
+  .lede.tight { max-width: 480px; }
+
+  /* ─── Hero stamp ─── */
+  .stamp {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    margin-bottom: 48px;
+    text-transform: uppercase;
+  }
+  .stamp .dot { color: var(--accent); margin: 0 12px; }
+
+  /* ─── Three lenses grid ─── */
+  .lens-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+    max-width: 960px;
+  }
+  .lens-card {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-top: 2px solid var(--accent);
+    padding: 32px 24px;
+  }
+  .lens-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+  }
+  .lens-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+  .lens-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* ─── The promotional offer card ─── */
+  .offer-card {
+    margin-top: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--accent);
+    padding: 32px 36px;
+    max-width: 560px;
+  }
+  .offer-card .head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .offer-card .rules {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .offer-card .rule {
+    display: flex;
+    gap: 14px;
+    color: var(--text-muted);
+  }
+  .offer-card .rule .k {
+    color: var(--text-dim);
+    min-width: 90px;
+  }
+  .offer-card .rule .v { color: var(--text-primary); }
+  .offer-card .rule.reward .v { color: var(--accent); font-size: 16px; font-weight: 500; }
+
+  /* ─── McDonald's dominance visual ─── */
+  .dominance {
+    margin-top: 48px;
+    max-width: 620px;
+  }
+  .dom-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  .dom-row .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    min-width: 160px;
+    color: var(--text-muted);
+  }
+  .dom-row.mcd .lbl { color: var(--accent); }
+  .dom-track {
+    flex: 1;
+    height: 32px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    position: relative;
+    overflow: hidden;
+  }
+  .dom-fill {
+    height: 100%;
+    width: 0;
+    transition: width 1.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .dom-row.mcd .dom-fill { background: var(--accent); }
+  .dom-row.other .dom-fill { background: var(--text-dim); }
+  .in .dom-row.mcd .dom-fill { width: 90%; }
+  .in .dom-row.other .dom-fill { width: 10%; }
+  .dom-row .pct {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    min-width: 50px;
+    text-align: right;
+  }
+  .dom-row.mcd .pct { color: var(--accent); }
+  .dom-row.other .pct { color: var(--text-muted); }
+
+  /* ─── Restaurant grid (Amersfoort expansion) ─── */
+  .rest-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    margin-top: 48px;
+    max-width: 720px;
+  }
+  .rest-tag {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 20px 20px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  .rest-tag.first {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .in .rest-tag { opacity: 1; transform: translateY(0); }
+  .in .rest-tag:nth-child(1) { transition-delay: 0.1s; }
+  .in .rest-tag:nth-child(2) { transition-delay: 0.25s; }
+  .in .rest-tag:nth-child(3) { transition-delay: 0.4s; }
+  .in .rest-tag:nth-child(4) { transition-delay: 0.55s; }
+  .in .rest-tag:nth-child(5) { transition-delay: 0.7s; }
+  .in .rest-tag:nth-child(6) { transition-delay: 0.85s; }
+  .in .rest-tag:nth-child(7) { transition-delay: 1.0s; }
+  .in .rest-tag:nth-child(8) { transition-delay: 1.15s; }
+
+  /* ─── Utrecht platforms ─── */
+  .platforms {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 48px;
+    max-width: 720px;
+  }
+  .platform-tile {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 40px 24px 32px;
+    text-align: center;
+  }
+  .platform-tile .p-name {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .platform-tile.uber { border-top: 2px solid var(--accent-cool); }
+  .platform-tile.uber .p-name { color: var(--accent-cool); }
+  .platform-tile.thuis { border-top: 2px solid #ffb800; }
+  .platform-tile.thuis .p-name { color: #ffb800; }
+  .platform-tile.deliv { border-top: 2px solid #00ccbc; }
+  .platform-tile.deliv .p-name { color: #00ccbc; }
+  .platform-tile .p-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* ─── The Question (the pivot) ─── */
+  .question-block {
+    max-width: 800px;
+  }
+  .question-mark {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(120px, 20vw, 240px);
+    color: var(--accent);
+    line-height: 0.8;
+    margin-bottom: 32px;
+    opacity: 0.15;
+  }
+  .ask {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(28px, 4.5vw, 44px);
+    line-height: 1.3;
+    color: var(--text-primary);
+    letter-spacing: -0.015em;
+    margin-bottom: 32px;
+  }
+  .ask .em { color: var(--accent); font-style: italic; }
+  .ask-echo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    margin-top: 24px;
+  }
+
+  /* Closing bridge */
+  .bridge {
+    max-width: 720px;
+  }
+  .bridge-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(28px, 4.5vw, 44px);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+    margin-bottom: 40px;
+  }
+  .bridge-line .em { color: var(--accent); }
+  .bridge-echo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    line-height: 1.7;
+    max-width: 560px;
+  }
+  .bridge-echo.final {
+    margin-top: 32px;
+    color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; transition: none; }
+    .rest-tag { opacity: 1; transform: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 720px) {
+    .hud { padding: 16px 20px; }
+    .hud-brand, .hud-when { font-size: 10px; }
+    section { padding: 80px 20px 60px; }
+    .timeline-bar { padding: 0 12px; font-size: 9px; }
+    .timeline-bar .stage { padding: 0 8px; }
+    .platforms { grid-template-columns: 1fr; gap: 12px; }
+    .platform-tile { padding: 24px 20px; }
+    .dom-row { flex-wrap: wrap; }
+    .dom-row .lbl { min-width: 100%; }
+    .offer-card { padding: 24px 20px; }
+    .offer-card .rule { flex-direction: column; gap: 4px; }
+    .offer-card .rule .k { min-width: auto; }
+    .lens-grid { grid-template-columns: 1fr; gap: 16px; }
+  }
+
+  /* ─── Chapter navigation bar ─── */
+  .chapter-nav {
+    position: fixed;
+    bottom: 36px; left: 0; right: 0;
+    height: 44px;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 99;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .chapter-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover { color: var(--accent); }
+  .chapter-nav .home-link { color: var(--text-dim); }
+  .chapter-nav .spacer { flex: 1; }
+  @media (max-width: 720px) {
+    .chapter-nav { padding: 0 16px; font-size: 9px; height: 40px; bottom: 36px; }
+    .chapter-nav a span.label-full { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="chapter-nav">
+  <a href="how-it-all-began.html">&larr; <span class="label-full">Beginning</span></a>
+  <div class="spacer"></div>
+  <a href="how-it-all-began.html" class="home-link">Field Notes Home</a>
+  <div class="spacer"></div>
+  <a href="chapter-2-three-cities.html"><span class="label-full">Ch.2 Three Cities</span> &rarr;</a>
+</div>
+
+
+<div class="hud">
+  <div class="hud-brand">HP / Field Notes 001</div>
+  <div class="hud-when"><span id="whenLabel">The Beginning</span></div>
+</div>
+
+<div class="timeline-bar">
+  <div class="stage" data-stage="arrival">Arrival</div>
+  <div class="stage" data-stage="apeldoorn">Apeldoorn · 90% McD</div>
+  <div class="stage" data-stage="amersfoort">Amersfoort · Variety</div>
+  <div class="stage" data-stage="utrecht">Utrecht · The Mesh</div>
+  <div class="stage" data-stage="question">The Question</div>
+</div>
+
+<!-- ─── 1. Hero ─── -->
+<section data-sec="0" data-stage="arrival" data-when="The Beginning">
+  <div class="container">
+    <div class="stamp fade-up">Chapter 01 <span class="dot">·</span> How I Got Here</div>
+    <h1 class="fade-up delay-1">
+      This is not a<br>
+      story about<br>
+      <span class="accent">food.</span>
+    </h1>
+    <p class="lede fade-up delay-2">
+      It's a story about noticing. About standing on a bike for fourteen months, watching a system decide who got which order, and slowly realizing that the system was the thing I actually wanted to understand.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 2. The arrival ─── -->
+<section data-sec="1" data-stage="arrival" data-when="Aug 2020 · Apeldoorn">
+  <div class="container">
+    <div class="chapter-label fade-up">01 / The Arrival</div>
+    <h2 class="fade-up delay-1">An international student.<br>A small Dutch town.</h2>
+    <p class="lede fade-up delay-2">
+      I came to the Netherlands as a student. Uber Eats was expanding into the smaller cities that summer, and they needed riders. The town I lived in — Apeldoorn — had just come online. I signed up.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 2. Why deliveries — the honest context ─── -->
+<section data-sec="2" data-stage="arrival" data-when="Winter 2020 · Lockdown">
+  <div class="container">
+    <div class="chapter-label fade-up">— / Before Uber</div>
+    <h2 class="fade-up delay-1">Not everyone asks this out loud.<br>But the question is fair.</h2>
+    <p class="lede fade-up delay-2" style="max-width: 640px;">
+      "Why did you do Uber?" It's a fair question. Here's the honest answer.
+    </p>
+    <p class="lede fade-up delay-3" style="max-width: 640px; margin-top: 28px; color: var(--text-primary); font-size: 19px; line-height: 1.7;">
+      During my initial days in the Netherlands, I experienced the pandemic firsthand. Lockdown, social distancing, online classes — daily life became something to cope with, not live. Part-time work, survival, isolation: they all fed into a constant, quiet worry about what came next.
+    </p>
+    <p class="lede fade-up delay-3" style="max-width: 640px; margin-top: 20px; color: var(--text-primary); font-size: 19px; line-height: 1.7;">
+      I've always had a passion for cooking. In my free time, I liked to take my mountain bike out and explore the neighborhood — one of the few things that still felt normal.
+    </p>
+    <p class="lede fade-up delay-4" style="max-width: 640px; margin-top: 20px; color: var(--accent); font-size: 20px; line-height: 1.7; font-weight: 400;">
+      Then Uber Eats came to the city where I was living.
+    </p>
+    <p class="lede fade-up delay-4" style="max-width: 640px; margin-top: 12px; font-size: 17px;">
+      I didn't sign up because I loved food delivery. I signed up because a door had finally opened, and I needed to walk through it.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 3. The three lenses ─── -->
+<section data-sec="3" data-stage="arrival" data-when="Without Knowing It">
+  <div class="container">
+    <div class="chapter-label fade-up">— / What I Didn't Know I Was Doing</div>
+    <h2 class="fade-up delay-1">I thought I was<br>just delivering food.</h2>
+    <p class="lede fade-up delay-2" style="max-width: 620px;">
+      I was actually doing three kinds of analysis at once — I just didn't have the words for it yet.
+    </p>
+    <div class="lens-grid fade-up delay-3">
+      <div class="lens-card">
+        <div class="lens-num">01</div>
+        <div class="lens-title">Product Analysis</div>
+        <div class="lens-body">Watching how Uber Eats made decisions — which order went to which rider, when surge appeared, how batching worked. I was reverse-engineering a product from the inside.</div>
+      </div>
+      <div class="lens-card">
+        <div class="lens-num">02</div>
+        <div class="lens-title">Consumer Analysis</div>
+        <div class="lens-body">Noticing how Dutch customers actually behaved — when they tipped, what they ordered, how weather and weekdays changed their habits. I was watching a market, order by order.</div>
+      </div>
+      <div class="lens-card">
+        <div class="lens-num">03</div>
+        <div class="lens-title">Data Analysis</div>
+        <div class="lens-body">Every shift generated numbers — euros, minutes, kilometers. A year later, I went back and tested every instinct the other two lenses had given me.</div>
+      </div>
+    </div>
+    <p class="lede fade-up delay-4" style="margin-top: 48px; max-width: 640px;">
+      This project is what happens when you finally sit down and do formally what you'd already been doing informally for fourteen months.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 4. The offer ─── -->
+<section data-sec="4" data-stage="apeldoorn" data-when="Aug 2020 · The Offer">
+  <div class="container">
+    <div class="chapter-label fade-up">02 / The Rules of the Game</div>
+    <h2 class="fade-up delay-1">Log in. Do two orders.<br>Get €16 an hour.</h2>
+    <p class="lede fade-up delay-2 tight">
+      Uber had a promotional program in new cities. If you followed the rules, you were guaranteed the hourly rate. Simple. Legible. That was the pitch.
+    </p>
+    <div class="offer-card fade-up delay-3">
+      <div class="head">Promotional Terms · Apeldoorn Launch</div>
+      <div class="rules">
+        <div class="rule">
+          <span class="k">Window</span>
+          <span class="v">09:00 – 14:00 · lunch</span>
+        </div>
+        <div class="rule">
+          <span class="k">Minimum</span>
+          <span class="v">2 orders completed</span>
+        </div>
+        <div class="rule">
+          <span class="k">Evening</span>
+          <span class="v">Same pattern, same terms</span>
+        </div>
+        <div class="rule reward">
+          <span class="k">Guaranteed</span>
+          <span class="v">€16.00 / hour</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 4. The McDonald's rhythm ─── -->
+<section data-sec="5" data-stage="apeldoorn" data-when="Aug – Oct 2020 · Apeldoorn">
+  <div class="container">
+    <div class="chapter-label fade-up">03 / The Pattern I Stopped Noticing</div>
+    <h2 class="fade-up delay-1">Nine out of ten orders<br>came from one restaurant.</h2>
+    <p class="lede fade-up delay-2 tight">
+      Every ride, the same pickup. Same fluorescent light. Same paper bag. The rhythm was so reliable I stopped seeing it — until I moved cities and it broke.
+    </p>
+    <div class="dominance fade-up delay-3">
+      <div class="dom-row mcd">
+        <div class="lbl">McDonald's</div>
+        <div class="dom-track"><div class="dom-fill"></div></div>
+        <div class="pct">~90%</div>
+      </div>
+      <div class="dom-row other">
+        <div class="lbl">Everything else</div>
+        <div class="dom-track"><div class="dom-fill"></div></div>
+        <div class="pct">~10%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 5. Amersfoort — variety ─── -->
+<section data-sec="6" data-stage="amersfoort" data-when="Nov 2020 – Feb 2021 · Amersfoort">
+  <div class="container">
+    <div class="chapter-label fade-up">04 / The Menu Widens</div>
+    <h2 class="fade-up delay-1">Then Amersfoort.<br>The map filled in.</h2>
+    <p class="lede fade-up delay-2 tight">
+      When I moved to Amersfoort, more restaurants had joined the platform. Every week another kitchen came online. The system wasn't static — it was learning too.
+    </p>
+    <div class="rest-grid fade-up delay-3">
+      <div class="rest-tag first">McDonald's</div>
+      <div class="rest-tag">KFC</div>
+      <div class="rest-tag">Asian</div>
+      <div class="rest-tag">Indian</div>
+      <div class="rest-tag">Mexican</div>
+      <div class="rest-tag">Cafés</div>
+      <div class="rest-tag">Bagels</div>
+      <div class="rest-tag">Bakeries</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 6. Utrecht — the mesh ─── -->
+<section data-sec="7" data-stage="utrecht" data-when="Mar – Oct 2021 · Utrecht">
+  <div class="container">
+    <div class="chapter-label fade-up">05 / The Ecosystem Revealed</div>
+    <h2 class="fade-up delay-1">Then Utrecht.<br>Two apps, one bike.</h2>
+    <p class="lede fade-up delay-2 tight">
+      In Utrecht I started running both platforms at once. Orders came in overlapping. That was the moment I realized I wasn't doing a job — I was inside an industry.
+    </p>
+    <div class="platforms fade-up delay-3" style="grid-template-columns: repeat(2, 1fr); max-width: 560px;">
+      <div class="platform-tile uber">
+        <div class="p-name">Uber Eats</div>
+        <div class="p-sub">The default</div>
+      </div>
+      <div class="platform-tile deliv">
+        <div class="p-name">Deliveroo</div>
+        <div class="p-sub">The premium</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 7. The question ─── -->
+<section data-sec="8" data-stage="question" data-when="The Question">
+  <div class="container question-block">
+    <div class="chapter-label fade-up">06 / The Question That Followed Me Home</div>
+    <div class="question-mark fade-up">?</div>
+    <p class="ask fade-up delay-1">
+      Every night, I found myself wondering how this app made its choice — out of every rider on that street, at that minute, <span class="em">why me?</span> Why not someone else?
+    </p>
+    <p class="ask-echo fade-up delay-3">
+      Not once. Not as a passing thought. Every shift, every restaurant, every idle minute waiting for the next ping.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 8. The bridge ─── -->
+<section data-sec="9" data-stage="question" data-when="From here on out">
+  <div class="container bridge">
+    <div class="chapter-label fade-up">07 / What Came Next</div>
+    <p class="bridge-line fade-up delay-1">
+      I couldn't answer that question on the bike.
+      <span class="em">But the question never left.</span>
+    </p>
+    <p class="bridge-echo fade-up delay-2">
+      A year after I stopped delivering, I requested my data from Uber. Every trip, every euro, every timestamp. 23,486 rows.
+    </p>
+    <p class="bridge-echo fade-up delay-3">
+      I finally had a way to look under the app. To test what I remembered against what actually happened. To answer, one line item at a time, the question that had followed me for fourteen months.
+    </p>
+    <p class="bridge-echo final fade-up delay-4">
+      Everything that follows is what I found.
+    </p>
+  </div>
+</section>
+
+<script>
+  // Fade-ups
+  const fadeObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+  // Section-level 'in' class for restaurant grid + dominance bars
+  const secObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.3 });
+  document.querySelectorAll('section').forEach(s => secObs.observe(s));
+
+  // HUD + timeline drive
+  const whenEl = document.getElementById('whenLabel');
+  const sections = Array.from(document.querySelectorAll('section[data-sec]'));
+  const stages = document.querySelectorAll('.timeline-bar .stage');
+  const stageOrder = ['arrival', 'apeldoorn', 'amersfoort', 'utrecht', 'question'];
+
+  function updateHud() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let active = sections[0];
+    for (const s of sections) if (s.offsetTop <= mid) active = s;
+    whenEl.textContent = active.dataset.when;
+
+    const currentStage = active.dataset.stage;
+    const idx = stageOrder.indexOf(currentStage);
+    stages.forEach((el, i) => {
+      el.classList.remove('active', 'passed');
+      if (i < idx) el.classList.add('passed');
+      else if (i === idx) el.classList.add('active');
+    });
+  }
+  let raf = false;
+  window.addEventListener('scroll', () => {
+    if (!raf) { raf = true; requestAnimationFrame(() => { updateHud(); raf = false; }); }
+  }, { passive: true });
+  updateHud();
+</script>
+
+</body>
+</html>

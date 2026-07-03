@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 7 — Why This Made Me a Data Analyst · Harshil Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #14181f;
+    --text-primary: #ebe7df;
+    --text-muted: #a3a8b8;
+    --text-dim: #7d829a;
+    --accent: #ffc940;
+    --divider: #20242d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: radial-gradient(ellipse 1200px 800px at 50% -10%, #131824 0%, var(--bg-deep) 55%);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(10,13,20,0.85) 0%, rgba(10,13,20,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+  .hud-brand, .hud-when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+  .hud-when .accent { color: var(--accent); }
+
+  .footer-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 36px;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    z-index: 100;
+  }
+  .footer-bar .accent { color: var(--accent); }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 40px 80px;
+    position: relative;
+  }
+  .container { max-width: 920px; margin: 0 auto; width: 100%; }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.3s; }
+  .delay-3 { transition-delay: 0.45s; }
+  .delay-4 { transition-delay: 0.6s; }
+  .delay-5 { transition-delay: 0.75s; }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(44px, 7.5vw, 96px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  h1 .accent { color: var(--accent); }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(32px, 5vw, 60px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.7;
+  }
+  .lede.primary {
+    color: var(--text-primary);
+    font-size: 19px;
+  }
+
+  /* ─── Three lenses recap ─── */
+  .lens-recap {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 48px;
+    max-width: 900px;
+  }
+  .lens-recap .lc {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 24px 20px;
+    text-align: left;
+  }
+  .lens-recap .lc .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+  .lens-recap .lc .t {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .lens-recap .lc .d {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .lens-arrow {
+    text-align: center;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    color: var(--text-dim);
+    margin: 24px 0;
+  }
+  .lens-outcome {
+    background: rgba(255, 201, 64, 0.08);
+    border-left: 2px solid var(--accent);
+    padding: 24px 28px;
+    max-width: 700px;
+    font-size: 17px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+
+  /* ─── MBA reasoning block ─── */
+  .mba-block {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 40px;
+    max-width: 800px;
+    align-items: start;
+  }
+  .mba-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    padding-top: 4px;
+  }
+  .mba-text {
+    font-size: 18px;
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .mba-text strong { color: var(--accent); font-weight: 500; }
+
+  /* ─── The bridge visual ─── */
+  .bridge-viz {
+    margin-top: 56px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 24px;
+    align-items: center;
+    max-width: 800px;
+  }
+  .bridge-side {
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 28px 24px;
+    text-align: center;
+  }
+  .bridge-side .b-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  .bridge-side .b-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .bridge-mid {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* ─── Now section ─── */
+  .now-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+    margin-top: 48px;
+    max-width: 800px;
+  }
+  .now-stat {
+    padding: 28px 24px 28px 0;
+    border-right: 1px solid var(--divider);
+  }
+  .now-stat:last-child { border-right: none; }
+  .now-stat .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .now-stat .val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
+  }
+
+  /* ─── Final closing ─── */
+  .final-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(32px, 5.5vw, 64px);
+    line-height: 1.2;
+    max-width: 860px;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+  }
+  .final-line .em { color: var(--accent); }
+  .final-echo {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.7;
+  }
+  .final-sign {
+    margin-top: 56px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+  .cta-row {
+    margin-top: 48px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 28px;
+    text-decoration: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .cta.primary {
+    background: var(--accent);
+    color: var(--bg-deep);
+  }
+  .cta.secondary {
+    background: transparent;
+    border: 1px solid var(--divider);
+    color: var(--text-primary);
+  }
+  .cta:hover { transform: translateY(-2px); }
+  .cta .arrow { transition: transform 0.2s ease; }
+  .cta:hover .arrow { transform: translateX(4px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 800px) {
+    .lens-recap { grid-template-columns: 1fr; }
+    .mba-block { grid-template-columns: 1fr; gap: 12px; }
+    .bridge-viz { grid-template-columns: 1fr; gap: 12px; }
+    .bridge-mid { transform: rotate(90deg); padding: 8px 0; }
+  }
+  @media (max-width: 720px) {
+    .hud { padding: 16px 20px; }
+    .hud-brand, .hud-when { font-size: 10px; }
+    section { padding: 80px 20px 60px; }
+    .footer-bar { font-size: 8px; padding: 0 16px; text-align: center; }
+    .now-stat { padding: 20px 12px 20px 0; }
+    .now-stat .val { font-size: 17px; }
+    .cta-row { flex-direction: column; }
+  }
+
+  /* ─── Chapter navigation bar ─── */
+  .chapter-nav {
+    position: fixed;
+    bottom: 36px; left: 0; right: 0;
+    height: 44px;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 99;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .chapter-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover { color: var(--accent); }
+  .chapter-nav .home-link { color: var(--text-dim); }
+  .chapter-nav .spacer { flex: 1; }
+  @media (max-width: 720px) {
+    .chapter-nav { padding: 0 16px; font-size: 9px; height: 40px; bottom: 36px; }
+    .chapter-nav a span.label-full { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="chapter-nav">
+  <a href="chapter-6-memory-scoreboard.html">&larr; <span class="label-full">Ch.6 Memory Scoreboard</span></a>
+  <div class="spacer"></div>
+  <a href="how-it-all-began.html" class="home-link">Field Notes Home</a>
+  <div class="spacer"></div>
+  <span></span>
+</div>
+
+
+<div class="hud">
+  <div class="hud-brand">HP / Field Notes 007</div>
+  <div class="hud-when"><span class="accent">Closing</span></div>
+</div>
+
+<div class="footer-bar">
+  Field Notes 001 – 007 <span class="accent">·</span> How It All Began <span class="accent">·</span> Harshil Patel
+</div>
+
+<!-- 1. Hero -->
+<section data-sec="0">
+  <div class="container">
+    <div class="chapter-label fade-up">Chapter 07 / Why This Made Me a Data Analyst</div>
+    <h1 class="fade-up delay-1">
+      The question<br>
+      followed me<br>
+      <span class="accent">off the bike.</span>
+    </h1>
+    <p class="lede primary fade-up delay-2">
+      "How does the app decide?" I couldn't answer that question while I was riding. But I never stopped asking it. Eventually, that question became a career.
+    </p>
+  </div>
+</section>
+
+<!-- 2. Three lenses, proven out -->
+<section data-sec="1">
+  <div class="container">
+    <div class="chapter-label fade-up">01 / What Six Chapters Actually Proved</div>
+    <h2 class="fade-up delay-1">I wasn't just<br>delivering food.</h2>
+    <p class="lede fade-up delay-2">
+      Chapter 1 introduced three lenses I didn't have words for at the time. By the end of this project, all three had become real, tested skills.
+    </p>
+    <div class="lens-recap fade-up delay-3">
+      <div class="lc">
+        <div class="num">01 · Product</div>
+        <div class="t">Reading a system</div>
+        <div class="d">I reverse-engineered how Uber priced trips, triggered surge, and structured incentives — without ever seeing their internal logic.</div>
+      </div>
+      <div class="lc">
+        <div class="num">02 · Consumer</div>
+        <div class="t">Reading a market</div>
+        <div class="d">I noticed how Dutch customers tipped, ordered, and behaved differently by season, city, and day of week — a market I mapped by hand.</div>
+      </div>
+      <div class="lc">
+        <div class="num">03 · Data</div>
+        <div class="t">Reading the evidence</div>
+        <div class="d">A year later, I tested every instinct against 23,486 rows of my own GDPR data. Some intuitions held. Some didn't. Both were useful.</div>
+      </div>
+    </div>
+    <div class="lens-outcome fade-up delay-4" style="margin-top: 40px;">
+      What connects all three isn't the bike, or Uber, or the Netherlands. It's the habit of noticing a pattern, forming a hypothesis, and going to find out if it's actually true.
+    </div>
+  </div>
+</section>
+
+<!-- 3. The MBA -->
+<section data-sec="2">
+  <div class="container">
+    <div class="chapter-label fade-up">02 / Naming What I Already Had</div>
+    <h2 class="fade-up delay-1">The MBA wasn't<br>the start.<br>It was the formalization.</h2>
+    <div class="mba-block fade-up delay-2">
+      <div class="mba-tag">Why Data Analytics</div>
+      <p class="mba-text">
+        The MBA was the need of the hour. I chose a specialization in <strong>Data Analytics</strong> because I knew it would give me the confidence to bridge complex data and data insights into business decisions — combining a technical foundation with a business one.
+      </p>
+    </div>
+    <div class="mba-block fade-up delay-3" style="margin-top: 32px;">
+      <div class="mba-tag">What I Learned at Work</div>
+      <p class="mba-text">
+        The people who manage stakeholders and bridge the gap between data complexity and business language are the ones with the <strong>steeper growth curve</strong> in any company. Technical skill alone isn't the differentiator. Translation is.
+      </p>
+    </div>
+    <div class="bridge-viz fade-up delay-4">
+      <div class="bridge-side">
+        <div class="b-title">Complex Data</div>
+        <div class="b-sub">Rows, ledgers, line items</div>
+      </div>
+      <div class="bridge-mid">bridged by →</div>
+      <div class="bridge-side">
+        <div class="b-title">Business Decisions</div>
+        <div class="b-sub">What actually gets acted on</div>
+      </div>
+    </div>
+    <p class="lede fade-up delay-5" style="margin-top: 32px; max-width: 680px;">
+      My current title is <strong style="color: var(--accent); font-weight: 500;">Sales Analyst, Commercial Insight.</strong> That word — commercial — is the job. Not just running the numbers, but making sure the numbers change what the business actually decides to do next.
+    </p>
+  </div>
+</section>
+
+<!-- 4. Where I am now -->
+<section data-sec="3">
+  <div class="container">
+    <div class="chapter-label fade-up">03 / Where I Am Now</div>
+    <h2 class="fade-up delay-1">Utrecht, still.<br>A different kind of work.</h2>
+    <p class="lede fade-up delay-2">
+      I still live in the Netherlands. I work as a <strong style="color: var(--text-primary); font-weight: 500;">Sales Analyst, Commercial Insight</strong> at Bever, a Dutch outdoor retailer, while I build toward the next step in my career. This project — the one you just read — is the clearest proof I have of how I think.
+    </p>
+    <div class="now-stats fade-up delay-3">
+      <div class="now-stat">
+        <div class="lbl">Based in</div>
+        <div class="val">Utrecht, NL</div>
+      </div>
+      <div class="now-stat">
+        <div class="lbl">Currently</div>
+        <div class="val">Sales Analyst · Bever</div>
+      </div>
+      <div class="now-stat">
+        <div class="lbl">Focus</div>
+        <div class="val">Commercial Insight</div>
+      </div>
+      <div class="now-stat">
+        <div class="lbl">Looking for</div>
+        <div class="val">Data Analyst roles, NL</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Final closing -->
+<section data-sec="4">
+  <div class="container">
+    <div class="chapter-label fade-up">04 / The Last Line</div>
+    <p class="final-line fade-up delay-1">
+      I didn't set out to become a data analyst.
+      <span class="em">I noticed a pattern, and I couldn't stop asking why.</span>
+    </p>
+    <p class="final-echo fade-up delay-2">
+      That's the whole job, really. Not the tools, not the charts, not the dashboards. Just the refusal to accept "that's just how it works" as a full answer.
+    </p>
+    <p class="final-echo fade-up delay-3" style="margin-top: 20px; color: var(--accent);">
+      Fourteen months on a bike gave me the question. This project is the answer I finally went looking for.
+    </p>
+    <div class="cta-row fade-up delay-4">
+      <a href="how-it-all-began.html" class="cta secondary">
+        ← Back to the beginning
+      </a>
+      <a href="https://hp85-nl.github.io/Portfolio" class="cta primary">
+        See the rest of my work
+        <span class="arrow">→</span>
+      </a>
+    </div>
+    <div class="final-sign fade-up delay-5">Harshil Patel · Utrecht, Netherlands</div>
+  </div>
+</section>
+
+<script>
+  const fadeObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+</script>
+
+</body>
+</html>

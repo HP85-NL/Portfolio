@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 2 — Three Cities · Harshil Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #14181f;
+    --text-primary: #ebe7df;
+    --text-muted: #a3a8b8;
+    --text-dim: #7d829a;
+    --accent: #ffc940;
+    --apeldoorn: #6aa8ff;
+    --amersfoort: #ffc940;
+    --utrecht: #00ccbc;
+    --amsterdam: #ff5252;
+    --divider: #20242d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: radial-gradient(ellipse 1200px 800px at 50% -10%, #131824 0%, var(--bg-deep) 55%);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* HUD */
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(10,13,20,0.85) 0%, rgba(10,13,20,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+  .hud-brand, .hud-city {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+  .hud-city .val { color: var(--accent); font-weight: 500; }
+
+  /* City progress bar */
+  .city-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 36px;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    z-index: 100;
+  }
+  .city-bar .stage {
+    flex: 1;
+    padding: 0 16px;
+    color: var(--text-dim);
+    position: relative;
+    transition: color 0.6s ease;
+    border-right: 1px solid var(--divider);
+  }
+  .city-bar .stage:last-child { border-right: none; }
+  .city-bar .stage.active { color: var(--accent); }
+  .city-bar .stage.passed { color: var(--text-muted); }
+  .city-bar .stage::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 50%;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--text-dim);
+    transform: translate(-2px, -50%);
+    transition: background 0.6s ease;
+  }
+  .city-bar .stage.active::before { background: var(--accent); }
+  .city-bar .stage.passed::before { background: var(--text-muted); }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 40px 80px;
+    position: relative;
+  }
+  .container { max-width: 1080px; margin: 0 auto; width: 100%; }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.3s; }
+  .delay-3 { transition-delay: 0.45s; }
+  .delay-4 { transition-delay: 0.6s; }
+  .delay-5 { transition-delay: 0.75s; }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(48px, 8vw, 104px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  h1 .accent { color: var(--accent); }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 620px;
+    line-height: 1.6;
+  }
+
+  /* ─── City card layouts ─── */
+  .city-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  .city-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+  .city-window {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 8px 14px;
+  }
+  .city-window.apeldoorn { background: rgba(106, 168, 255, 0.12); color: var(--apeldoorn); }
+  .city-window.amersfoort { background: rgba(255, 201, 64, 0.12); color: var(--amersfoort); }
+  .city-window.utrecht { background: rgba(0, 204, 188, 0.12); color: var(--utrecht); }
+  .city-window.amsterdam { background: rgba(255, 82, 82, 0.12); color: var(--amsterdam); }
+
+  h2.city-name.apeldoorn { color: var(--apeldoorn); }
+  h2.city-name.amersfoort { color: var(--amersfoort); }
+  h2.city-name.utrecht { color: var(--utrecht); }
+  h2.city-name.amsterdam { color: var(--amsterdam); }
+
+  /* Signature stat — one big number per city */
+  .sig-stat {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+  .sig-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(80px, 14vw, 168px);
+    font-weight: 500;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 12px;
+  }
+  .sig-number.apeldoorn { color: var(--apeldoorn); }
+  .sig-number.amersfoort { color: var(--amersfoort); }
+  .sig-number.utrecht { color: var(--utrecht); }
+  .sig-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1.6;
+    max-width: 240px;
+  }
+  .sig-explain {
+    font-size: 17px;
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  .sig-explain .em {
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .sig-explain.apeldoorn .em { color: var(--apeldoorn); }
+  .sig-explain.amersfoort .em { color: var(--amersfoort); }
+  .sig-explain.utrecht .em { color: var(--utrecht); }
+
+  /* City stats table */
+  .city-stats {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 0;
+    border-top: 1px solid var(--divider);
+    border-bottom: 1px solid var(--divider);
+  }
+  .cs-item {
+    padding: 24px 20px 24px 0;
+    border-right: 1px solid var(--divider);
+  }
+  .cs-item:last-child { border-right: none; }
+  .cs-item .lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .cs-item .val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .cs-item .val .unit {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-left: 4px;
+    font-weight: 300;
+    letter-spacing: 0.05em;
+  }
+
+  /* Quote block */
+  .quote {
+    font-size: 20px;
+    color: var(--text-primary);
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 720px;
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+    margin: 32px 0 8px;
+  }
+  .quote.apeldoorn { border-color: var(--apeldoorn); }
+  .quote.amersfoort { border-color: var(--amersfoort); }
+  .quote.utrecht { border-color: var(--utrecht); }
+  .quote.amsterdam { border-color: var(--amsterdam); }
+  .quote .attribution {
+    display: block;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* Amsterdam — the ghost city section */
+  .ghost-city {
+    text-align: left;
+  }
+  .zero-block {
+    margin-top: 48px;
+    padding: 60px 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--amsterdam);
+    text-align: center;
+    max-width: 720px;
+  }
+  .zero-number {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(120px, 22vw, 240px);
+    font-weight: 500;
+    color: var(--amsterdam);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    margin-bottom: 16px;
+  }
+  .zero-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  /* Side-by-side comparison table */
+  .comparison-wrap {
+    margin-top: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 32px;
+  }
+  .comparison-wrap .head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .comp-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .comp-table th, .comp-table td {
+    padding: 16px 12px;
+    text-align: left;
+    font-size: 14px;
+    border-bottom: 1px solid var(--divider);
+  }
+  .comp-table thead th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 400;
+    padding-bottom: 20px;
+  }
+  .comp-table thead th.apeldoorn { color: var(--apeldoorn); }
+  .comp-table thead th.amersfoort { color: var(--amersfoort); }
+  .comp-table thead th.utrecht { color: var(--utrecht); }
+  .comp-table tbody th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+  .comp-table tbody td {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+  .comp-table tbody td.best.apeldoorn { color: var(--apeldoorn); }
+  .comp-table tbody td.best.amersfoort { color: var(--amersfoort); }
+  .comp-table tbody td.best.utrecht { color: var(--utrecht); }
+  .comp-table tr:last-child td, .comp-table tr:last-child th { border-bottom: none; }
+
+  /* Closing */
+  .closing-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(28px, 4.5vw, 44px);
+    line-height: 1.25;
+    max-width: 820px;
+    letter-spacing: -0.015em;
+    margin-bottom: 36px;
+  }
+  .closing-line .em { color: var(--accent); }
+  .closing-echo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    max-width: 620px;
+    line-height: 1.7;
+  }
+  .closing-echo.final {
+    color: var(--accent);
+    margin-top: 32px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 900px) {
+    .sig-stat { grid-template-columns: 1fr; gap: 24px; }
+  }
+  @media (max-width: 720px) {
+    .hud { padding: 16px 20px; }
+    .hud-brand, .hud-city { font-size: 10px; }
+    section { padding: 80px 20px 60px; }
+    .city-bar { padding: 0 12px; font-size: 9px; }
+    .city-bar .stage { padding: 0 8px; }
+    .quote { padding-left: 16px; font-size: 17px; }
+    .comp-table th, .comp-table td { padding: 12px 8px; font-size: 12px; }
+    .comp-table tbody td { font-size: 15px; }
+    .zero-block { padding: 40px 24px; }
+    .cs-item { padding: 20px 12px 20px 0; }
+    .cs-item .val { font-size: 20px; }
+  }
+
+  /* ─── Chapter navigation bar ─── */
+  .chapter-nav {
+    position: fixed;
+    bottom: 36px; left: 0; right: 0;
+    height: 44px;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 99;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .chapter-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover { color: var(--accent); }
+  .chapter-nav .home-link { color: var(--text-dim); }
+  .chapter-nav .spacer { flex: 1; }
+  @media (max-width: 720px) {
+    .chapter-nav { padding: 0 16px; font-size: 9px; height: 40px; bottom: 36px; }
+    .chapter-nav a span.label-full { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="chapter-nav">
+  <a href="chapter-1-how-i-got-here.html">&larr; <span class="label-full">Ch.1 How I Got Here</span></a>
+  <div class="spacer"></div>
+  <a href="how-it-all-began.html" class="home-link">Field Notes Home</a>
+  <div class="spacer"></div>
+  <a href="chapter-3-the-economics.html"><span class="label-full">Ch.3 The Economics</span> &rarr;</a>
+</div>
+
+
+<div class="hud">
+  <div class="hud-brand">HP / Field Notes 002</div>
+  <div class="hud-city">Currently · <span class="val" id="cityLabel">The Beginning</span></div>
+</div>
+
+<div class="city-bar">
+  <div class="stage" data-stage="intro">Three Cities</div>
+  <div class="stage" data-stage="apeldoorn">Apeldoorn</div>
+  <div class="stage" data-stage="amersfoort">Amersfoort</div>
+  <div class="stage" data-stage="utrecht">Utrecht</div>
+  <div class="stage" data-stage="amsterdam">Amsterdam</div>
+  <div class="stage" data-stage="compare">Side by Side</div>
+</div>
+
+<!-- 1. Hero -->
+<section data-sec="0" data-stage="intro" data-city="The Beginning">
+  <div class="container">
+    <div class="chapter-label fade-up">Chapter 02 / Three Cities, One Bike</div>
+    <h1 class="fade-up delay-1">
+      Every city<br>
+      taught me<br>
+      <span class="accent">a different lesson.</span>
+    </h1>
+    <p class="lede fade-up delay-2">
+      Same job, same platform, same bike. Three different Dutch cities decided completely differently how much I earned, how long I rode, and how customers treated me. This is the fingerprint of each.
+    </p>
+  </div>
+</section>
+
+<!-- 2. Apeldoorn -->
+<section data-sec="1" data-stage="apeldoorn" data-city="Apeldoorn">
+  <div class="container">
+    <div class="city-header fade-up">
+      <div class="city-number">City 01 / Apeldoorn</div>
+      <div class="city-window apeldoorn">Aug – Oct 2020 · 60 days</div>
+    </div>
+    <h2 class="city-name apeldoorn fade-up delay-1">Apeldoorn.<br>The starter town.</h2>
+    <p class="lede fade-up delay-2">
+      A new city on Uber's map. A student rider on a promotional program. A restaurant scene of about five kitchens, and 90% of them were McDonald's.
+    </p>
+    <div class="sig-stat fade-up delay-3">
+      <div>
+        <div class="sig-number apeldoorn">60%</div>
+        <div class="sig-lbl">Of trips triggered surge pricing</div>
+      </div>
+      <div>
+        <p class="sig-explain apeldoorn">
+          Uber was launching a new market. They needed riders on the road. So every second trip fired <span class="em">surge pricing</span> — an incentive to keep me pedaling in a town too small to sustain the demand naturally.
+        </p>
+      </div>
+    </div>
+    <div class="city-stats fade-up delay-4">
+      <div class="cs-item">
+        <div class="lbl">Trips</div>
+        <div class="val">425</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Total earned</div>
+        <div class="val">€2,465</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Median hourly</div>
+        <div class="val">€15.47</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Median session</div>
+        <div class="val">20<span class="unit">min</span></div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Tip rate</div>
+        <div class="val">8.7<span class="unit">%</span></div>
+      </div>
+    </div>
+    <p class="quote apeldoorn fade-up delay-5">
+      Uber had a promotional offer for riders: log in 9 to 14, complete two orders, and you got paid €16 per hour. We got more orders from McDonald's — around 90% of them.
+      <span class="attribution">— Field log · Apeldoorn</span>
+    </p>
+  </div>
+</section>
+
+<!-- 3. Amersfoort -->
+<section data-sec="2" data-stage="amersfoort" data-city="Amersfoort">
+  <div class="container">
+    <div class="city-header fade-up">
+      <div class="city-number">City 02 / Amersfoort</div>
+      <div class="city-window amersfoort">Oct 2020 – Feb 2021 · 97 days</div>
+    </div>
+    <h2 class="city-name amersfoort fade-up delay-1">Amersfoort.<br>The favorite.</h2>
+    <p class="lede fade-up delay-2">
+      More restaurants had come online. The map filled in. And an entire Dutch winter — the coldest, hardest lockdown of the pandemic — happened here, on this bike.
+    </p>
+    <div class="sig-stat fade-up delay-3">
+      <div>
+        <div class="sig-number amersfoort">€18.11</div>
+        <div class="sig-lbl">Median hourly rate · highest of any city</div>
+      </div>
+      <div>
+        <p class="sig-explain amersfoort">
+          The best-paying city per active hour I ever rode. Enough variety of restaurants to keep me moving. Enough winter to bring out sympathetic tippers. Enough demand to earn <span class="em">€6.47 per trip</span> — the highest per-trip average of the three.
+        </p>
+      </div>
+    </div>
+    <div class="city-stats fade-up delay-4">
+      <div class="cs-item">
+        <div class="lbl">Trips</div>
+        <div class="val">1,104</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Total earned</div>
+        <div class="val">€7,140</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Median hourly</div>
+        <div class="val">€18.11</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Peak tip rate</div>
+        <div class="val">14.6<span class="unit">%</span></div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Per-trip avg</div>
+        <div class="val">€6.47</div>
+      </div>
+    </div>
+    <p class="quote amersfoort fade-up delay-5">
+      I love Amersfoort amongst all. I love mountain biking, I like food, I like cooking. I always enjoyed riding in Amersfoort.
+      <span class="attribution">— Field log · Amersfoort</span>
+    </p>
+  </div>
+</section>
+
+<!-- 4. Utrecht -->
+<section data-sec="3" data-stage="utrecht" data-city="Utrecht">
+  <div class="container">
+    <div class="city-header fade-up">
+      <div class="city-number">City 03 / Utrecht</div>
+      <div class="city-window utrecht">Mar – Oct 2021 · 137 days</div>
+    </div>
+    <h2 class="city-name utrecht fade-up delay-1">Utrecht.<br>The mature market.</h2>
+    <p class="lede fade-up delay-2">
+      Every restaurant on multiple platforms. Every rider on multiple apps. The Eureka moment — when I stopped seeing individual orders and started seeing the shape of the whole system.
+    </p>
+    <div class="sig-stat fade-up delay-3">
+      <div>
+        <div class="sig-number utrecht">19.8%</div>
+        <div class="sig-lbl">Of trips were batched — highest rate anywhere</div>
+      </div>
+      <div>
+        <p class="sig-explain utrecht">
+          A dense city with a dense restaurant map means Uber could pair orders together. In Apeldoorn, batching was <span class="em">1.4%</span>. Here it was 20%. The system had matured to the point where two deliveries could share one bike ride.
+        </p>
+      </div>
+    </div>
+    <div class="city-stats fade-up delay-4">
+      <div class="cs-item">
+        <div class="lbl">Trips</div>
+        <div class="val">1,686</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Total earned</div>
+        <div class="val">€9,053</div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Share of all</div>
+        <div class="val">48.5<span class="unit">%</span></div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Batch rate</div>
+        <div class="val">19.8<span class="unit">%</span></div>
+      </div>
+      <div class="cs-item">
+        <div class="lbl">Surge rate</div>
+        <div class="val">19.3<span class="unit">%</span></div>
+      </div>
+    </div>
+    <p class="quote utrecht fade-up delay-5">
+      In Utrecht, most of the restaurants were associated with Uber and Deliveroo. I did most of my orders there. Sometimes two orders, nearby addresses, restaurants in the same area. That was where I started to see the system underneath the app.
+      <span class="attribution">— Field log · Utrecht</span>
+    </p>
+  </div>
+</section>
+
+<!-- 5. Amsterdam — the ghost city -->
+<section data-sec="4" data-stage="amsterdam" data-city="Amsterdam">
+  <div class="container ghost-city">
+    <div class="city-header fade-up">
+      <div class="city-number">City 04 / Amsterdam</div>
+      <div class="city-window amsterdam">The city I avoided</div>
+    </div>
+    <h2 class="city-name amsterdam fade-up delay-1">Amsterdam.<br>The ghost city.</h2>
+    <p class="lede fade-up delay-2">
+      Uber's GDPR export lists my operating city as "Amsterdam." Their internal accounting says every one of my 3,215 trips happened there. The reality is different.
+    </p>
+    <div class="zero-block fade-up delay-3">
+      <div class="zero-number">0</div>
+      <div class="zero-lbl">Trips actually delivered in Amsterdam<br>across 14 months</div>
+    </div>
+    <p class="quote amsterdam fade-up delay-4" style="margin-top: 48px;">
+      I avoid going to Amsterdam because it is hell for bikers, and the kind of orders are coming from one corner to another corner.
+      <span class="attribution">— Field log · Amsterdam (never)</span>
+    </p>
+    <p class="lede fade-up delay-5" style="margin-top: 40px;">
+      Uber's data has the whole Randstad rolled up as "Amsterdam" — that's why my ledger was mislabeled. My memory had to correct the accounting.
+    </p>
+  </div>
+</section>
+
+<!-- 6. Side-by-side comparison -->
+<section data-sec="5" data-stage="compare" data-city="Side by Side">
+  <div class="container">
+    <div class="chapter-label fade-up">05 / Three Fingerprints</div>
+    <h2 class="fade-up delay-1">Same job.<br>Different math.</h2>
+    <p class="lede fade-up delay-2">
+      Every metric on this page changed as I moved cities. The market matured. Uber pulled back on surge. Batching went up. Sessions got longer. My earnings per trip went down — but total earnings went up.
+    </p>
+    <div class="comparison-wrap fade-up delay-3">
+      <div class="head">Per-City Fingerprint · 3,215 trips · 14 months</div>
+      <table class="comp-table">
+        <thead>
+          <tr>
+            <th style="width:38%">Metric</th>
+            <th class="apeldoorn">Apeldoorn</th>
+            <th class="amersfoort">Amersfoort</th>
+            <th class="utrecht">Utrecht</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>Trips</th>
+            <td>425</td>
+            <td>1,104</td>
+            <td class="best utrecht">1,686</td>
+          </tr>
+          <tr>
+            <th>Total earned</th>
+            <td>€2,465</td>
+            <td>€7,140</td>
+            <td class="best utrecht">€9,053</td>
+          </tr>
+          <tr>
+            <th>Median hourly rate</th>
+            <td>€15.47</td>
+            <td class="best amersfoort">€18.11</td>
+            <td>€16.77</td>
+          </tr>
+          <tr>
+            <th>Per-trip average</th>
+            <td>€5.80</td>
+            <td class="best amersfoort">€6.47</td>
+            <td>€5.37</td>
+          </tr>
+          <tr>
+            <th>Median session length</th>
+            <td>20 min</td>
+            <td>41 min</td>
+            <td class="best utrecht">46 min</td>
+          </tr>
+          <tr>
+            <th>Surge rate</th>
+            <td class="best apeldoorn">60.2%</td>
+            <td>44.5%</td>
+            <td>19.3%</td>
+          </tr>
+          <tr>
+            <th>Batch rate</th>
+            <td>1.4%</td>
+            <td>7.5%</td>
+            <td class="best utrecht">19.8%</td>
+          </tr>
+          <tr>
+            <th>Tip rate</th>
+            <td>8.7%</td>
+            <td class="best amersfoort">11.4%</td>
+            <td>11.3%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="lede fade-up delay-4" style="margin-top: 32px;">
+      Look at the diagonals. Surge fell as the market matured. Batching rose. Session length stretched. Every column is a snapshot of Uber's platform at a different stage of its own growth — and I was riding across all three stages.
+    </p>
+  </div>
+</section>
+
+<!-- 7. Closing -->
+<section data-sec="6" data-stage="compare" data-city="The Lesson">
+  <div class="container">
+    <div class="chapter-label fade-up">06 / What the Map Was Actually Showing</div>
+    <p class="closing-line fade-up delay-1">
+      Apeldoorn taught me the promo.
+      Amersfoort taught me the winter.
+      <span class="em">Utrecht taught me the system.</span>
+    </p>
+    <p class="closing-echo fade-up delay-2">
+      The three cities weren't just three geographies. They were three stages of Uber's own maturity — a small market bribing riders to show up, a mid-sized market humming at its best hourly rate, a large market where the algorithm had learned to squeeze two deliveries into one bike ride.
+    </p>
+    <p class="closing-echo fade-up delay-3" style="margin-top: 24px;">
+      I moved three times in fourteen months. But the platform was moving too, faster than I noticed, restructuring the work under me while I pedaled.
+    </p>
+    <p class="closing-echo fade-up delay-4 final">
+      Only in the data, a year later, could I see all three of us moving at once.
+    </p>
+  </div>
+</section>
+
+<script>
+  const fadeObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+  // HUD + timeline
+  const cityLabel = document.getElementById('cityLabel');
+  const sections = Array.from(document.querySelectorAll('section[data-sec]'));
+  const stages = document.querySelectorAll('.city-bar .stage');
+  const stageOrder = ['intro', 'apeldoorn', 'amersfoort', 'utrecht', 'amsterdam', 'compare'];
+
+  function updateHud() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let active = sections[0];
+    for (const s of sections) if (s.offsetTop <= mid) active = s;
+    cityLabel.textContent = active.dataset.city;
+
+    const stage = active.dataset.stage;
+    const idx = stageOrder.indexOf(stage);
+    stages.forEach((el, i) => {
+      el.classList.remove('active', 'passed');
+      if (i < idx) el.classList.add('passed');
+      else if (i === idx) el.classList.add('active');
+    });
+  }
+  let raf = false;
+  window.addEventListener('scroll', () => {
+    if (!raf) { raf = true; requestAnimationFrame(() => { updateHud(); raf = false; }); }
+  }, { passive: true });
+  updateHud();
+</script>
+
+</body>
+</html>

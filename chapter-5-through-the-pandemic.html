@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chapter 5 — Through the Pandemic · Harshil Patel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0d14;
+    --bg-card: #14181f;
+    --text-primary: #ebe7df;
+    --text-muted: #a3a8b8;
+    --text-dim: #7d829a;
+    --accent: #ffc940;
+    --lockdown: #ff5252;
+    --curfew: #ff9548;
+    --reopen: #7ed957;
+    --divider: #20242d;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: radial-gradient(ellipse 1200px 800px at 50% -10%, #131824 0%, var(--bg-deep) 55%);
+    color: var(--text-primary);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 400;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  .hud {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(10,13,20,0.85) 0%, rgba(10,13,20,0) 100%);
+    backdrop-filter: blur(2px);
+  }
+  .hud-brand, .hud-phase {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--text-primary);
+    text-transform: uppercase;
+  }
+  .hud-phase .val { color: var(--accent); font-weight: 500; }
+
+  .phase-bar {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: 36px;
+    background: rgba(10, 13, 20, 0.85);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    z-index: 100;
+  }
+  .phase-bar .stage {
+    flex: 1;
+    padding: 0 10px;
+    color: var(--text-dim);
+    position: relative;
+    transition: color 0.6s ease;
+    border-right: 1px solid var(--divider);
+    text-align: center;
+  }
+  .phase-bar .stage:last-child { border-right: none; }
+  .phase-bar .stage.active { color: var(--accent); }
+  .phase-bar .stage.passed { color: var(--text-muted); }
+
+  section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 40px 80px;
+    position: relative;
+  }
+  .container { max-width: 1080px; margin: 0 auto; width: 100%; }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 1s ease, transform 1s ease;
+  }
+  .fade-up.in { opacity: 1; transform: translateY(0); }
+  .delay-1 { transition-delay: 0.15s; }
+  .delay-2 { transition-delay: 0.3s; }
+  .delay-3 { transition-delay: 0.45s; }
+  .delay-4 { transition-delay: 0.6s; }
+
+  .chapter-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .chapter-label::before {
+    content: '';
+    width: 24px; height: 1px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+  }
+  h1 .accent { color: var(--accent); }
+  h2 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: clamp(32px, 5vw, 60px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .lede {
+    font-size: 18px;
+    color: var(--text-muted);
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  /* ─── The permit card ─── */
+  .permit-card {
+    margin-top: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    border-left: 3px solid var(--curfew);
+    padding: 32px 36px;
+    max-width: 560px;
+  }
+  .permit-card .head {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--curfew);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .permit-card .p-row {
+    display: flex; justify-content: space-between;
+    padding: 10px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    border-bottom: 1px dashed var(--divider);
+  }
+  .permit-card .p-row:last-child { border-bottom: none; }
+  .permit-card .p-row .v { color: var(--text-primary); }
+  .permit-card .p-row.exempt .v { color: var(--curfew); font-weight: 500; }
+
+  /* ─── Timeline / chart ─── */
+  .chart-wrap {
+    margin-top: 48px;
+    background: var(--bg-card);
+    border: 1px solid var(--divider);
+    padding: 32px 24px 20px;
+  }
+  .chart-legend {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .chart-legend .item {
+    display: flex; align-items: center; gap: 8px;
+    color: var(--text-muted);
+  }
+  .chart-legend .sw { width: 12px; height: 12px; }
+  svg.chart { width: 100%; height: 340px; display: block; }
+  .chart-caption {
+    margin-top: 16px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  /* ─── Contrast reveal (peak vs crash) ─── */
+  .contrast-block {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 32px;
+    align-items: center;
+    margin-top: 56px;
+    max-width: 900px;
+  }
+  .contrast-side { text-align: center; }
+  .contrast-side .c-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .contrast-side.lockdown .c-lbl { color: var(--curfew); }
+  .contrast-side.reopen .c-lbl { color: var(--reopen); }
+  .contrast-side .c-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(64px, 10vw, 120px);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .contrast-side.lockdown .c-num { color: var(--curfew); }
+  .contrast-side.reopen .c-num { color: var(--reopen); }
+  .contrast-side .c-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .contrast-arrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 40px;
+    color: var(--text-dim);
+  }
+
+  .quote {
+    font-size: 20px;
+    color: var(--text-primary);
+    font-weight: 300;
+    line-height: 1.55;
+    max-width: 720px;
+    margin: 40px 0 8px;
+    padding-left: 24px;
+    border-left: 2px solid var(--accent);
+  }
+  .quote .attribution {
+    display: block;
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .closing-line {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 400;
+    font-size: clamp(28px, 4.5vw, 48px);
+    line-height: 1.25;
+    max-width: 820px;
+    letter-spacing: -0.015em;
+    margin-bottom: 36px;
+  }
+  .closing-line .em { color: var(--accent); }
+  .closing-echo {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-muted);
+    letter-spacing: 0.08em;
+    max-width: 620px;
+    line-height: 1.7;
+  }
+  .closing-echo.final { color: var(--accent); margin-top: 32px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-up { opacity: 1; transform: none; transition: none; }
+    html { scroll-behavior: auto; }
+  }
+  @media (max-width: 800px) {
+    .contrast-block { grid-template-columns: 1fr; gap: 20px; }
+    .contrast-arrow { transform: rotate(90deg); }
+  }
+  @media (max-width: 720px) {
+    .hud { padding: 16px 20px; }
+    .hud-brand, .hud-phase { font-size: 10px; }
+    section { padding: 80px 20px 60px; }
+    .phase-bar { font-size: 7px; padding: 0 6px; }
+    .phase-bar .stage { padding: 0 4px; }
+    svg.chart { height: 260px; }
+    .permit-card { padding: 22px 20px; }
+  }
+
+  /* ─── Chapter navigation bar ─── */
+  .chapter-nav {
+    position: fixed;
+    bottom: 36px; left: 0; right: 0;
+    height: 44px;
+    background: rgba(10, 13, 20, 0.92);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    z-index: 99;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .chapter-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.2s ease;
+  }
+  .chapter-nav a:hover { color: var(--accent); }
+  .chapter-nav .home-link { color: var(--text-dim); }
+  .chapter-nav .spacer { flex: 1; }
+  @media (max-width: 720px) {
+    .chapter-nav { padding: 0 16px; font-size: 9px; height: 40px; bottom: 36px; }
+    .chapter-nav a span.label-full { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="chapter-nav">
+  <a href="chapter-4-uber-vs-deliveroo.html">&larr; <span class="label-full">Ch.4 Uber vs Deliveroo</span></a>
+  <div class="spacer"></div>
+  <a href="how-it-all-began.html" class="home-link">Field Notes Home</a>
+  <div class="spacer"></div>
+  <a href="chapter-6-memory-scoreboard.html"><span class="label-full">Ch.6 Memory Scoreboard</span> &rarr;</a>
+</div>
+
+
+<div class="hud">
+  <div class="hud-brand">HP / Field Notes 005</div>
+  <div class="hud-phase">Phase · <span class="val" id="phaseLabel">Relative Calm</span></div>
+</div>
+
+<div class="phase-bar">
+  <div class="stage" data-phase="calm">Relative Calm</div>
+  <div class="stage" data-phase="partial">Partial Lockdown</div>
+  <div class="stage" data-phase="hard">Hard Lockdown</div>
+  <div class="stage" data-phase="curfew">Curfew</div>
+  <div class="stage" data-phase="reopen">Reopening</div>
+  <div class="stage" data-phase="second">2nd Wave Return</div>
+</div>
+
+<!-- 1. Hero -->
+<section data-sec="0" data-phase="calm">
+  <div class="container">
+    <div class="chapter-label fade-up">Chapter 05 / Through the Pandemic</div>
+    <h1 class="fade-up delay-1">
+      My busiest month<br>
+      was the <span class="accent">Netherlands'</span><br>
+      hardest month.
+    </h1>
+    <p class="lede fade-up delay-2">
+      Fourteen months on a bike. Also fourteen months of a pandemic. Lockdowns, a curfew, closed restaurants — the same conditions that emptied Dutch streets filled my delivery queue.
+    </p>
+  </div>
+</section>
+
+<!-- 2. The permit -->
+<section data-sec="1" data-phase="curfew">
+  <div class="container">
+    <div class="chapter-label fade-up">01 / The Permit in My Pocket</div>
+    <h2 class="fade-up delay-1">While the country<br>stayed inside,<br>riders were the ones<br>still on the street.</h2>
+    <p class="lede fade-up delay-2">
+      On 23 January 2021, the Netherlands imposed its first curfew since the Second World War. 21:00 to 4:30, nobody outside without a reason. Delivery riders were one of the exceptions.
+    </p>
+    <div class="permit-card fade-up delay-3">
+      <div class="head">Curfew Exemption · Jan–Apr 2021</div>
+      <div class="p-row"><span>Curfew hours</span><span class="v">21:00 – 04:30</span></div>
+      <div class="p-row"><span>General public</span><span class="v">Stay inside</span></div>
+      <div class="p-row exempt"><span>Delivery riders</span><span class="v">Exempt — permit required</span></div>
+      <div class="p-row"><span>Duration</span><span class="v">23 Jan – 28 Apr 2021</span></div>
+    </div>
+    <p class="quote fade-up delay-4">
+      During the lockdown it seems like only riders were the only ones who can be seen. We were providing a permit from Uber that we are riders and we are allowed to deliver.
+      <span class="attribution">— Field log · Curfew, Winter 2021</span>
+    </p>
+  </div>
+</section>
+
+<!-- 3. The full timeline chart -->
+<section data-sec="2" data-phase="hard">
+  <div class="container">
+    <div class="chapter-label fade-up">02 / Trip Volume Against the Timeline</div>
+    <h2 class="fade-up delay-1">Every wave of restrictions<br>shows up in the ledger.</h2>
+    <p class="lede fade-up delay-2">
+      This is monthly trip volume from August 2020 to October 2021, laid against the actual restriction timeline. The shaded bands are lockdown and curfew periods.
+    </p>
+    <div class="chart-wrap fade-up delay-3">
+      <div class="chart-legend">
+        <div class="item"><div class="sw" style="background:#3d404a"></div>Normal / reopened</div>
+        <div class="item"><div class="sw" style="background: var(--curfew)"></div>Lockdown / curfew active</div>
+      </div>
+      <svg id="chart-timeline" class="chart" viewBox="0 0 1020 340" preserveAspectRatio="none"></svg>
+      <div class="chart-caption">Monthly trips · Aug 2020 → Oct 2021 · restriction periods shaded</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. The contrast: April peak vs June crash -->
+<section data-sec="3" data-phase="reopen">
+  <div class="container">
+    <div class="chapter-label fade-up">03 / The Reopening Crash</div>
+    <h2 class="fade-up delay-1">The day the Netherlands<br>reopened, my income<br>fell by more than half.</h2>
+    <p class="lede fade-up delay-2">
+      April 2021 was my single busiest month in 14 months of delivery — the tail end of curfew, restaurants still closed for dine-in. Six weeks later, the government's "openingsplan" reopened restaurants on 5 June. The very next month, my trip count collapsed.
+    </p>
+    <div class="contrast-block fade-up delay-3">
+      <div class="contrast-side lockdown">
+        <div class="c-lbl">April 2021 · Curfew tail end</div>
+        <div class="c-num" data-count="369">0</div>
+        <div class="c-sub">Trips · peak month</div>
+      </div>
+      <div class="contrast-arrow">→</div>
+      <div class="contrast-side reopen">
+        <div class="c-lbl">June 2021 · Reopened</div>
+        <div class="c-num" data-count="143">0</div>
+        <div class="c-sub">Trips · −61%</div>
+      </div>
+    </div>
+    <p class="lede fade-up delay-4" style="margin-top: 40px;">
+      Restaurants reopened their dining rooms on 5 June 2021. Customers who had been ordering delivery for six months went back to eating out. My income didn't dip — it fell off a cliff.
+    </p>
+  </div>
+</section>
+
+<!-- 5. Closing -->
+<section data-sec="4" data-phase="second">
+  <div class="container">
+    <div class="chapter-label fade-up">04 / What the Pandemic Actually Was, Economically</div>
+    <p class="closing-line fade-up delay-1">
+      The pandemic didn't interrupt my work.
+      <span class="em">The pandemic was the demand.</span>
+    </p>
+    <p class="closing-echo fade-up delay-2">
+      Every restriction that emptied a restaurant filled my queue. Every curfew that cleared the streets left riders as the only visible workers. When the country reopened, the platform I depended on lost more than half its purpose overnight.
+    </p>
+    <p class="closing-echo fade-up delay-3" style="margin-top: 24px;">
+      I didn't choose this job because of the pandemic. But the pandemic decided how much that job was worth, month by month, without ever asking me.
+    </p>
+    <p class="closing-echo fade-up delay-4 final">
+      That's the kind of relationship a spreadsheet can show you, and a memory alone cannot.
+    </p>
+  </div>
+</section>
+
+<script>
+  const fadeObs = new IntersectionObserver((es) => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fadeObs.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => fadeObs.observe(el));
+
+  // Count-ups
+  const countObs = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const target = parseInt(el.dataset.count, 10);
+      const dur = 1600, start = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      function tick(now) {
+        const p = Math.min((now - start) / dur, 1);
+        el.textContent = Math.round(target * ease(p)).toLocaleString('en-US');
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      countObs.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-count]').forEach(el => countObs.observe(el));
+
+  // HUD phase tracking
+  const phaseLabel = document.getElementById('phaseLabel');
+  const sections = Array.from(document.querySelectorAll('section[data-sec]'));
+  const stages = document.querySelectorAll('.phase-bar .stage');
+  const phaseNames = { calm: 'Relative Calm', partial: 'Partial Lockdown', hard: 'Hard Lockdown', curfew: 'Curfew', reopen: 'Reopening', second: '2nd Wave Return' };
+  const stageOrder = ['calm', 'partial', 'hard', 'curfew', 'reopen', 'second'];
+
+  function updateHud() {
+    const mid = window.scrollY + window.innerHeight * 0.5;
+    let active = sections[0];
+    for (const s of sections) if (s.offsetTop <= mid) active = s;
+    const phase = active.dataset.phase;
+    phaseLabel.textContent = phaseNames[phase];
+    const idx = stageOrder.indexOf(phase);
+    stages.forEach((el, i) => {
+      el.classList.remove('active', 'passed');
+      if (i < idx) el.classList.add('passed');
+      else if (i === idx) el.classList.add('active');
+    });
+  }
+  let raf = false;
+  window.addEventListener('scroll', () => {
+    if (!raf) { raf = true; requestAnimationFrame(() => { updateHud(); raf = false; }); }
+  }, { passive: true });
+  updateHud();
+
+  // ─── Timeline chart: bars + restriction shading ───
+  const monthly = [
+    {m:'Aug20', trips:111, restricted:false},
+    {m:'Sep20', trips:211, restricted:false},
+    {m:'Oct20', trips:287, restricted:true},   // partial lockdown from 14 Oct
+    {m:'Nov20', trips:177, restricted:true},
+    {m:'Dec20', trips:247, restricted:true},   // hard lockdown from 15 Dec
+    {m:'Jan21', trips:236, restricted:true},   // curfew from 23 Jan
+    {m:'Feb21', trips:260, restricted:true},
+    {m:'Mar21', trips:262, restricted:true},
+    {m:'Apr21', trips:369, restricted:true},   // curfew ends 28 Apr
+    {m:'May21', trips:331, restricted:false},
+    {m:'Jun21', trips:143, restricted:false},  // openingsplan 5 Jun
+    {m:'Jul21', trips:236, restricted:true},   // restrictions reintroduced 10 Jul
+    {m:'Aug21', trips:236, restricted:true},   // lifted 14 Aug
+    {m:'Sep21', trips:82, restricted:false},
+    {m:'Oct21', trips:27, restricted:false},
+  ];
+
+  const svg = document.getElementById('chart-timeline');
+  const W = 1020, H = 340;
+  const padL = 50, padR = 20, padT = 20, padB = 40;
+  const chartW = W - padL - padR, chartH = H - padT - padB;
+  const maxVal = Math.max(...monthly.map(d => d.trips));
+  const step = chartW / monthly.length;
+  const barW = step * 0.68;
+
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs) {
+    const e = document.createElementNS(NS, name);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  // Y grid
+  [0, 0.5, 1].forEach(t => {
+    const y = padT + chartH * (1 - t);
+    svg.appendChild(el('line', { x1: padL, y1: y, x2: W - padR, y2: y, stroke: '#20242d', 'stroke-width': 1 }));
+    const lbl = el('text', { x: padL - 8, y: y + 4, 'text-anchor': 'end', 'font-family': 'JetBrains Mono, monospace', 'font-size': 10, fill: '#a3a8b8' });
+    lbl.textContent = Math.round(maxVal * t);
+    svg.appendChild(lbl);
+  });
+
+  // Restriction period background shading
+  monthly.forEach((d, i) => {
+    if (d.restricted) {
+      const x = padL + i * step;
+      svg.appendChild(el('rect', {
+        x: x, y: padT, width: step, height: chartH,
+        fill: '#ff5252', opacity: 0.08,
+      }));
+    }
+  });
+
+  // Bars
+  const bars = [];
+  monthly.forEach((d, i) => {
+    const x = padL + i * step + (step - barW) / 2;
+    const h = (d.trips / maxVal) * chartH;
+    const color = d.restricted ? '#ff9548' : '#3d404a';
+    const rect = el('rect', { x: x, y: padT + chartH, width: barW, height: 0, fill: color, opacity: 0.9 });
+    svg.appendChild(rect);
+    bars.push({ rect, h });
+
+    const vlbl = el('text', {
+      x: x + barW/2, y: padT + chartH - h - 8,
+      'text-anchor': 'middle', 'font-family': 'JetBrains Mono, monospace',
+      'font-size': 10, fill: d.restricted ? '#ff9548' : '#7a7d8a', opacity: 0,
+    });
+    vlbl.textContent = d.trips;
+    svg.appendChild(vlbl);
+    bars[bars.length-1].vlbl = vlbl;
+
+    const xlbl = el('text', {
+      x: x + barW/2, y: H - padB + 20,
+      'text-anchor': 'middle', 'font-family': 'JetBrains Mono, monospace',
+      'font-size': 9, fill: '#a3a8b8', 'letter-spacing': '0.02em',
+    });
+    xlbl.textContent = d.m;
+    svg.appendChild(xlbl);
+  });
+
+  let animated = false;
+  const chartObs = new IntersectionObserver((es) => {
+    es.forEach(e => {
+      if (e.isIntersecting && !animated) {
+        animated = true;
+        const dur = 1600, start = performance.now();
+        const ease = t => 1 - Math.pow(1 - t, 3);
+        function tick(now) {
+          const p = Math.min((now - start) / dur, 1);
+          const k = ease(p);
+          bars.forEach(b => {
+            b.rect.setAttribute('y', padT + chartH - b.h * k);
+            b.rect.setAttribute('height', b.h * k);
+            b.vlbl.setAttribute('opacity', k);
+          });
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+    });
+  }, { threshold: 0.3 });
+  chartObs.observe(document.querySelector('section[data-sec="2"]'));
+</script>
+
+</body>
+</html>
