@@ -84,9 +84,16 @@ section.block{padding:72px 0 0}
 .st:hover .disc,.st:focus-visible .disc{transform:scale(1.08)}
 .st:focus{outline:none}
 .st:focus-visible .disc{stroke:var(--ember-btn);stroke-width:4}
+.road__bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;padding:2px 4px 6px}
+.road__cap{font-size:14px;color:var(--ink-2);flex:1 1 320px;margin:0}
+.road__cap b{color:var(--ink);font-weight:600}
+.road__switch{display:inline-flex;align-items:center;min-height:44px;padding:0 18px;border-radius:6px;background:var(--navy);color:#fff;font-weight:600;font-size:14px;white-space:nowrap}
+.road__switch:hover{background:var(--navy-2)}
+.road__switch[aria-pressed="true"]{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.chip-g{transform-box:fill-box;transform-origin:center bottom}
+@media (prefers-reduced-motion:no-preference){.chip-g.pop{animation:pop .45s cubic-bezier(.2,1.4,.4,1) both}@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.6)}to{opacity:1;transform:none}}
+.seg{stroke-dasharray:1600;animation:draw 1.1s ease-out both}@keyframes draw{from{stroke-dashoffset:1600}to{stroke-dashoffset:0}}}
 .road__hint{font-size:13px;color:var(--ink-3);text-align:center;padding:4px 0 8px}
-.parcel{offset-path:path('M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940');offset-rotate:0deg}
-@media (prefers-reduced-motion:no-preference){.parcel{animation:drive 14s linear infinite}@keyframes drive{from{offset-distance:0%}to{offset-distance:100%}}}
 .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-3);margin-top:14px}
 .legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 
@@ -284,10 +291,10 @@ section.block{padding:72px 0 0}
     </div>
 
     <div class="results">
-      <div class="result"><div class="result__num">8×</div><div class="result__txt t" data-en="Factory output, from 250 to 2,000+ units per customer a month" data-nl="Fabrieksoutput, van 250 naar 2.000+ eenheden per klant per maand">Factory output, from 250 to 2,000+ units per customer a month</div><div class="result__src">Techno Electromech</div></div>
-      <div class="result"><div class="result__num">−2 <span class="t" data-en="days" data-nl="dagen">days</span></div><div class="result__txt t" data-en="Order-to-dispatch lead time" data-nl="Doorlooptijd van order tot verzending">Order-to-dispatch lead time</div><div class="result__src">Techno Electromech</div></div>
-      <div class="result"><div class="result__num">&lt;2.5%</div><div class="result__txt t" data-en="Production defects, down from 3.5%" data-nl="Productiefouten, omlaag van 3,5%">Production defects, down from 3.5%</div><div class="result__src">Techno Electromech</div></div>
-      <div class="result"><div class="result__num">15–20%+</div><div class="result__txt t" data-en="Store conversion, up from 6–8%" data-nl="Winkelconversie, omhoog van 6–8%">Store conversion, up from 6–8%</div><div class="result__src">Bever · The North Face</div></div>
+      <div class="result"><div class="result__num"><span class="cu" data-from="1" data-to="8" data-dec="0" data-suf="×">8×</span></div><div class="result__txt t" data-en="Factory output, from 250 to 2,000+ units per customer a month" data-nl="Fabrieksoutput, van 250 naar 2.000+ eenheden per klant per maand">Factory output, from 250 to 2,000+ units per customer a month</div><div class="result__src">Techno Electromech</div></div>
+      <div class="result"><div class="result__num"><span class="cu" data-from="0" data-to="2" data-dec="0" data-pre="−">−2</span> <span class="t" data-en="days" data-nl="dagen">days</span></div><div class="result__txt t" data-en="Order-to-dispatch lead time" data-nl="Doorlooptijd van order tot verzending">Order-to-dispatch lead time</div><div class="result__src">Techno Electromech</div></div>
+      <div class="result"><div class="result__num"><span class="cu" data-from="3.5" data-to="2.5" data-dec="1" data-suf="%">&lt;2.5%</span></div><div class="result__txt t" data-en="Production defects, down from 3.5%" data-nl="Productiefouten, omlaag van 3,5%">Production defects, down from 3.5%</div><div class="result__src">Techno Electromech</div></div>
+      <div class="result"><div class="result__num"><span class="cu" data-from="6" data-to="20" data-dec="0" data-suf="%">15–20%+</span></div><div class="result__txt t" data-en="Store conversion, up from 6–8%" data-nl="Winkelconversie, omhoog van 6–8%">Store conversion, up from 6–8%</div><div class="result__src">Bever · The North Face</div></div>
     </div>
     <p class="results-cap t" data-en="Results from real jobs, not portfolio projects." data-nl="Resultaten uit echte functies, geen portfolioprojecten.">Results from real jobs, not portfolio projects.</p>
   </div>
@@ -298,23 +305,23 @@ section.block{padding:72px 0 0}
   <div class="wrap">
     <p class="eyebrow t" data-en="My work, along the supply chain" data-nl="Mijn werk, langs de supply chain">My work, along the supply chain</p>
     <h2 class="h2 t" data-en="Follow a product from supplier to customer's home" data-nl="Volg een product van leverancier tot bij de klant thuis">Follow a product from supplier to customer's home</h2>
-    <p class="lead t" data-en="Each stop shows a question I answered with data, and the real job behind it. Click a project to open it." data-nl="Elke stop toont een vraag die ik met data heb beantwoord, en de echte functie erachter. Klik op een project om het te openen.">Each stop shows a question I answered with data, and the real job behind it. Click a project to open it.</p>
+    <p class="lead t" data-en="I've worked along this road, from the factory to the customer's door. Switch the view to see what I found with data at each stop." data-nl="Ik heb langs deze weg gewerkt, van de fabriek tot de voordeur van de klant. Wissel de weergave om te zien wat ik met data vond bij elke stop.">I've worked along this road, from the factory to the customer's door. Switch the view to see what I found with data at each stop.</p>
 
     <div class="road">
+      <div class="road__bar">
+        <p class="road__cap" id="roadCap" aria-live="polite"></p>
+        <button class="road__switch" id="roadSwitch" aria-pressed="false"></button>
+      </div>
       <svg viewBox="0 0 1000 450" role="img" aria-labelledby="roadT roadD" id="roadSvg">
         <title id="roadT">Supply chain road</title>
-        <desc id="roadD">An S-shaped road with six stops: supplier, factory, warehouse, transport, store and customer's home. Select a stop to jump to its projects.</desc>
-        <path d="M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940" fill="none" stroke="#E3E1DA" stroke-width="30" stroke-linecap="round"/>
+        <desc id="roadD">An S-shaped road with six stops: supplier, factory, warehouse, transport, store and customer's home. One view shows where Harshil worked along the road; the other shows the key KPI he found at each stop. Select a stop to jump to its projects.</desc>
+        <g id="careerLayer" aria-hidden="true"></g>
+        <path d="M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940" fill="none" stroke="#E3E1DA" stroke-width="30" stroke-linecap="round" opacity=".9"/>
         <path d="M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940" fill="none" stroke="#1C2B4A" stroke-width="2" stroke-dasharray="10 10"/>
-        <g class="parcel" aria-hidden="true"><rect x="-9" y="-9" width="18" height="18" rx="3" fill="#E05C2A"/><path d="M-9 -2 H9 M0 -9 V9" stroke="#fff" stroke-width="1.5"/></g>
         <g id="roadStations"></g>
+        <g id="chipLayer"></g>
       </svg>
       <p class="road__hint t" data-en="Select a stop to jump to its projects" data-nl="Kies een stop om naar de projecten te gaan">Select a stop to jump to its projects</p>
-    </div>
-    <div class="legend">
-      <span><i style="background:#1C2B4A;box-shadow:0 0 0 2px #E05C2A"></i><span class="t" data-en="Stop with a project" data-nl="Stop met een project">Stop with a project</span></span>
-      <span><i style="border:3px solid #3F7D5C"></i><span class="t" data-en="Real-job experience" data-nl="Ervaring uit een echte functie">Real-job experience</span></span>
-      <span><i style="border:2px dashed #A9AFBA"></i><span class="t" data-en="Coming next" data-nl="Volgt binnenkort">Coming next</span></span>
     </div>
 
     <ol class="stations" id="stations"></ol>
@@ -619,10 +626,9 @@ function renderRoad() {
       ? `<circle class="disc" cx="${s.x}" cy="${s.y}" r="26" fill="#1C2B4A" stroke="#E05C2A" stroke-width="3"/>`
       : `<circle class="disc" cx="${s.x}" cy="${s.y}" r="26" fill="#FFFFFF" stroke="#A9AFBA" stroke-width="2" stroke-dasharray="5 4"/>`;
     const num = `<text x="${s.x}" y="${s.y + 6}" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="17" fill="${has ? '#FFFFFF' : '#5A6475'}">${i + 1}</text>`;
-    const job = `<circle cx="${s.x + 22}" cy="${s.y - 22}" r="8" fill="#FFFFFF" stroke="#3F7D5C" stroke-width="3.5"/>`;
     const label = `<text x="${s.x}" y="${s.y + 54}" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="16" fill="#1C2B4A">${tr(s.name)}</text>
       <text x="${s.x}" y="${s.y + 72}" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#5A6475">${s.stage}${has ? ' · ' + s.projects.length + ' ' + tr(L(s.projects.length > 1 ? 'projects' : 'project', s.projects.length > 1 ? 'projecten' : 'project')) : ''}</text>`;
-    return `<g class="st" tabindex="0" role="button" data-id="${s.id}" aria-label="${i + 1}. ${tr(s.name)}, ${s.stage}">${disc}${num}${job}${label}</g>`;
+    return `<g class="st" tabindex="0" role="button" data-id="${s.id}" aria-label="${i + 1}. ${tr(s.name)}, ${s.stage}">${disc}${num}${label}</g>`;
   }).join('');
   g.querySelectorAll('.st').forEach(el => {
     const go = () => jumpTo(el.dataset.id);
@@ -630,6 +636,75 @@ function renderRoad() {
     el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
   });
 }
+
+/* ============ ROAD VIEWS: career + KPI flags ============ */
+let roadView = 'career', roadSeen = false;
+const CAREER_SEGS = [
+  {d:'M160 90 H860 C960 90 960 230 860 230 H700', c:'#3F7D5C'},
+  {d:'M740 90 H860', c:'#2F67C8'},
+  {d:'M360 230 H240', c:'#2F67C8'},
+  {d:'M480 370 H640', c:'#E05C2A'}
+];
+const CAREER_CHIPS = [
+  {x:320, y:14, bg:'#E7F2EC', fg:'#2E6447', t:L('Techno Electromech: intake → production → dispatch','Techno Electromech: ontvangst → productie → verzending')},
+  {x:800, y:14, bg:'#E6EEFB', fg:'#1F4F9E', t:L('Bever: forecasting and inventory','Bever: forecasting en voorraad')},
+  {x:300, y:168, bg:'#E6EEFB', fg:'#1F4F9E', t:L('Bever: store sales','Bever: winkelverkoop')},
+  {x:560, y:310, bg:'#FBE7DE', fg:'#8F3412', t:L('Patel Delivers: 3,215 deliveries','Patel Delivers: 3.215 bezorgingen')}
+];
+const KPI_CHIPS = [
+  {x:160, y:14, bg:'#FFFFFF', fg:'#5A6475', st:'#A9AFBA', dash:true, t:L('Coming next','Volgt binnenkort')},
+  {x:480, y:14, bg:'#FFF3DC', fg:'#7A4E05', st:'#C98A2B', t:L('OEE 68.2% · target 85%','OEE 68,2% · doel 85%')},
+  {x:800, y:14, bg:'#E7F2EC', fg:'#2E6447', st:'#3F7D5C', t:L('€593K stock savings found','€593K voorraadbesparing gevonden')},
+  {x:700, y:168, bg:'#FCE8E6', fg:'#8E1F1A', st:'#C9302C', t:L('OTIF 28.9% · target 70%','OTIF 28,9% · doel 70%')},
+  {x:300, y:168, bg:'#FFF3DC', fg:'#7A4E05', st:'#C98A2B', t:L('€40.5M margin lost to promotions','€40,5M marge verloren aan acties')},
+  {x:560, y:310, bg:'#E6EEFB', fg:'#1F4F9E', st:'#2F67C8', t:L('3,215 real deliveries analysed','3.215 echte bezorgingen geanalyseerd')}
+];
+function chipSvg(c, i, animate) {
+  const txt = tr(c.t), w = Math.round(txt.length * 7.1 + 30), x = c.x - w / 2;
+  return `<g class="chip-g${animate ? ' pop' : ''}" style="animation-delay:${animate ? i * 130 : 0}ms">
+    <rect x="${x}" y="${c.y}" width="${w}" height="28" rx="6" fill="${c.bg}" stroke="${c.st || c.bg}" stroke-width="1.5"${c.dash ? ' stroke-dasharray="4 3"' : ''}/>
+    <text x="${c.x}" y="${c.y + 19}" text-anchor="middle" font-family="Inter,sans-serif" font-weight="600" font-size="13" fill="${c.fg}">${txt}</text></g>`;
+}
+function renderLayers(animate) {
+  const career = roadView === 'career';
+  document.getElementById('careerLayer').innerHTML = career
+    ? CAREER_SEGS.map((sg, i) => `<path class="${animate ? 'seg' : ''}" style="animation-delay:${i * 150}ms" d="${sg.d}" fill="none" stroke="${sg.c}" stroke-width="46" stroke-linecap="round" opacity=".55"/>`).join('')
+    : '';
+  document.getElementById('chipLayer').innerHTML = (career ? CAREER_CHIPS : KPI_CHIPS).map((c, i) => chipSvg(c, i, animate)).join('');
+  document.getElementById('roadCap').innerHTML = career
+    ? tr(L('<b>My career on this road:</b> production and dispatch at Techno Electromech, forecasting and store sales at Bever, and 3,215 deliveries of my own.','<b>Mijn loopbaan op deze weg:</b> productie en verzending bij Techno Electromech, forecasting en winkelverkoop bij Bever, en 3.215 eigen bezorgingen.'))
+    : tr(L('<b>What I found with data:</b> the key number at each stop. Red is far off target, amber needs attention, green is a saving found.','<b>Wat ik met data vond:</b> het belangrijkste getal bij elke stop. Rood ligt ver van het doel, oranje vraagt aandacht, groen is een gevonden besparing.'));
+  const sw = document.getElementById('roadSwitch');
+  sw.textContent = career ? tr(L('See what I found with data →','Bekijk wat ik met data vond →')) : tr(L('← See my career','← Bekijk mijn loopbaan'));
+  sw.setAttribute('aria-pressed', !career);
+}
+document.getElementById('roadSwitch').addEventListener('click', () => { roadView = roadView === 'career' ? 'kpi' : 'career'; renderLayers(true); });
+const roadObs = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting && !roadSeen) { roadSeen = true; renderLayers(true); roadObs.disconnect(); }
+}), { threshold: 0.35 });
+roadObs.observe(document.getElementById('roadSvg'));
+
+/* ============ COUNT-UP RESULTS ============ */
+document.querySelectorAll('.cu').forEach(el => el.dataset.final = el.innerHTML);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+function countUp(el) {
+  const from = +el.dataset.from, to = +el.dataset.to, dec = +el.dataset.dec || 0, pre = el.dataset.pre || '', suf = el.dataset.suf || '';
+  const dur = 1400, t0 = performance.now(), ease = t => 1 - Math.pow(1 - t, 3);
+  (function tick(now) {
+    const p = Math.min((now - t0) / dur, 1);
+    let v = (from + (to - from) * ease(p)).toFixed(dec);
+    if (currentLang === 'nl') v = v.replace('.', ',');
+    el.textContent = pre + v + suf;
+    if (p < 1) requestAnimationFrame(tick); else el.innerHTML = el.dataset.final;
+  })(t0);
+}
+if (!reduce) {
+  const cuObs = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) { e.target.querySelectorAll('.cu').forEach(countUp); cuObs.unobserve(e.target); }
+  }), { threshold: 0.5 });
+  document.querySelectorAll('.results').forEach(r => cuObs.observe(r));
+}
+
 function renderStations() {
   document.getElementById('stations').innerHTML = STATIONS.map((s, i) => {
     const has = s.projects.length > 0;
@@ -712,7 +787,7 @@ function setLang(lang) {
   });
   document.documentElement.lang = lang;
   document.querySelectorAll('.t').forEach(el => { const v = el.dataset[lang]; if (v !== undefined) el.innerHTML = v; });
-  renderRoad(); renderStations();
+  renderRoad(); renderStations(); renderLayers(false);
   try { localStorage.setItem('hp-lang', lang); } catch (e) {}
 }
 let startLang = 'en';
