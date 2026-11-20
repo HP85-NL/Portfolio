@@ -3,810 +3,443 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Harshilkumar Patel — Data Analyst based in Utrecht, Netherlands.">
-<link rel="icon" type="image/png" href="assets/favicon.png">
-<meta property="og:title" content="Harshilkumar Patel · Data Analyst · Utrecht">
-<meta property="og:description" content="The engineer who knows business. I turn messy data into decisions that move the needle — across supply chains, retail floors, and boardrooms.">
-<meta property="og:image" content="assets/projects/how-it-all-began/thumb.png">
+<meta name="description" content="Harshilkumar Patel — Data Analyst for supply chain and operations in Utrecht. From the factory floor to the shop floor, with proof you can check.">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<meta property="og:title" content="Harshilkumar Patel · Data Analyst · Supply Chain & Operations">
+<meta property="og:description" content="From the factory floor to the shop floor, I make supply chains better with data.">
+<meta property="og:image" content="assets/projects/lumenops-360/thumb.png">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<title>Harshilkumar Patel · Data Analyst · Utrecht</title>
+<title>Harshilkumar Patel · Data Analyst · Supply Chain & Operations</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --navy:#1a2a3a; --navy-light:#243447; --beige:#faf8f5; --beige-dark:#f0ebe5;
-  --orange:#d97757; --orange-light:#e8956a; --orange-pale:#fdf0ea;
-  --text-dark:#2c3e50; --text-mid:#4a5568; --text-light:#7f8c8d;
-  --white:#ffffff; --border:#e8e2d9; --shadow:0 2px 12px rgba(0,0,0,0.08);
+:root{
+  --navy:#1C2B4A; --navy-2:#26375A; --navy-3:#3A4C70;
+  --ember:#E05C2A; --ember-btn:#C2481B; --ember-text:#B8441A; --ember-soft:#F4A27F;
+  --bg:#F7F6F2; --card:#FFFFFF; --soft:#EFEDE6; --line:#E3E1DA; --line-2:#D6D3CA;
+  --ink:#1C2B4A; --ink-2:#3D4657; --ink-3:#5A6475; --ok:#3F7D5C;
+  --f-head:'Montserrat',system-ui,sans-serif; --f-body:'Inter',system-ui,sans-serif; --f-num:'IBM Plex Mono',ui-monospace,monospace;
+  --wrap:1080px;
+  color-scheme:light;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--beige);color:var(--text-dark);line-height:1.6;overflow-x:hidden}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{font-family:var(--f-body);background:var(--bg);color:var(--ink);line-height:1.6;font-size:16px;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
+button{font:inherit;cursor:pointer;border:none;background:none;color:inherit;text-align:inherit}
 img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--ember-btn);outline-offset:3px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ember-text)}
+.h2{font-family:var(--f-head);font-size:30px;font-weight:700;line-height:1.2;margin-top:8px;text-wrap:balance}
+.lead{font-size:16px;color:var(--ink-2);margin-top:8px;max-width:660px}
+section.block{padding:72px 0 0}
 
-/* LAYOUT */
-.layout{display:grid;grid-template-columns:230px 1fr;min-height:100vh}
-
-/* SIDEBAR */
-.sidebar{
-  background:var(--navy);color:var(--white);
-  position:fixed;left:0;top:0;bottom:0;width:230px;
-  display:flex;flex-direction:column;
-  padding:32px 24px;overflow-y:auto;z-index:100;
-}
-.sidebar__profile{text-align:center;margin-bottom:32px}
-.sidebar__photo{
-  width:150px;height:180px;border-radius:14px;object-fit:cover;
-  margin:0 auto 14px;border:3px solid rgba(217,119,87,0.5);display:block;
-}
-.sidebar__name{font-size:15px;font-weight:700;margin-bottom:4px}
-.sidebar__role{font-size:12px;color:var(--orange);margin-bottom:10px}
-.sidebar__status{display:flex;align-items:center;gap:6px;justify-content:center;padding:5px 14px;border-radius:14px;background:rgba(94,180,120,0.12);margin-bottom:16px}
-.sidebar__status-dot{width:7px;height:7px;border-radius:50%;background:#5eb478;animation:pulse 2s ease-in-out infinite}
-.sidebar__status-text{font-size:11px;color:#5eb478;font-weight:600}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
-
-/* LANGUAGE TOGGLE — prominent */
-.lang-toggle{
-  display:flex;gap:6px;padding:4px;
-  background:rgba(255,255,255,0.08);border-radius:8px;
-  margin-bottom:28px;
-}
-.lang-btn{
-  flex:1;padding:8px 6px;font-size:13px;font-weight:600;
-  border-radius:6px;color:rgba(255,255,255,0.55);
-  transition:all 200ms;display:flex;align-items:center;
-  justify-content:center;gap:5px;
-}
-.lang-btn.active{background:var(--orange);color:var(--white)}
-.lang-btn:hover:not(.active){color:var(--white);background:rgba(255,255,255,0.1)}
-.lang-flag{font-size:16px}
-.lang-label{font-size:12px;font-weight:600}
-
-/* NAV */
-.nav{display:flex;flex-direction:column;gap:4px;margin-bottom:auto}
-.nav-link{
-  display:flex;align-items:center;gap:12px;
-  padding:10px 14px;border-radius:8px;font-size:14px;font-weight:500;
-  color:rgba(255,255,255,0.65);transition:all 200ms;cursor:pointer;
-}
-.nav-link:hover{color:var(--white);background:rgba(255,255,255,0.08)}
-.nav-link.active{color:var(--white);background:var(--orange)}
-.nav-icon{font-size:17px;width:22px;text-align:center;flex-shrink:0}
-
-/* SIDEBAR FOOTER */
-.sidebar__footer{padding-top:24px;border-top:1px solid rgba(255,255,255,0.1);margin-top:24px}
-.cv-btn{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  width:100%;padding:11px;background:var(--orange);color:var(--white);
-  border-radius:8px;font-size:13px;font-weight:700;
-  margin-bottom:16px;transition:all 200ms;
-}
-.cv-btn:hover{background:var(--orange-light)}
-.socials{display:flex;gap:10px;justify-content:center}
-.social{
-  width:36px;height:36px;display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,0.08);border-radius:6px;
-  font-size:13px;font-weight:700;transition:all 200ms;
-}
-.social:hover{background:var(--orange)}
-
-/* MAIN */
-.main{grid-column:2;padding:56px 72px;max-width:1160px}
-
-/* LANGUAGE NUDGE BANNER */
-.lang-nudge{
-  display:flex;align-items:center;gap:12px;
-  background:var(--orange-pale);border:1px solid var(--orange);
-  border-radius:8px;padding:12px 18px;margin-bottom:40px;
-  font-size:14px;color:var(--text-dark);
-}
-.lang-nudge__flag{font-size:20px}
-.lang-nudge__text{flex:1;font-weight:500}
-.lang-nudge__btn{
-  background:var(--orange);color:var(--white);
-  padding:7px 14px;border-radius:6px;font-size:13px;font-weight:700;
-  transition:all 200ms;white-space:nowrap;cursor:pointer;
-}
-.lang-nudge__btn:hover{background:var(--orange-light)}
-.lang-nudge__close{
-  color:var(--text-light);font-size:18px;cursor:pointer;
-  padding:0 4px;transition:all 200ms;
-}
-.lang-nudge__close:hover{color:var(--text-dark)}
-.lang-nudge.hidden{display:none}
-
-/* SECTIONS */
-.section{margin-bottom:72px;scroll-margin-top:32px}
-.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--orange);font-weight:700;margin-bottom:10px}
-.section-title{font-size:32px;font-weight:700;color:var(--text-dark);margin-bottom:8px;line-height:1.2}
-.divider{width:48px;height:3px;background:var(--orange);border-radius:2px;margin-bottom:32px}
+/* TOP BAR */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(255,255,255,.96);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid var(--line)}
+.topbar .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.brand{font-family:var(--f-head);font-weight:700;font-size:16px;margin-right:auto;white-space:nowrap}
+.brand span{font-family:var(--f-body);font-weight:500;font-size:13px;color:var(--ink-3);margin-left:8px}
+.links{display:flex;gap:22px;font-size:14px;font-weight:500}
+.links a{color:var(--ink-2);padding:6px 0;border-bottom:2px solid transparent}
+.links a:hover{color:var(--ink);border-color:var(--ember)}
+.lang{display:flex;border:1px solid var(--line-2);border-radius:6px;overflow:hidden}
+.lang button{font-size:13px;font-weight:600;padding:0 12px;min-height:36px;color:var(--ink-3)}
+.lang button.active{background:var(--navy);color:#fff}
+.cv{display:inline-flex;align-items:center;min-height:40px;padding:0 16px;border-radius:6px;background:var(--ember-btn);color:#fff;font-weight:600;font-size:14px;white-space:nowrap}
+.cv:hover{background:#A93D15}
 
 /* HERO */
-.hero{margin-bottom:72px}
-.hero-greeting{font-size:16px;color:var(--text-mid);margin-bottom:12px}
-.hero-name{font-size:52px;font-weight:700;line-height:1.1;color:var(--text-dark);margin-bottom:10px}
-.hero-role{font-size:18px;color:var(--orange);font-weight:600;margin-bottom:16px}
-.hero-bio{font-size:16px;color:var(--text-mid);max-width:640px;line-height:1.7;margin-bottom:28px}
-.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
-.btn{padding:12px 24px;border-radius:8px;font-weight:600;font-size:14px;transition:all 200ms;display:inline-flex;align-items:center;gap:8px;cursor:pointer}
-.btn-primary{background:var(--orange);color:var(--white);border:2px solid var(--orange)}
-.btn-primary:hover{background:var(--orange-light);border-color:var(--orange-light)}
-.btn-secondary{background:var(--white);color:var(--text-dark);border:2px solid var(--border)}
-.btn-secondary:hover{border-color:var(--text-dark)}
+.hero{padding:64px 0 0}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:48px;align-items:center}
+.hero h1{font-family:var(--f-head);font-weight:800;font-size:46px;line-height:1.08;letter-spacing:-.015em;margin-top:12px;text-wrap:balance}
+.hero__who{margin-top:18px;font-size:18px;color:var(--ink-2)}
+.hero__who strong{color:var(--ink);font-weight:600}
+.hero__facts{margin-top:6px;font-size:15px;color:var(--ink-3)}
+.hero__facts b{color:var(--ink);font-weight:600}
+.photo{width:220px;height:220px;border-radius:50%;object-fit:cover;object-position:50% 20%;border:4px solid var(--card);box-shadow:0 0 0 2px var(--ember)}
+.btns{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;min-height:46px;padding:0 22px;border-radius:6px;font-weight:600;font-size:15px;transition:background .2s,color .2s}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-primary:hover{background:var(--navy-2)}
+.btn-secondary{border:1.5px solid var(--navy);color:var(--navy)}
+.btn-secondary:hover{background:var(--navy);color:#fff}
+.results{margin-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line-2)}
+.result{padding:20px 20px 4px 0}
+.result + .result{padding-left:20px;border-left:1px solid var(--line)}
+.result__num{font-family:var(--f-num);font-weight:600;font-size:30px;line-height:1.1}
+.result__txt{font-size:14px;color:var(--ink-2);margin-top:6px;line-height:1.45}
+.result__src{font-size:12px;color:var(--ink-3);margin-top:6px}
+.results-cap{font-size:12px;color:var(--ink-3);margin-top:10px}
 
-/* METRICS ROW */
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-bottom:72px}
-.metric-card{background:var(--white);border-radius:10px;padding:24px 20px;text-align:center;border:1px solid var(--border);box-shadow:var(--shadow)}
-.metric-num{font-size:32px;font-weight:700;color:var(--orange);font-family:'Inter',sans-serif;margin-bottom:6px}
-.metric-label{font-size:12px;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;font-weight:600}
+/* S-ROAD */
+.road{margin-top:28px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 18px 8px}
+.road svg{width:100%;height:auto;display:block}
+.st{cursor:pointer}
+.st .disc{transition:transform .2s;transform-box:fill-box;transform-origin:center}
+.st:hover .disc,.st:focus-visible .disc{transform:scale(1.08)}
+.st:focus{outline:none}
+.st:focus-visible .disc{stroke:var(--ember-btn);stroke-width:4}
+.road__hint{font-size:13px;color:var(--ink-3);text-align:center;padding:4px 0 8px}
+.parcel{offset-path:path('M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940');offset-rotate:0deg}
+@media (prefers-reduced-motion:no-preference){.parcel{animation:drive 14s linear infinite}@keyframes drive{from{offset-distance:0%}to{offset-distance:100%}}}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--ink-3);margin-top:14px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 
-/* SKILLS */
-.skills-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.skill-card{background:var(--white);border-radius:10px;padding:22px;border-left:4px solid var(--orange);box-shadow:var(--shadow)}
-.skill-card-title{font-size:12px;text-transform:uppercase;letter-spacing:1px;color:var(--orange);font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px}
-.chips{display:flex;flex-wrap:wrap;gap:8px}
-.chip{background:var(--beige-dark);color:var(--text-dark);padding:5px 11px;border-radius:5px;font-size:12px;font-weight:500}
+/* STATION LIST */
+.stations{margin-top:22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;list-style:none}
+.station{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:12px;transition:border-color .3s,box-shadow .3s}
+.station.flash{border-color:var(--ember);box-shadow:0 0 0 3px rgba(224,92,42,.18)}
+.station.next{background:transparent;border-style:dashed;border-color:var(--line-2)}
+.station__head{display:flex;align-items:center;gap:12px}
+.station__no{width:34px;height:34px;border-radius:50%;background:var(--navy);color:#fff;font-family:var(--f-head);font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.station.next .station__no{background:var(--card);color:var(--ink-3);border:1.5px dashed #A9AFBA}
+.station__name{font-family:var(--f-head);font-weight:700;font-size:17px;line-height:1.2}
+.station__name small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;color:var(--ink-3)}
+.station__q{font-size:14px;color:var(--ink-3)}
+.proj{display:block;width:100%;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:14px 16px;transition:border-color .2s,background .2s}
+.proj:hover{border-color:var(--navy);background:#fff}
+.proj__hook{font-family:var(--f-head);font-weight:700;font-size:15px;line-height:1.35}
+.proj__ans{font-size:14px;color:var(--ink-2);margin-top:3px}
+.proj__meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;margin-top:10px;font-size:12px;color:var(--ink-3)}
+.proj__name{font-weight:600;color:var(--ink)}
+.tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;background:var(--soft);color:var(--ink-2)}
+.tag.own{background:#E7F2EC;color:#2E6447}
+.tag.si{background:#FBE7DE;color:#8F3412}
+.proj__open{margin-left:auto;font-weight:600;color:var(--ember-text)}
+.job-proof{font-size:13px;line-height:1.5;color:var(--ink);border-left:3px solid var(--ok);padding-left:10px}
+.job-proof b{color:var(--ok);font-weight:600}
+.next-note{font-size:14px;color:var(--ink-3)}
+.layer{margin-top:16px;background:var(--navy);color:#fff;border-radius:12px;padding:20px 22px}
+.layer__head{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.layer__title{font-family:var(--f-head);font-weight:700;font-size:17px}
+.layer__q{font-size:14px;color:#C9D2E0}
+.layer__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:14px}
+.layer .proj{background:var(--navy-2);border-color:var(--navy-3);color:#fff}
+.layer .proj:hover{background:#2E4066;border-color:var(--ember-soft)}
+.layer .proj__ans,.layer .proj__meta{color:#C9D2E0}
+.layer .proj__name{color:#fff}
+.layer .proj__open{color:var(--ember-soft)}
+.layer .tag{background:var(--navy-3);color:#E6EBF3}
+.honest{margin-top:14px;font-size:13px;color:var(--ink-3);max-width:760px}
 
 /* EXPERIENCE */
-.exp-item{background:var(--white);border-left:4px solid var(--orange);border-radius:10px;padding:26px;margin-bottom:20px;box-shadow:var(--shadow)}
-.exp-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:6px;gap:16px}
-.exp-title{font-size:17px;font-weight:700;color:var(--text-dark)}
-.exp-company{color:var(--orange);font-size:14px;font-weight:600;margin-bottom:12px}
-.exp-meta{text-align:right;flex-shrink:0}
-.exp-period{font-size:13px;color:var(--text-light);font-weight:500}
-.exp-location{font-size:12px;color:var(--text-light)}
-.exp-current{display:inline-block;background:var(--orange-pale);color:var(--orange);padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-top:4px}
-.exp-desc{font-size:14px;color:var(--text-mid);margin-bottom:14px;line-height:1.6}
-.bullets{display:flex;flex-direction:column;gap:7px}
-.bullet{font-size:13px;color:var(--text-mid);padding-left:16px;position:relative;line-height:1.55}
-.bullet::before{content:'▸';position:absolute;left:0;color:var(--orange);font-size:11px;top:2px}
-.bullet strong{color:var(--text-dark);font-weight:600}
+.timeline{margin-top:26px;list-style:none;border-left:2px solid var(--line-2);margin-left:6px}
+.tl{position:relative;padding:0 0 30px 28px}
+.tl:last-child{padding-bottom:4px}
+.tl::before{content:"";position:absolute;left:-8px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--card);border:3px solid var(--navy)}
+.tl__top{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 14px}
+.tl__org{font-family:var(--f-head);font-weight:700;font-size:19px}
+.tl__meta{font-size:13px;color:var(--ink-3)}
+.tl__role{margin-top:6px;font-weight:600;display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline}
+.tl__role span{font-family:var(--f-num);font-size:13px;color:var(--ink-3);font-weight:500}
+.tl__role.prev{font-weight:500;color:var(--ink-2);font-size:14px}
+.tl ul{margin:8px 0 0 18px;font-size:15px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px;max-width:760px}
+.tl li strong{color:var(--ink);font-weight:600}
+.tl p{font-size:15px;color:var(--ink-2);margin-top:6px;max-width:760px}
+.tl a{color:var(--ember-text);text-decoration:underline;text-underline-offset:3px;font-weight:500}
+.edu{margin-top:10px;padding:18px 0 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:6px 22px}
+.edu b{font-family:var(--f-head);color:var(--ink)}
+.edu strong{color:var(--ink);font-weight:600}
 
-/* PROJECTS */
-.projects-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.project-card{background:var(--white);border-radius:10px;overflow:hidden;cursor:pointer;transition:all 200ms;border:1px solid var(--border);box-shadow:var(--shadow)}
-.project-card:hover{transform:translateY(-4px);box-shadow:0 8px 28px rgba(0,0,0,0.12);border-color:var(--orange)}
-.project-thumb{width:100%;aspect-ratio:16/10;object-fit:cover;background:var(--navy)}
-.project-body{padding:18px}
-.project-badge{display:inline-block;background:var(--orange-pale);color:var(--orange);padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:10px}
-.project-title{font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:8px;line-height:1.35}
-.project-desc{font-size:12px;color:var(--text-light);margin-bottom:12px;line-height:1.5}
-.tags{display:flex;flex-wrap:wrap;gap:6px}
-.tag{background:var(--beige-dark);color:var(--text-mid);padding:4px 9px;border-radius:4px;font-size:11px;font-weight:500}
-
-/* EDUCATION */
-.edu-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.edu-card{background:var(--white);border-radius:10px;padding:24px;border-left:4px solid var(--orange);box-shadow:var(--shadow)}
-.edu-degree{font-size:16px;font-weight:700;color:var(--text-dark);margin-bottom:4px}
-.edu-school{font-size:14px;color:var(--orange);font-weight:600;margin-bottom:10px}
-.edu-meta{font-size:13px;color:var(--text-light)}
-.edu-gpa{display:inline-block;background:var(--orange-pale);color:var(--orange);padding:3px 12px;border-radius:20px;font-size:12px;font-weight:700;margin-top:10px}
-
-/* CERTIFICATIONS */
-.certs-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.cert-card{background:var(--white);border-radius:10px;padding:20px 22px;border-left:4px solid var(--orange);box-shadow:var(--shadow);display:flex;flex-direction:column;gap:4px}
-.cert-name{font-size:14px;font-weight:700;color:var(--text-dark)}
-.cert-issuer{font-size:12px;color:var(--text-light)}
-.cert-link{font-size:12px;color:var(--orange);font-weight:600;margin-top:6px;display:inline-flex;align-items:center;gap:4px;transition:all 200ms}
-.cert-link:hover{color:var(--orange-light)}
+/* RECOMMENDATIONS */
+.recs{margin-top:26px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.rec{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.rec.lead-rec{background:var(--navy);border-color:var(--navy);color:#fff}
+.rec__rel{align-self:flex-start;font-size:11px;font-weight:600;padding:3px 8px;border-radius:4px;background:var(--soft);color:var(--ink-2)}
+.lead-rec .rec__rel{background:var(--navy-2);color:#E6EBF3}
+.rec blockquote{font-family:var(--f-head);font-weight:600;font-size:17px;line-height:1.45}
+.rec__who{display:flex;gap:12px;align-items:center;margin-top:auto}
+.rec__av{width:40px;height:40px;border-radius:50%;background:var(--soft);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;flex-shrink:0}
+.lead-rec .rec__av{background:var(--navy-3);color:#fff}
+.rec__name{font-weight:600;font-size:14px;display:block}
+.rec__role{font-size:12px;color:var(--ink-3);line-height:1.4;display:block}
+.lead-rec .rec__role{color:#C9D2E0}
+.rec__link{font-size:13px;font-weight:600;color:var(--ember-text);text-decoration:underline;text-underline-offset:3px}
+.lead-rec .rec__link{color:var(--ember-soft)}
 
 /* CONTACT */
-.contact-box{background:var(--navy);border-radius:12px;padding:56px;color:var(--white);text-align:center}
-.contact-box .eyebrow{color:var(--orange)}
-.contact-box .section-title{color:var(--white);margin-bottom:14px}
-.contact-desc{font-size:15px;color:rgba(255,255,255,0.75);max-width:560px;margin:0 auto 36px;line-height:1.7}
-.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px}
-.contact-card{background:rgba(255,255,255,0.07);border-radius:10px;padding:22px;text-align:left;transition:all 200ms;border:1px solid rgba(255,255,255,0.08)}
-.contact-card:hover{background:rgba(255,255,255,0.12);border-color:var(--orange)}
-.contact-label{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--orange);font-weight:700;margin-bottom:6px}
-.contact-value{font-size:14px;color:var(--white);font-weight:500;word-break:break-word}
+.contact{margin-top:72px;background:var(--navy);color:#fff}
+.contact .wrap{padding-top:56px;padding-bottom:56px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:28px;align-items:center}
+.contact h2{font-family:var(--f-head);font-size:30px;font-weight:700}
+.contact p{color:#D5DCE8;margin-top:6px}
+.contact dl{margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:6px 18px;font-size:15px}
+.contact dt{color:#9AA8BD}
+.contact dd a{text-decoration:underline;text-underline-offset:3px}
+.contact .btn-primary{background:var(--ember-btn)}
+.contact .btn-primary:hover{background:#A93D15}
+.contact .btn-secondary{border-color:#fff;color:#fff}
+.contact .btn-secondary:hover{background:#fff;color:var(--navy)}
+.foot{background:var(--navy);color:#9AA8BD;font-size:13px;border-top:1px solid var(--navy-3)}
+.foot .wrap{padding-top:18px;padding-bottom:22px}
 
 /* MODAL */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:300;align-items:center;justify-content:center;padding:20px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(15,26,46,.65);z-index:300;align-items:center;justify-content:center;padding:20px}
 .modal-bg.active{display:flex}
-.modal{background:var(--white);border-radius:14px;width:min(860px,100%);max-height:90vh;overflow-y:auto;position:relative}
-.modal-close{position:sticky;top:16px;float:right;margin:16px 16px 0 0;width:36px;height:36px;background:var(--beige-dark);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;transition:all 200ms;z-index:1;flex-shrink:0}
-.modal-close:hover{background:var(--text-light);color:var(--white)}
-.modal-header{padding:32px 36px 24px;border-bottom:1px solid var(--border);clear:both}
-.modal-eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:1.5px;color:var(--orange);font-weight:700;margin-bottom:8px}
-.modal-title{font-size:24px;font-weight:700;color:var(--text-dark);line-height:1.3}
-.modal-body{padding:32px 36px}
-.carousel-wrap{position:relative;border-radius:10px;overflow:hidden;background:var(--navy);margin-bottom:28px;aspect-ratio:16/9}
-.carousel-img{width:100%;height:100%;object-fit:cover;display:block}
-.c-nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;background:rgba(0,0,0,0.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);cursor:pointer;transition:all 200ms;font-size:16px}
-.c-nav:hover{background:var(--orange)}
-.c-prev{left:14px}
-.c-next{right:14px}
-.c-dots{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
-.c-dot{width:7px;height:7px;background:rgba(255,255,255,0.45);border-radius:50%;cursor:pointer;transition:all 200ms}
-.c-dot.active{background:var(--white);width:20px;border-radius:4px}
-.modal-desc{font-size:15px;line-height:1.75;color:var(--text-mid);margin-bottom:24px}
-.modal-desc p{margin-bottom:14px}
-.modal-desc p:last-child{margin-bottom:0}
-.modal-desc strong{color:var(--text-dark);font-weight:600}
-.modal-stack{display:flex;flex-wrap:wrap;gap:8px;padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);margin-bottom:22px}
+.modal{background:#fff;border-radius:12px;width:min(860px,100%);max-height:90vh;overflow-y:auto;position:relative}
+.modal-close{position:sticky;top:14px;float:right;margin:14px 14px 0 0;width:44px;height:44px;background:var(--soft);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;z-index:1}
+.modal-close:hover{background:var(--line-2)}
+.modal-header{padding:26px 32px 16px;border-bottom:1px solid var(--line);clear:both}
+.modal-hook{font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--ember-text);line-height:1.4}
+.modal-title{font-family:var(--f-head);font-size:24px;font-weight:700;line-height:1.25;margin-top:6px}
+.modal-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.modal-body{padding:22px 32px 30px}
+.carousel-wrap{position:relative;border-radius:8px;overflow:hidden;background:var(--navy);margin-bottom:20px;aspect-ratio:16/9}
+.carousel-img{width:100%;height:100%;object-fit:contain;background:var(--navy)}
+.c-nav{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;background:rgba(0,0,0,.5);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px}
+.c-nav:hover{background:var(--ember-btn)}
+.c-prev{left:12px}.c-next{right:12px}
+.c-dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px}
+.c-dot{width:8px;height:8px;background:rgba(255,255,255,.5);border-radius:50%;cursor:pointer}
+.c-dot.active{background:#fff;width:20px;border-radius:4px}
+.modal-kpi{display:flex;flex-wrap:wrap;align-items:baseline;gap:10px}
+.modal-kpi .num{font-weight:600;font-size:30px}
+.modal-root{font-size:14px;color:var(--ok);font-weight:500;margin:6px 0 14px}
+.modal-desc{font-size:15px;line-height:1.7;color:var(--ink-2)}
+.modal-desc p+p{margin-top:12px}
+.modal-desc strong{color:var(--ink);font-weight:600}
+.modal-stack{display:flex;flex-wrap:wrap;gap:6px;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin:20px 0}
 .modal-actions{display:flex;flex-wrap:wrap;gap:10px}
-.act-btn{padding:9px 16px;border-radius:7px;font-size:13px;font-weight:600;border:2px solid var(--border);background:var(--white);transition:all 200ms;display:inline-flex;align-items:center;gap:6px}
-.act-btn:hover{border-color:var(--text-dark);background:var(--beige-dark)}
-.act-btn-live{background:var(--orange);color:var(--white);border-color:var(--orange)}
-.act-btn-live:hover{background:var(--orange-light);border-color:var(--orange-light)}
+.act{display:inline-flex;align-items:center;min-height:44px;padding:0 16px;border-radius:6px;border:1.5px solid var(--navy);font-size:14px;font-weight:600}
+.act:hover{background:var(--navy);color:#fff}
+.act.live{background:var(--navy);color:#fff}
+.act.live:hover{background:var(--navy-2)}
 
-/* HOME HERO — new landing section */
-.home-hero{margin-bottom:56px;scroll-margin-top:32px}
-.home-greeting{font-size:15px;color:var(--text-mid);margin-bottom:8px}
-.home-name{font-size:44px;font-weight:700;line-height:1.1;color:var(--text-dark);margin-bottom:6px}
-.home-name span{color:var(--orange)}
-.home-tagline{font-size:15px;color:var(--text-mid);max-width:520px;line-height:1.7;margin-bottom:20px}
-.hero-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.hero-pill{padding:6px 14px;border-radius:16px;font-size:12px;font-weight:600;background:rgba(26,42,58,0.06);color:var(--text-dark);display:flex;align-items:center;gap:5px}
-.hero-pill-icon{font-size:14px;color:var(--orange)}
-
-/* WHAT I BRING */
-.what-section{margin-bottom:56px}
-.what-label{font-size:11px;text-transform:uppercase;letter-spacing:2px;color:var(--orange);font-weight:700;margin-bottom:14px}
-.strength-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.strength-item{display:flex;align-items:flex-start;gap:12px;padding:16px;border-radius:10px;background:var(--white);border:1px solid var(--border);box-shadow:var(--shadow);transition:all 200ms}
-.strength-item:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,0.1)}
-.strength-icon{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.strength-icon.s-a{background:rgba(217,119,87,0.1);color:var(--orange)}
-.strength-icon.s-b{background:rgba(26,42,58,0.06);color:var(--navy)}
-.strength-icon.s-c{background:rgba(94,110,78,0.1);color:#5e6e4e}
-.strength-icon.s-d{background:rgba(55,138,221,0.08);color:#378add}
-.strength-title{font-size:13px;font-weight:700;color:var(--text-dark)}
-.strength-desc{font-size:12px;color:var(--text-light);margin-top:2px}
-
-.scroll-hint{display:flex;align-items:center;gap:6px;color:var(--text-light);font-size:12px;margin-bottom:56px}
-
-/* CATEGORY FILTER TABS */
-.cat-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
-.cat-tab{padding:10px 20px;border-radius:28px;font-size:13px;font-weight:600;cursor:pointer;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);display:inline-flex;align-items:center;gap:7px;border:2px solid transparent;user-select:none}
-.cat-tab .cat-count{font-size:11px;padding:1px 7px;border-radius:10px;font-weight:600;transition:all 0.3s}
-/* Applied */
-.cat-tab[data-cat="ap"]{background:rgba(26,42,58,0.06);color:#2c3e5a}
-.cat-tab[data-cat="ap"] .cat-count{background:rgba(26,42,58,0.12);color:#2c3e5a}
-.cat-tab[data-cat="ap"].active{background:var(--navy);color:var(--white);box-shadow:0 4px 16px rgba(26,42,58,0.35)}
-.cat-tab[data-cat="ap"].active .cat-count{background:rgba(217,119,87,0.5);color:var(--white)}
-/* Foundational */
-.cat-tab[data-cat="fo"]{background:rgba(94,110,78,0.08);color:#5e6650}
-.cat-tab[data-cat="fo"] .cat-count{background:rgba(94,110,78,0.15);color:#5e6650}
-.cat-tab[data-cat="fo"].active{background:#5e6e4e;color:#f4f2ec;box-shadow:0 4px 16px rgba(94,110,78,0.3)}
-.cat-tab[data-cat="fo"].active .cat-count{background:rgba(255,255,255,0.2);color:#f4f2ec}
-.cat-tab:not(.active):hover{transform:translateY(-1px)}
-.cat-subtitle{font-size:14px;font-style:italic;color:var(--text-light);margin-bottom:22px;min-height:22px;transition:opacity 0.3s}
-.cat-empty{text-align:center;padding:36px;color:var(--text-light);font-size:14px;font-style:italic}
-.project-card{transition:all 0.35s cubic-bezier(0.4,0,0.2,1)}
-.project-card.card-hidden{display:none}
-
-/* FLAGSHIP BANNER — the featured self-initiated project */
-.flagship{
-  background:linear-gradient(160deg,#0d1119 0%,#161c28 100%);
-  border-radius:14px;padding:28px 32px;margin-bottom:40px;
-  display:flex;justify-content:space-between;align-items:flex-start;gap:32px;
-  position:relative;overflow:hidden;
-  border:1px solid rgba(255,201,64,0.15);
+/* RESPONSIVE */
+@media(max-width:960px){
+  .links{display:none}
+  .hero__grid{grid-template-columns:minmax(0,1fr) 160px;gap:28px}
+  .photo{width:160px;height:160px}
+  .results{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .result:nth-child(3){padding-left:0;border-left:0}
+  .result:nth-child(n+3){border-top:1px solid var(--line)}
+  .recs{grid-template-columns:1fr}
+  .layer__grid{grid-template-columns:1fr}
 }
-.flagship::before{
-  content:'';position:absolute;top:0;left:0;width:3px;height:100%;
-  background:linear-gradient(180deg,#ffc940,#d97757);
+@media(max-width:720px){
+  .topbar .wrap{gap:10px;height:58px}
+  .brand span{display:none}
+  .brand{font-size:15px}
+  .cv{padding:0 12px;font-size:13px}
+  .hero{padding-top:36px}
+  .hero__grid{grid-template-columns:1fr}
+  .photo{width:112px;height:112px;order:-1}
+  .hero h1{font-size:31px}
+  .h2{font-size:25px}
+  section.block{padding-top:56px}
+  .road,.legend{display:none}
+  .stations{grid-template-columns:1fr;gap:0;position:relative;margin-left:4px;border-left:3px dashed var(--line-2);padding-left:18px}
+  .station{margin-bottom:16px;position:relative}
+  .station::before{content:"";position:absolute;left:-29px;top:26px;width:16px;height:16px;border-radius:50%;background:var(--ember);border:3px solid var(--bg)}
+  .station.next::before{background:var(--line-2)}
+  .modal-header{padding:22px 20px 14px}.modal-body{padding:18px 20px 24px}
 }
-.flagship-left{flex:1;min-width:0}
-.flagship-right{display:flex;flex-direction:column;align-items:flex-end;gap:16px;flex-shrink:0}
-.flagship-eyebrow{
-  display:inline-flex;align-items:center;gap:8px;
-  font-size:11px;text-transform:uppercase;letter-spacing:2px;
-  color:#7d829a;font-weight:500;margin-bottom:10px;
-  font-family:'JetBrains Mono',monospace;
-}
-.flagship-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#ffc940;animation:pulse 2s ease-in-out infinite}
-.flagship-title{font-size:22px;font-weight:700;color:#ebe7df;line-height:1.3;margin-bottom:12px}
-.flagship-pills{display:flex;gap:8px;flex-wrap:wrap}
-.flagship-pill{
-  font-size:12px;padding:4px 12px;border-radius:20px;
-  background:rgba(255,201,64,0.1);color:#ffc940;
-  border:0.5px solid rgba(255,201,64,0.25);
-}
-.flagship-stats{display:flex;gap:24px}
-.flagship-stat .num{font-size:20px;font-weight:700;color:#ffc940;font-family:'JetBrains Mono',monospace;line-height:1;text-align:center}
-.flagship-stat .lbl{font-size:10px;color:#7d829a;text-transform:uppercase;letter-spacing:1px;margin-top:4px;text-align:center}
-.flagship-cta{
-  display:inline-flex;align-items:center;gap:10px;
-  background:#ffc940;color:#0a0d14;padding:10px 20px;
-  border-radius:6px;font-weight:700;font-size:13px;
-  transition:all 200ms;text-decoration:none;
-}
-.flagship-cta:hover{background:#ffd76b;transform:translateY(-2px)}
-@media(max-width:900px){
-  .flagship{flex-direction:column;padding:24px 20px;gap:20px}
-  .flagship-right{align-items:flex-start;width:100%}
-  .flagship-stats{gap:20px}
-}
-
-/* MOBILE BAR */
-.mobile-bar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--navy);z-index:200;align-items:center;padding:0 20px;gap:16px;border-bottom:1px solid rgba(255,255,255,0.1)}
-.mobile-bar__name{font-size:15px;font-weight:700;color:var(--white);flex:1}
-.hamburger{width:38px;height:38px;background:rgba(255,255,255,0.1);border-radius:7px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:20px;color:var(--white)}
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:150}
-.overlay.active{display:block}
-
-@media(max-width:1100px){
-  .layout{grid-template-columns:200px 1fr}
-  .sidebar{width:200px}
-  .main{padding:40px 40px}
-  .projects-grid{grid-template-columns:repeat(2,1fr)}
-  .metrics{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:768px){
-  .layout{grid-template-columns:1fr}
-  .sidebar{width:240px;left:-240px;transition:left 280ms}
-  .sidebar.open{left:0}
-  .main{grid-column:1;padding:24px 20px;margin-top:56px}
-  .mobile-bar{display:flex}
-  .skills-grid{grid-template-columns:repeat(2,1fr)}
-  .projects-grid{grid-template-columns:1fr}
-  .edu-grid{grid-template-columns:1fr}
-  .certs-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr}
-  .hero-name{font-size:36px}
-  .home-name{font-size:32px}
-  .strength-grid{grid-template-columns:1fr}
-  .cat-tabs{gap:6px}
-  .cat-tab{padding:8px 14px;font-size:12px}
-  .contact-box{padding:36px 24px}
-  .modal-header{padding:24px}
-  .modal-body{padding:24px}
-  .metrics{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:480px){
-  .skills-grid{grid-template-columns:1fr}
-  .metrics{grid-template-columns:1fr 1fr}
+@media(max-width:400px){
+  .lang button{padding:0 9px}
+  .result{padding-right:10px}
+  .result + .result{padding-left:10px}
+  .result__num{font-size:24px}
 }
 </style>
 </head>
 <body>
 
-<!-- MOBILE TOP BAR -->
-<div class="mobile-bar">
-  <div class="mobile-bar__name">Harshilkumar Patel</div>
-  <button class="hamburger" id="hamburger">☰</button>
-</div>
-<div class="overlay" id="overlay"></div>
+<header class="topbar">
+  <div class="wrap">
+    <a class="brand" href="#top">Harshilkumar Patel<span>Data Analyst · Supply Chain</span></a>
+    <nav class="links" aria-label="Sections">
+      <a href="#work" class="t" data-en="Work" data-nl="Werk">Work</a>
+      <a href="#experience" class="t" data-en="Experience" data-nl="Ervaring">Experience</a>
+      <a href="#contact" class="t" data-en="Contact" data-nl="Contact">Contact</a>
+    </nav>
+    <div class="lang" role="group" aria-label="Language">
+      <button id="btnEN" class="active" aria-pressed="true" onclick="setLang('en')">EN</button>
+      <button id="btnNL" aria-pressed="false" onclick="setLang('nl')">NL</button>
+    </div>
+    <a class="cv t" href="mailto:harshil.patel150@gmail.com?subject=CV%20request" data-en="Request CV" data-nl="CV opvragen">Request CV</a>
+  </div>
+</header>
 
-<div class="layout">
+<main id="top">
 
-<!-- ====== SIDEBAR ====== -->
-<aside class="sidebar" id="sidebar">
-  <div class="sidebar__profile">
-    <img src="assets/profile.png" alt="Harshilkumar Patel" class="sidebar__photo" onerror="this.style.background='var(--orange-light)';this.alt='HP'">
-    <div class="sidebar__name">Harshilkumar Patel</div>
-    <div class="sidebar__role">Data Analyst</div>
-    <div class="sidebar__status">
-      <div class="sidebar__status-dot"></div>
-      <div class="sidebar__status-text"><span class="t" data-en="Open to work" data-nl="Beschikbaar">Open to work</span></div>
+<!-- ABOUT -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow">Data Analyst · Supply Chain &amp; Operations</p>
+        <h1 class="t" data-en="From the factory floor to the shop floor, I make supply chains better with data." data-nl="Van fabrieksvloer tot winkelvloer: ik maak supply chains beter met data.">From the factory floor to the shop floor, I make supply chains better with data.</h1>
+        <p class="hero__who"><strong>Harshilkumar Patel</strong> · <span class="t" data-en="Demand planning · S&amp;OP (Sales &amp; Operations Planning) · Production" data-nl="Vraagplanning · S&amp;OP (Sales &amp; Operations Planning) · Productie">Demand planning · S&amp;OP (Sales &amp; Operations Planning) · Production</span></p>
+        <p class="hero__facts"><b>Utrecht</b> · <span class="t" data-en="Dutch B1, working towards B2" data-nl="Nederlands B1, op weg naar B2">Dutch B1, working towards B2</span> · <b class="t" data-en="Open to work" data-nl="Beschikbaar voor werk">Open to work</b> · MBA Data Analytics (NL)</p>
+        <div class="btns">
+          <a href="#work" class="btn btn-primary t" data-en="See my work" data-nl="Bekijk mijn werk">See my work</a>
+          <a href="mailto:harshil.patel150@gmail.com?subject=CV%20request" class="btn btn-secondary t" data-en="Request CV" data-nl="CV opvragen">Request CV</a>
+        </div>
+      </div>
+      <img class="photo" src="assets/profile.png" alt="Harshilkumar Patel">
     </div>
 
-    <!-- LANGUAGE TOGGLE — prominent with flags -->
-    <div class="lang-toggle">
-      <button class="lang-btn active" id="btnEN" onclick="setLang('en')">
-        <span class="lang-flag">🇬🇧</span>
-        <span class="lang-label">EN</span>
-      </button>
-      <button class="lang-btn" id="btnNL" onclick="setLang('nl')">
-        <span class="lang-flag">🇳🇱</span>
-        <span class="lang-label">NL</span>
-      </button>
+    <div class="results">
+      <div class="result"><div class="result__num">8×</div><div class="result__txt t" data-en="Factory output, from 250 to 2,000+ units per customer a month" data-nl="Fabrieksoutput, van 250 naar 2.000+ eenheden per klant per maand">Factory output, from 250 to 2,000+ units per customer a month</div><div class="result__src">Techno Electromech</div></div>
+      <div class="result"><div class="result__num">−2 <span class="t" data-en="days" data-nl="dagen">days</span></div><div class="result__txt t" data-en="Order-to-dispatch lead time" data-nl="Doorlooptijd van order tot verzending">Order-to-dispatch lead time</div><div class="result__src">Techno Electromech</div></div>
+      <div class="result"><div class="result__num">&lt;2.5%</div><div class="result__txt t" data-en="Production defects, down from 3.5%" data-nl="Productiefouten, omlaag van 3,5%">Production defects, down from 3.5%</div><div class="result__src">Techno Electromech</div></div>
+      <div class="result"><div class="result__num">15–20%+</div><div class="result__txt t" data-en="Store conversion, up from 6–8%" data-nl="Winkelconversie, omhoog van 6–8%">Store conversion, up from 6–8%</div><div class="result__src">Bever · The North Face</div></div>
+    </div>
+    <p class="results-cap t" data-en="Results from real jobs, not portfolio projects." data-nl="Resultaten uit echte functies, geen portfolioprojecten.">Results from real jobs, not portfolio projects.</p>
+  </div>
+</section>
+
+<!-- WORK: S-ROAD -->
+<section class="block" id="work">
+  <div class="wrap">
+    <p class="eyebrow t" data-en="My work, along the supply chain" data-nl="Mijn werk, langs de supply chain">My work, along the supply chain</p>
+    <h2 class="h2 t" data-en="Follow a product from supplier to customer's home" data-nl="Volg een product van leverancier tot bij de klant thuis">Follow a product from supplier to customer's home</h2>
+    <p class="lead t" data-en="Each stop shows a question I answered with data, and the real job behind it. Click a project to open it." data-nl="Elke stop toont een vraag die ik met data heb beantwoord, en de echte functie erachter. Klik op een project om het te openen.">Each stop shows a question I answered with data, and the real job behind it. Click a project to open it.</p>
+
+    <div class="road">
+      <svg viewBox="0 0 1000 450" role="img" aria-labelledby="roadT roadD" id="roadSvg">
+        <title id="roadT">Supply chain road</title>
+        <desc id="roadD">An S-shaped road with six stops: supplier, factory, warehouse, transport, store and customer's home. Select a stop to jump to its projects.</desc>
+        <path d="M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940" fill="none" stroke="#E3E1DA" stroke-width="30" stroke-linecap="round"/>
+        <path d="M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940" fill="none" stroke="#1C2B4A" stroke-width="2" stroke-dasharray="10 10"/>
+        <g class="parcel" aria-hidden="true"><rect x="-9" y="-9" width="18" height="18" rx="3" fill="#E05C2A"/><path d="M-9 -2 H9 M0 -9 V9" stroke="#fff" stroke-width="1.5"/></g>
+        <g id="roadStations"></g>
+      </svg>
+      <p class="road__hint t" data-en="Select a stop to jump to its projects" data-nl="Kies een stop om naar de projecten te gaan">Select a stop to jump to its projects</p>
+    </div>
+    <div class="legend">
+      <span><i style="background:#1C2B4A;box-shadow:0 0 0 2px #E05C2A"></i><span class="t" data-en="Stop with a project" data-nl="Stop met een project">Stop with a project</span></span>
+      <span><i style="border:3px solid #3F7D5C"></i><span class="t" data-en="Real-job experience" data-nl="Ervaring uit een echte functie">Real-job experience</span></span>
+      <span><i style="border:2px dashed #A9AFBA"></i><span class="t" data-en="Coming next" data-nl="Volgt binnenkort">Coming next</span></span>
+    </div>
+
+    <ol class="stations" id="stations"></ol>
+
+    <div class="layer">
+      <div class="layer__head"><h3 class="layer__title t" data-en="Data layer · under every stop" data-nl="Datalaag · onder elke stop">Data layer · under every stop</h3><span class="layer__q t" data-en="Is the data that runs the chain reliable and visible?" data-nl="Is de data achter de keten betrouwbaar en zichtbaar?">Is the data that runs the chain reliable and visible?</span></div>
+      <div class="layer__grid" id="layerGrid"></div>
+    </div>
+    <p class="honest t" data-en="Project data is public, simulated or my own, because real supply chain data is confidential. Each project shows its source." data-nl="Projectdata is publiek, gesimuleerd of van mijzelf, omdat echte supply chain-data vertrouwelijk is. Elk project toont de bron.">Project data is public, simulated or my own, because real supply chain data is confidential. Each project shows its source.</p>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="block" id="experience">
+  <div class="wrap">
+    <p class="eyebrow t" data-en="Experience" data-nl="Ervaring">Experience</p>
+    <h2 class="h2 t" data-en="Where I've done the work" data-nl="Waar ik het werk heb gedaan">Where I've done the work</h2>
+    <ol class="timeline">
+      <li class="tl">
+        <div class="tl__top"><h3 class="tl__org">Bever · The North Face stores</h3><span class="tl__meta">Utrecht &amp; Amsterdam · 2021 – <span class="t" data-en="present" data-nl="heden">present</span></span></div>
+        <div class="tl__role">Sales Analyst <span>2023 – <span class="t" data-en="present" data-nl="heden">present</span></span></div>
+        <ul>
+          <li class="t" data-en="Forecast store demand and plan inventory, aligning stock levels with sales targets." data-nl="Voorspel de vraag per winkel en plan voorraad, afgestemd op verkoopdoelen.">Forecast store demand and plan inventory, aligning stock levels with sales targets.</li>
+          <li class="t" data-en="Brief store managers on stock levels and incoming new SKUs (stock-keeping units)." data-nl="Informeer winkelmanagers over voorraadniveaus en nieuwe SKU's (artikelnummers) die binnenkomen.">Brief store managers on stock levels and incoming new SKUs (stock-keeping units).</li>
+          <li class="t" data-en="Prevent lost sales by sourcing out-of-stock items from warehouse inventory, so customers don't leave empty-handed." data-nl="Voorkom misgelopen verkoop door artikelen die niet in de winkel liggen uit het magazijn te halen, zodat klanten niet met lege handen vertrekken.">Prevent lost sales by sourcing out-of-stock items from warehouse inventory, so customers don't leave empty-handed.</li>
+          <li class="t" data-en="Raised store conversion from 6–8% to &lt;strong&gt;15–20%+&lt;/strong&gt;." data-nl="Winkelconversie verhoogd van 6–8% naar &lt;strong&gt;15–20%+&lt;/strong&gt;.">Raised store conversion from 6–8% to <strong>15–20%+</strong>.</li>
+        </ul>
+        <div class="tl__role prev">Sales Associate <span>2021 – 2023</span></div>
+      </li>
+      <li class="tl">
+        <div class="tl__top"><h3 class="tl__org">Patel Delivers</h3><span class="tl__meta"><span class="t" data-en="Self-employed (KvK)" data-nl="Zelfstandig ondernemer (KvK)">Self-employed (KvK)</span> · 2020 – <span class="t" data-en="present" data-nl="heden">present</span></span></div>
+        <p class="t" data-en="Last-mile delivery for Uber Eats in Apeldoorn, Amersfoort and Utrecht, plus flexible shifts through Temper and YoungOnes. I analysed my own &lt;strong&gt;3,215 Uber trips&lt;/strong&gt;: &lt;a href=&quot;how-it-all-began.html&quot;&gt;read the Field Notes&lt;/a&gt;." data-nl="Last-mile bezorging voor Uber Eats in Apeldoorn, Amersfoort en Utrecht, plus flexibele diensten via Temper en YoungOnes. Ik analyseerde mijn eigen &lt;strong&gt;3.215 Uber-ritten&lt;/strong&gt;: &lt;a href=&quot;how-it-all-began.html&quot;&gt;lees de Field Notes&lt;/a&gt;.">Last-mile delivery for Uber Eats in Apeldoorn, Amersfoort and Utrecht, plus flexible shifts through Temper and YoungOnes. I analysed my own <strong>3,215 Uber trips</strong>: <a href="how-it-all-began.html">read the Field Notes</a>.</p>
+      </li>
+      <li class="tl">
+        <div class="tl__top"><h3 class="tl__org">Techno Electromech Pvt. Ltd.</h3><span class="tl__meta">Vadodara, India · 2015 – 2019</span></div>
+        <div class="tl__role">Operations Analyst (Production) <span>2017 – 2019</span></div>
+        <ul>
+          <li class="t" data-en="Scaled monthly OEM output &lt;strong&gt;8×&lt;/strong&gt; (250 → 2,000+ units per customer) through capacity planning." data-nl="Maandelijkse OEM-output &lt;strong&gt;8×&lt;/strong&gt; opgeschaald (250 → 2.000+ eenheden per klant) door capaciteitsplanning.">Scaled monthly OEM output <strong>8×</strong> (250 → 2,000+ units per customer) through capacity planning.</li>
+          <li class="t" data-en="Cut order-to-dispatch lead time by &lt;strong&gt;2 days&lt;/strong&gt; by restructuring cross-team workflows." data-nl="Doorlooptijd van order tot verzending met &lt;strong&gt;2 dagen&lt;/strong&gt; verkort door werkprocessen tussen teams te herstructureren.">Cut order-to-dispatch lead time by <strong>2 days</strong> by restructuring cross-team workflows.</li>
+          <li class="t" data-en="Reduced production defects from &lt;strong&gt;3.5% to under 2.5%&lt;/strong&gt; with new quality-control inspections." data-nl="Productiefouten verlaagd van &lt;strong&gt;3,5% naar onder 2,5%&lt;/strong&gt; met nieuwe kwaliteitscontroles.">Reduced production defects from <strong>3.5% to under 2.5%</strong> with new quality-control inspections.</li>
+          <li class="t" data-en="Led the move to in-house LED panel assembly, including a pick-and-place automation rollout, for a unit of 30–40 operators." data-nl="Leidde de overstap naar eigen LED-paneelassemblage, inclusief pick-and-place-automatisering, voor een afdeling van 30–40 operators.">Led the move to in-house LED panel assembly, including a pick-and-place automation rollout, for a unit of 30–40 operators.</li>
+        </ul>
+        <div class="tl__role prev">Production Engineer <span>2015 – 2017</span></div>
+      </li>
+      <li class="tl">
+        <div class="tl__top"><h3 class="tl__org">AtliQ Technologies</h3><span class="tl__meta"><span class="t" data-en="Virtual internship · 4 weeks" data-nl="Virtuele stage · 4 weken">Virtual internship · 4 weeks</span></span></div>
+        <div class="tl__role">Data Analyst Intern</div>
+        <p class="t" data-en="Data cleaning, validation and reporting for an insurance client, including a Power BI dashboard for Shield Insurance." data-nl="Data opschonen, valideren en rapporteren voor een verzekeringsklant, inclusief een Power BI-dashboard voor Shield Insurance.">Data cleaning, validation and reporting for an insurance client, including a Power BI dashboard for Shield Insurance.</p>
+      </li>
+    </ol>
+    <div class="edu">
+      <b class="t" data-en="Education" data-nl="Opleiding">Education</b>
+      <span><strong>MBA, Data Analytics</strong> · Wittenborg University of Applied Sciences, NL (2026)</span>
+      <span><strong>B.Tech, Electronics &amp; Communication Engineering</strong> · India (2015)</span>
     </div>
   </div>
+</section>
 
-  <!-- NAV with icons -->
-  <nav class="nav" id="mainNav">
-    <a class="nav-link active" href="#home" data-section="home">
-      <span class="nav-icon">🏠</span>
-      <span class="t" data-en="Home" data-nl="Home">Home</span>
-    </a>
-    <a class="nav-link" href="#projects" data-section="projects">
-      <span class="nav-icon">📁</span>
-      <span class="t" data-en="Projects" data-nl="Projecten">Projects</span>
-    </a>
-    <a class="nav-link" href="#skills" data-section="skills">
-      <span class="nav-icon">⚡</span>
-      <span class="t" data-en="Skills" data-nl="Vaardigheden">Skills</span>
-    </a>
-    <a class="nav-link" href="#experience" data-section="experience">
-      <span class="nav-icon">💼</span>
-      <span class="t" data-en="Experience" data-nl="Ervaring">Experience</span>
-    </a>
-    <a class="nav-link" href="#education" data-section="education">
-      <span class="nav-icon">🎓</span>
-      <span class="t" data-en="Education" data-nl="Opleiding">Education</span>
-    </a>
-    <a class="nav-link" href="#certifications" data-section="certifications">
-      <span class="nav-icon">🏅</span>
-      <span class="t" data-en="Certifications" data-nl="Certificaten">Certifications</span>
-    </a>
-    <a class="nav-link" href="#contact" data-section="contact">
-      <span class="nav-icon">📧</span>
-      <span class="t" data-en="Contact" data-nl="Contact">Contact</span>
-    </a>
-  </nav>
-
-  <div class="sidebar__footer">
-    <a href="assets/harshil-cv.pdf" target="_blank" rel="noopener" class="cv-btn">
-      📥 <span class="t" data-en="Download CV" data-nl="Download CV">Download CV</span>
-    </a>
-    <div class="socials">
-      <a href="https://linkedin.com/in/harshil-patel-188b2274" target="_blank" rel="noopener" class="social" title="LinkedIn">in</a>
-      <a href="https://github.com/HP85-NL" target="_blank" rel="noopener" class="social" title="GitHub">gh</a>
-      <a href="mailto:harshil.patel150@gmail.com" class="social" title="Email">✉</a>
+<!-- RECOMMENDATIONS -->
+<section class="block" id="recommendations">
+  <div class="wrap">
+    <p class="eyebrow t" data-en="Recommendations" data-nl="Aanbevelingen">Recommendations</p>
+    <h2 class="h2 t" data-en="What people I've worked with say" data-nl="Wat mensen met wie ik heb gewerkt zeggen">What people I've worked with say</h2>
+    <div class="recs">
+      <figure class="rec lead-rec">
+        <span class="rec__rel t" data-en="Managed me directly" data-nl="Directe leidinggevende">Managed me directly</span>
+        <blockquote>“He brought a data-backed mindset to retail operations before it was a part of his job title.”</blockquote>
+        <figcaption class="rec__who"><span class="rec__av">RH</span><span><span class="rec__name">Richard Heezen</span><span class="rec__role">Store Manager, The North Face Utrecht &amp; Amsterdam · Bever</span></span></figcaption>
+        <a class="rec__link t" href="https://www.linkedin.com/in/harshil-patel-188b2274/details/recommendations/" target="_blank" rel="noopener" data-en="Read on LinkedIn →" data-nl="Lees op LinkedIn →">Read on LinkedIn →</a>
+      </figure>
+      <figure class="rec">
+        <span class="rec__rel t" data-en="Senior colleague" data-nl="Senior collega">Senior colleague</span>
+        <blockquote>“What always stood out was his ability to turn data into action.”</blockquote>
+        <figcaption class="rec__who"><span class="rec__av">JE</span><span><span class="rec__name">John Engelen</span><span class="rec__role">District Manager · Bever</span></span></figcaption>
+        <a class="rec__link t" href="https://www.linkedin.com/in/harshil-patel-188b2274/details/recommendations/" target="_blank" rel="noopener" data-en="Read on LinkedIn →" data-nl="Lees op LinkedIn →">Read on LinkedIn →</a>
+      </figure>
+      <figure class="rec">
+        <span class="rec__rel t" data-en="Professor" data-nl="Docent">Professor</span>
+        <blockquote>“He showed a clear ability to connect AI concepts with practical business applications.”</blockquote>
+        <figcaption class="rec__who"><span class="rec__av">HA</span><span><span class="rec__name">Dr. Hind Albasry</span><span class="rec__role">Assistant Professor · Wittenborg University of Applied Sciences</span></span></figcaption>
+        <a class="rec__link t" href="https://www.linkedin.com/in/harshil-patel-188b2274/details/recommendations/" target="_blank" rel="noopener" data-en="Read on LinkedIn →" data-nl="Lees op LinkedIn →">Read on LinkedIn →</a>
+      </figure>
     </div>
   </div>
-</aside>
+</section>
 
-<!-- ====== MAIN ====== -->
-<main class="main" id="mainContent">
-
-  <!-- LANGUAGE NUDGE BANNER -->
-  <div class="lang-nudge" id="langNudge">
-    <span class="lang-nudge__flag" id="nudgeFlag">🇳🇱</span>
-    <span class="lang-nudge__text" id="nudgeText">Ook beschikbaar in het Nederlands</span>
-    <button class="lang-nudge__btn" id="nudgeBtn">Switch to NL</button>
-    <span class="lang-nudge__close" id="nudgeClose" title="Dismiss">✕</span>
-  </div>
-
-  <!-- HOME — Landing section -->
-  <section class="home-hero" id="home">
-    <p class="home-greeting"><span class="t" data-en="Hi, I'm" data-nl="Hoi, ik ben">Hi, I'm</span></p>
-    <h1 class="home-name">Harshilkumar <span>Patel</span></h1>
-    <p class="home-tagline">
-      <span class="t" data-en="The engineer who knows business. I turn messy data into decisions that move the needle — across supply chains, retail floors, and boardrooms." data-nl="De ingenieur die business begrijpt. Ik transformeer ruwe data tot beslissingen die impact maken — in supply chains, op de winkelvloer en in de bestuurskamer.">The engineer who knows business. I turn messy data into decisions that move the needle — across supply chains, retail floors, and boardrooms.</span>
-    </p>
-    <div class="hero-pills">
-      <div class="hero-pill"><span class="hero-pill-icon">🗄️</span> SQL</div>
-      <div class="hero-pill"><span class="hero-pill-icon">📊</span> Power BI</div>
-      <div class="hero-pill"><span class="hero-pill-icon">🐍</span> Python</div>
-      <div class="hero-pill"><span class="hero-pill-icon">📈</span> Excel</div>
-      <div class="hero-pill"><span class="hero-pill-icon">📐</span> DAX</div>
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <h2 class="t" data-en="Let's talk about your supply chain" data-nl="Laten we het over uw supply chain hebben">Let's talk about your supply chain</h2>
+      <p class="t" data-en="Open to Data Analyst and Supply Chain Analyst roles in the Netherlands." data-nl="Beschikbaar voor functies als Data Analyst en Supply Chain Analyst in Nederland.">Open to Data Analyst and Supply Chain Analyst roles in the Netherlands.</p>
+      <dl>
+        <dt>Email</dt><dd><a href="mailto:harshil.patel150@gmail.com">harshil.patel150@gmail.com</a></dd>
+        <dt>LinkedIn</dt><dd><a href="https://linkedin.com/in/harshil-patel-188b2274" target="_blank" rel="noopener">harshil-patel-188b2274</a></dd>
+        <dt>GitHub</dt><dd><a href="https://github.com/HP85-NL" target="_blank" rel="noopener">github.com/HP85-NL</a></dd>
+      </dl>
     </div>
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">
-        📁 <span class="t" data-en="View Projects" data-nl="Bekijk projecten">View Projects</span>
-      </a>
-      <a href="assets/harshil-cv.pdf" target="_blank" rel="noopener" class="btn btn-secondary">
-        📥 <span class="t" data-en="Download CV" data-nl="Download CV">Download CV</span>
-      </a>
-    </div>
-  </section>
-
-  <!-- METRICS -->
-  <div class="metrics" style="grid-template-columns:repeat(3,1fr)">
-    <div class="metric-card">
-      <div class="metric-num">9+</div>
-      <div class="metric-label"><span class="t" data-en="Data Projects" data-nl="Dataprojecten">Data Projects</span></div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-num">5</div>
-      <div class="metric-label"><span class="t" data-en="Live Power BI Dashboards" data-nl="Live Power BI dashboards">Live Power BI Dashboards</span></div>
-    </div>
-    <div class="metric-card">
-      <div class="metric-num">€170M+</div>
-      <div class="metric-label"><span class="t" data-en="Value Identified" data-nl="Waarde geïdentificeerd">Value Identified</span></div>
+    <div class="btns" style="margin-top:0">
+      <a href="mailto:harshil.patel150@gmail.com" class="btn btn-primary t" data-en="Email me" data-nl="Mail mij">Email me</a>
+      <a href="mailto:harshil.patel150@gmail.com?subject=CV%20request" class="btn btn-secondary t" data-en="Request CV" data-nl="CV opvragen">Request CV</a>
     </div>
   </div>
-
-  <!-- WHAT I BRING -->
-  <div class="what-section">
-    <div class="what-label"><span class="t" data-en="What I bring to your team" data-nl="Wat ik uw team breng">What I bring to your team</span></div>
-    <div class="strength-grid">
-      <div class="strength-item">
-        <div class="strength-icon s-a">📊</div>
-        <div>
-          <div class="strength-title"><span class="t" data-en="Dashboard Development" data-nl="Dashboard-ontwikkeling">Dashboard Development</span></div>
-          <div class="strength-desc"><span class="t" data-en="End-to-end Power BI solutions with DAX" data-nl="End-to-end Power BI-oplossingen met DAX">End-to-end Power BI solutions with DAX</span></div>
-        </div>
-      </div>
-      <div class="strength-item">
-        <div class="strength-icon s-b">🔧</div>
-        <div>
-          <div class="strength-title"><span class="t" data-en="Data Pipeline Design" data-nl="Data pipeline-ontwerp">Data Pipeline Design</span></div>
-          <div class="strength-desc"><span class="t" data-en="Python + SQL ingestion and transformation" data-nl="Python + SQL data-ingestie en transformatie">Python + SQL ingestion and transformation</span></div>
-        </div>
-      </div>
-      <div class="strength-item">
-        <div class="strength-icon s-c">🚛</div>
-        <div>
-          <div class="strength-title"><span class="t" data-en="Supply Chain Analytics" data-nl="Supply chain-analyse">Supply Chain Analytics</span></div>
-          <div class="strength-desc"><span class="t" data-en="Demand forecasting and operational insight" data-nl="Vraagvoorspelling en operationeel inzicht">Demand forecasting and operational insight</span></div>
-        </div>
-      </div>
-      <div class="strength-item">
-        <div class="strength-icon s-d">🎯</div>
-        <div>
-          <div class="strength-title"><span class="t" data-en="Stakeholder Storytelling" data-nl="Stakeholder-communicatie">Stakeholder Storytelling</span></div>
-          <div class="strength-desc"><span class="t" data-en="Translating numbers into business action" data-nl="Cijfers vertalen naar zakelijke actie">Translating numbers into business action</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- FLAGSHIP — Self-Initiated flagship project -->
-  <div class="flagship">
-    <div class="flagship-left">
-      <div class="flagship-eyebrow"><span class="dot"></span> Self-Initiated · Field Notes 001</div>
-      <h2 class="flagship-title">How my data journey in the Netherlands began</h2>
-      <div class="flagship-pills">
-        <span class="flagship-pill">🍳 Cooking</span>
-        <span class="flagship-pill">🚵 Mountain biking</span>
-        <span class="flagship-pill">📊 Data</span>
-      </div>
-    </div>
-    <div class="flagship-right">
-      <div class="flagship-stats">
-        <div class="flagship-stat"><div class="num">3,215</div><div class="lbl">Trips</div></div>
-        <div class="flagship-stat"><div class="num">7</div><div class="lbl">Chapters</div></div>
-        <div class="flagship-stat"><div class="num">€18,658</div><div class="lbl">Tracked</div></div>
-      </div>
-      <a href="how-it-all-began.html" target="_blank" class="flagship-cta">
-        Enter the Story <span>→</span>
-      </a>
-    </div>
-  </div>
-
-  <!-- PROJECTS -->
-  <section class="section" id="projects">
-    <p class="eyebrow">Portfolio</p>
-    <h2 class="section-title"><span class="t" data-en="Featured Projects" data-nl="Uitgelichte projecten">Featured Projects</span></h2>
-    <div class="divider"></div>
-
-    <!-- Category Filter Tabs -->
-    <div class="cat-tabs" id="catTabs">
-      <div class="cat-tab active" data-cat="ap" onclick="filterProjects('ap')">
-        💼 <span class="t" data-en="Applied" data-nl="Toegepast">Applied</span>
-        <span class="cat-count">5</span>
-      </div>
-      <div class="cat-tab" data-cat="fo" onclick="filterProjects('fo')">
-        🎓 <span class="t" data-en="Foundational" data-nl="Basis">Foundational</span>
-        <span class="cat-count">4</span>
-      </div>
-    </div>
-    <div class="cat-subtitle" id="catSubtitle">
-      <span class="t" data-en="Real business problems from my work in Dutch retail and freelance." data-nl="Echte zakelijke problemen uit mijn werk in Nederlandse retail en freelance.">Real business problems from my work in Dutch retail and freelance.</span>
-    </div>
-
-    <div class="projects-grid" id="projectsGrid"></div>
-  </section>
-
-
-  <!-- SKILLS -->
-  <section class="section" id="skills">
-    <p class="eyebrow"><span class="t" data-en="Technical Toolkit" data-nl="Technische tools">Technical Toolkit</span></p>
-    <h2 class="section-title"><span class="t" data-en="Skills & Tools" data-nl="Vaardigheden & Tools">Skills & Tools</span></h2>
-    <div class="divider"></div>
-    <div class="skills-grid">
-      <div class="skill-card">
-        <div class="skill-card-title">📊 <span class="t" data-en="BI & Visualisation" data-nl="BI & Visualisatie">BI & Visualisation</span></div>
-        <div class="chips"><span class="chip">Power BI</span><span class="chip">DAX</span><span class="chip">Power Query</span><span class="chip">Tableau</span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">💻 <span class="t" data-en="Programming" data-nl="Programmeren">Programming</span></div>
-        <div class="chips"><span class="chip">Python</span><span class="chip">Pandas</span><span class="chip">NumPy</span><span class="chip">Seaborn</span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">🗄️ <span class="t" data-en="Data & Databases" data-nl="Data & Databases">Data & Databases</span></div>
-        <div class="chips"><span class="chip">SQL</span><span class="chip">MySQL</span><span class="chip">PostgreSQL</span><span class="chip">DuckDB</span><span class="chip">dbt</span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">📈 <span class="t" data-en="Analytics & ML" data-nl="Analyse & ML">Analytics & ML</span></div>
-        <div class="chips"><span class="chip">XGBoost</span><span class="chip">Forecasting</span><span class="chip">Statistics</span><span class="chip">Hypothesis Testing</span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">🔧 <span class="t" data-en="Automation" data-nl="Automatisering">Automation</span></div>
-        <div class="chips"><span class="chip">n8n</span><span class="chip">Supabase</span><span class="chip">Docker</span><span class="chip">MotherDuck</span></div>
-      </div>
-      <div class="skill-card">
-        <div class="skill-card-title">🧠 <span class="t" data-en="Business" data-nl="Business">Business</span></div>
-        <div class="chips"><span class="chip">Supply Chain</span><span class="chip">Finance</span><span class="chip">KPI Design</span><span class="chip">Stakeholder Mgmt</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EXPERIENCE -->
-  <section class="section" id="experience">
-    <p class="eyebrow"><span class="t" data-en="Career History" data-nl="Loopbaan">Career History</span></p>
-    <h2 class="section-title"><span class="t" data-en="Work Experience" data-nl="Werkervaring">Work Experience</span></h2>
-    <div class="divider"></div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <div>
-          <div class="exp-title"><span class="t" data-en="Sales Associate & Data Insights" data-nl="Verkoopmedewerker & Data Insights">Sales Associate & Data Insights</span></div>
-          <div class="exp-company">Bever B.V.</div>
-        </div>
-        <div class="exp-meta">
-          <div class="exp-period">Oct 2023 — <span class="t" data-en="Present" data-nl="Heden">Present</span></div>
-          <div class="exp-location">Utrecht, NL</div>
-          <div class="exp-current"><span class="t" data-en="Current" data-nl="Huidig">Current</span></div>
-        </div>
-      </div>
-      <p class="exp-desc"><span class="t" data-en="Outdoor retail specialist combining floor sales with data-backed operations across Utrecht and Amsterdam." data-nl="Outdoor retail specialist die verkoop combineert met data-gedreven operaties in Utrecht en Amsterdam.">Outdoor retail specialist combining floor sales with data-backed operations across Utrecht and Amsterdam.</span></p>
-      <div class="bullets">
-        <div class="bullet"><span class="t" data-en="Drove store conversion from <strong>6–8% to 15–20%+</strong> through data-led customer engagement" data-nl="Verhoogde winkelconversie van <strong>6–8% naar 15–20%+</strong> door data-gedreven klantbenadering">Drove store conversion from <strong>6–8% to 15–20%+</strong> through data-led customer engagement</span></div>
-        <div class="bullet"><span class="t" data-en="Supported inventory planning using sales pattern analysis, contributing to revenue growth" data-nl="Ondersteunde voorraadplanning via verkooppatroonanalyse, bijdragend aan omzetgroei">Supported inventory planning using sales pattern analysis, contributing to revenue growth</span></div>
-        <div class="bullet"><span class="t" data-en="Recognised with <strong>performance bonus</strong> for measurable contribution to conversion" data-nl="Erkend met <strong>performance bonus</strong> voor meetbare bijdrage aan conversie">Recognised with <strong>performance bonus</strong> for measurable contribution to conversion</span></div>
-      </div>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <div>
-          <div class="exp-title"><span class="t" data-en="Data Analyst (Freelancer)" data-nl="Data Analyst (Freelancer)">Data Analyst (Freelancer)</span></div>
-          <div class="exp-company">Patel Delivers</div>
-        </div>
-        <div class="exp-meta">
-          <div class="exp-period">Sep 2020 — <span class="t" data-en="Present" data-nl="Heden">Present</span></div>
-          <div class="exp-location">Utrecht, NL</div>
-          <div class="exp-current"><span class="t" data-en="Current" data-nl="Huidig">Current</span></div>
-        </div>
-      </div>
-      <p class="exp-desc"><span class="t" data-en="KvK-registered data analytics consultancy delivering end-to-end solutions across Consumer Electronics, Supply Chain, and Retail." data-nl="KvK-geregistreerde data analytics consultancy met end-to-end oplossingen voor Consumer Electronics, Supply Chain en Retail.">KvK-registered data analytics consultancy delivering end-to-end solutions across Consumer Electronics, Supply Chain, and Retail.</span></p>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <div>
-          <div class="exp-title"><span class="t" data-en="Data Analyst Intern (Virtual)" data-nl="Data Analyst Stagiair (Virtueel)">Data Analyst Intern (Virtual)</span></div>
-          <div class="exp-company">AtliQ Technologies</div>
-        </div>
-        <div class="exp-meta">
-          <div class="exp-period">Dec 2025 — Mar 2026</div>
-          <div class="exp-location">Remote</div>
-        </div>
-      </div>
-      <p class="exp-desc">Completed an industry-designed analytics internship delivering projects across insurance, supply chain, and telecom domains.</p>
-      <div class="bullets">
-        <div class="bullet">Built a <strong>Power BI dashboard for Shield Insurance</strong> tracking ₹989M revenue and 27K+ customers. Managed the full consulting lifecycle — client requirements (17 features), wireframe mockup, stakeholder approval, 18 DAX measures, and 5 business insights including <strong>₹401M Delhi NCR revenue concentration</strong> and 83% settlement risk in the 65+ segment</div>
-        <div class="bullet">Engineered a <strong>Python-MySQL data pipeline</strong> (pandas, SQLAlchemy) loading supply chain records with CTE-based aggregations and reusable views. Normalised a denormalized dataset into a <strong>Star Schema</strong> resolving date format mismatches across the rows</div>
-        <div class="bullet">Debugged SQL queries, automated Excel reporting via Power Query, and delivered a client-facing <strong>5G impact analysis</strong> presentation</div>
-      </div>
-      <div class="chips" style="margin-top:14px">
-        <span class="chip">Power BI</span><span class="chip">DAX</span><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">MySQL</span><span class="chip">Power Query</span>
-      </div>
-    </div>
-
-    <div class="exp-item">
-      <div class="exp-header">
-        <div>
-          <div class="exp-title"><span class="t" data-en="Operations Analyst (Production)" data-nl="Operations Analyst (Productie)">Operations Analyst (Production)</span></div>
-          <div class="exp-company">Techno Electromech Pvt. Ltd.</div>
-        </div>
-        <div class="exp-meta">
-          <div class="exp-period">Jul 2015 — Dec 2019</div>
-          <div class="exp-location">Vadodara, India</div>
-        </div>
-      </div>
-      <p class="exp-desc"><span class="t" data-en="Managed end-to-end OEM LED lighting production for a unit of 30–40 operators — from raw material intake to packed goods dispatch. Promoted from Production Engineer in 2017." data-nl="Beheerde end-to-end OEM LED-verlichtingsproductie voor een eenheid van 30–40 operators — van grondstoffeninname tot verpakte goederenverzending. Gepromoveerd van Production Engineer in 2017.">Managed end-to-end OEM LED lighting production for a unit of 30–40 operators — from raw material intake to packed goods dispatch. Promoted from Production Engineer in 2017.</span></p>
-      <div class="bullets">
-        <div class="bullet"><span class="t" data-en="Scaled monthly OEM output <strong>8× (250 → 2,000+ units/customer)</strong> through systematic capacity planning" data-nl="Schaalde maandelijkse OEM-output <strong>8× (250 → 2.000+ eenheden/klant)</strong> door systematische capaciteitsplanning">Scaled monthly OEM output <strong>8× (250 → 2,000+ units/customer)</strong> through systematic capacity planning</span></div>
-        <div class="bullet"><span class="t" data-en="Reduced order-to-dispatch lead time by <strong>2 days</strong> by restructuring cross-team communication workflows" data-nl="Verkort order-to-dispatch doorlooptijd met <strong>2 dagen</strong> door herstructurering van teamoverstijgende communicatieworkflows">Reduced order-to-dispatch lead time by <strong>2 days</strong> by restructuring cross-team communication workflows</span></div>
-        <div class="bullet"><span class="t" data-en="Cut production-line defects from <strong>3.5% to under 2.5%</strong> through advanced QC inspection protocols" data-nl="Verlaagde productielijndefecten van <strong>3,5% naar onder 2,5%</strong> door geavanceerde QC-inspectieprotocollen">Cut production-line defects from <strong>3.5% to under 2.5%</strong> through advanced QC inspection protocols</span></div>
-        <div class="bullet"><span class="t" data-en="Led transition from outsourced to <strong>in-house LED panel assembly</strong>, including Japanese pick-and-place automation rollout" data-nl="Leidde overgang van uitbesteed naar <strong>interne LED-paneelassemblage</strong>, inclusief uitrol van Japanse pick-and-place automatisering">Led transition from outsourced to <strong>in-house LED panel assembly</strong>, including Japanese pick-and-place automation rollout</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- EDUCATION -->
-  <section class="section" id="education">
-    <p class="eyebrow"><span class="t" data-en="Academic Background" data-nl="Academische achtergrond">Academic Background</span></p>
-    <h2 class="section-title"><span class="t" data-en="Education" data-nl="Opleiding">Education</span></h2>
-    <div class="divider"></div>
-    <div class="edu-grid">
-      <div class="edu-card">
-        <div class="edu-degree"><span class="t" data-en="MBA — Specialization in Data Analytics" data-nl="MBA — Specialisatie in Data Analytics">MBA — Specialization in Data Analytics</span></div>
-        <div class="edu-school">Wittenborg University of Applied Sciences</div>
-        <div class="edu-meta">Amsterdam, Netherlands · Sep 2024 — Mar 2026</div>
-        <div class="edu-gpa">GPA 7.9 / 10</div>
-      </div>
-      <div class="edu-card">
-        <div class="edu-degree"><span class="t" data-en="B.Tech — Electronics & Communication Engineering" data-nl="B.Tech — Elektronica & Communicatietechniek">B.Tech — Electronics & Communication Engineering</span></div>
-        <div class="edu-school">Dr. Bhimrao Ambedkar University</div>
-        <div class="edu-meta">India · Dec 2011 — May 2015</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CERTIFICATIONS -->
-  <section class="section" id="certifications">
-    <p class="eyebrow"><span class="t" data-en="Learning & Development" data-nl="Leren & Ontwikkeling">Learning & Development</span></p>
-    <h2 class="section-title"><span class="t" data-en="Certifications" data-nl="Certificaten">Certifications</span></h2>
-    <div class="divider"></div>
-    <div class="certs-grid">
-      <div class="cert-card">
-        <div class="cert-name">Data Analysis Essentials</div>
-        <div class="cert-issuer">Cisco Networking Academy</div>
-        <a href="assets/certificates/data-analysis-essential.pdf" target="_blank" class="cert-link">View Certificate →</a>
-      </div>
-      <div class="cert-card">
-        <div class="cert-name">Data Analytics Job Simulation</div>
-        <div class="cert-issuer">Deloitte · Forage</div>
-        <a href="assets/certificates/deloitte-data-Analytics-Job-Simulation.pdf" target="_blank" class="cert-link">View Certificate →</a>
-      </div>
-      <div class="cert-card">
-        <div class="cert-name">Introduction to Data Science</div>
-        <div class="cert-issuer">Cisco Networking Academy</div>
-        <a href="assets/certificates/introduction-to-data-science.pdf" target="_blank" class="cert-link">View Certificate →</a>
-      </div>
-      <div class="cert-card">
-        <div class="cert-name">Operations & Industrial Engineering Simulation</div>
-        <div class="cert-issuer">Siemens · Forage</div>
-        <a href="assets/certificates/siemens-operations-industrial-engineer-Job-simulation.pdf" target="_blank" class="cert-link">View Certificate →</a>
-      </div>
-      <div class="cert-card">
-        <div class="cert-name">AI Fundamentals with IBM SkillsBuild</div>
-        <div class="cert-issuer">Cisco Networking Academy</div>
-        <a href="assets/certificates/ai-fundamentals-ibm-skillsbuild.pdf" target="_blank" class="cert-link">View Certificate →</a>
-      </div>
-      <div class="cert-card">
-        <div class="cert-name">Data Science Essentials with Python</div>
-        <div class="cert-issuer">Cisco Networking Academy</div>
-        <a href="assets/certificates/data-science-essentials-python.pdf" target="_blank" class="cert-link">View Certificate →</a>
-      </div>
-      <div class="cert-card">
-        <div class="cert-name">Engaging Stakeholders for Success</div>
-        <div class="cert-issuer">Cisco Networking Academy</div>
-        <a href="assets/certificates/engaging-stakeholders-for-success.pdf" target="_blank" class="cert-link">View Certificate →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="contact-box">
-      <p class="eyebrow"><span class="t" data-en="Let's Connect" data-nl="Neem contact op">Let's Connect</span></p>
-      <h2 class="section-title"><span class="t" data-en="Get In Touch" data-nl="Contact">Get In Touch</span></h2>
-      <p class="contact-desc"><span class="t" data-en="Open to Data Analyst and Business Analyst roles in the Netherlands — with proven impact across Supply Chain, Retail, FMCG, Manufacturing, Energy, and Fintech." data-nl="Open voor Data Analyst en Business Analyst rollen in Nederland — met bewezen impact in Supply Chain, Retail, FMCG, Manufacturing, Energie en Fintech.">Open to Data Analyst and Business Analyst roles in the Netherlands — with proven impact across Supply Chain, Retail, FMCG, Manufacturing, Energy, and Fintech.</span></p>
-      <div class="contact-grid">
-        <a href="mailto:harshil.patel150@gmail.com" class="contact-card">
-          <div class="contact-label">Email</div>
-          <div class="contact-value">harshil.patel150@gmail.com</div>
-        </a>
-        <a href="https://linkedin.com/in/harshil-patel-188b2274" target="_blank" class="contact-card">
-          <div class="contact-label">LinkedIn</div>
-          <div class="contact-value">harshil-patel-188b2274</div>
-        </a>
-        <a href="https://github.com/HP85-NL" target="_blank" class="contact-card">
-          <div class="contact-label">GitHub</div>
-          <div class="contact-value">github.com/HP85-NL</div>
-        </a>
-        <div class="contact-card">
-          <div class="contact-label"><span class="t" data-en="Location" data-nl="Locatie">Location</span></div>
-          <div class="contact-value">Utrecht, Netherlands 🇳🇱</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+</section>
 </main>
-</div>
+<footer class="foot"><div class="wrap">© 2026 Harshilkumar Patel · Utrecht</div></footer>
 
-<!-- MODAL -->
+<!-- PROJECT POP-UP -->
 <div class="modal-bg" id="modalBg">
-  <div class="modal" id="modal">
-    <button class="modal-close" id="modalClose">✕</button>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
     <div class="modal-header">
-      <div class="modal-eyebrow" id="modalEyebrow"></div>
-      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-hook" id="modalHook"></p>
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <div class="modal-tags" id="modalTags"></div>
     </div>
     <div class="modal-body">
       <div class="carousel-wrap">
-        <img id="carouselImg" class="carousel-img" src="" alt="Project screenshot">
-        <button class="c-nav c-prev" id="cPrev">❮</button>
-        <button class="c-nav c-next" id="cNext">❯</button>
+        <img class="carousel-img" id="carouselImg" src="" alt="">
+        <button class="c-nav c-prev" id="cPrev" aria-label="Previous slide">❮</button>
+        <button class="c-nav c-next" id="cNext" aria-label="Next slide">❯</button>
         <div class="c-dots" id="cDots"></div>
       </div>
+      <div class="modal-kpi" id="modalKpi"></div>
+      <p class="modal-root" id="modalRoot"></p>
       <div class="modal-desc" id="modalDesc"></div>
       <div class="modal-stack" id="modalStack"></div>
       <div class="modal-actions" id="modalActions"></div>
@@ -815,370 +448,276 @@ img{display:block;max-width:100%}
 </div>
 
 <script>
-/* =========================================================
-   PROJECT DATA
-   ========================================================= */
+let currentLang = 'en';
+const L = (en, nl) => ({en, nl});
+const tr = v => (v && typeof v === 'object' && 'en' in v) ? (v[currentLang] || v.en) : v;
+const DATA = { own:L('My own data','Mijn eigen data'), pub:L('Public data','Publieke data'), sim:L('Simulated data','Gesimuleerde data'), course:L('Course data','Cursusdata') };
+const TIER = { si:L('Self-initiated','Eigen initiatief') };
+
+/* ============ PROJECTS ============ */
 const PROJECTS = [
-  {
-    id:'last-mile', folder:'last-mile-co2', cat:'ap',
-    slides:['thumb.png','slide1.png','slide2.png'],
-    eyebrow:'Logistics · Industry Project',
-    title:'Last-Mile Delivery Analytics — Dutch Logistics',
-    short:'€146M recoverable value from delivery failures across 5 Dutch cities.',
-    stack:['Python','MySQL','SQL','Power BI'],
-    badge:'📊 Live Dashboard',
-    desc:`<p><strong>SwiftRoute NL</strong> — simulated Dutch last-mile startup analyzing 24,923 shipments. Built complete analytics platform: Python ETL → MySQL star schema → 6-page live Power BI dashboard.</p>
-<p><strong>Key findings:</strong> 50.1% of failures from "customer not home" — a scheduling problem, not operational. Rotterdam worst fail rate at 11.6%. Vehicle type has zero impact on fail rate — fleet electrification carries no performance risk.</p>
-<p><strong>Result:</strong> Three recommendations (parcel lockers, predictive dispatch, electrification) quantified at €146,385,000 annual value.</p>`,
-    github:'https://github.com/HP85-NL/Last-Mile-Delivery-Analytics-',
-    linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_lastmile-delivery-analysis-in-netherlandpptx-activity-7447176549742718977-Mjtd',
-    youtube:'https://youtu.be/ycfmIJZhGf8',
-    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiNTM0NzhjZDAtNGY1NS00MzRmLWFjMDItNzg3OTJiYzcwNjg1IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9'
-  },
-  {
-    id:'commercial', folder:'commercial-performance-diagnostic', cat:'ap',
-    slides:['thumb.png','Slide1.png','slide2.png','slide3.png'],
-    eyebrow:'Retail · Commercial Diagnostic',
-    title:'Commercial Performance Diagnostic — Dutch Outdoor Retail',
-    short:'€53.6M margin uplift + €116M trapped capital identified. dbt + DuckDB + Power BI.',
-    stack:['dbt','DuckDB','Python','Power BI','MotherDuck'],
-    badge:'📊 Live Dashboard',
-    desc:`<p><strong>Hoogland</strong> is a commercial performance diagnostic for a fictional Dutch outdoor retailer modelled on the A.S. Adventure/Decathlon archetype — 55 stores, €379M net revenue, 80K loyalty members, 620 SKUs, two years of transactional data.</p>
-<p>Built the full analytical stack from scratch. A three-layer <strong>dbt warehouse</strong> (13 staging, 5 intermediate, 5 mart models) inside a single-file DuckDB database feeds a six-page Power BI dashboard via MotherDuck connector. A Python EDA notebook tested six hypotheses using Difference-in-Differences, OLS regression, Pearson correlation, and RFM/CLV segmentation.</p>
-<p><strong>Five of six hypotheses confirmed:</strong> promotions destroy €40.5M in margin on net basis; €7.1M revenue gap between top and bottom quartile stores; <strong>€116M in working capital trapped</strong> in long-tail SKUs; top-tier loyalty members are worth 17.2× more but receive identical treatment; weather explains €1.7M in demand variance. One hypothesis (online cannibalises offline) rejected (r = 0.995).</p>
-<p><strong>Total addressable value: €53.6M margin uplift + €116M capital release.</strong> Every finding quantified in euros, every recommendation tied to a specific business action.</p>`,
-    github:'https://github.com/HP85-NL/Project-Hoogland-',
-    linkedin:'',
-    youtube:'https://www.youtube.com/watch?v=UokNXfdN9Rk',
-    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiYTg1Yzc5NTktY2M0Ny00NGQ1LWFhMjctZjE1NjI0YzEyODc3IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9'
-  },
-  {
-    id:'lumenops', folder:'lumenops-360', cat:'ap',
-    slides:['thumb.png','slide1.png','slide2.png'],
-    eyebrow:'Manufacturing · Operations Intelligence',
-    title:'LumenOps 360 — Manufacturing Operations Intelligence',
-    short:'~€798K/year in hidden losses quantified. DMAIC, TPM/OEE, SPC, Theory of Constraints.',
-    stack:['Python','DuckDB','dbt','Power BI','Jupyter','SQL'],
-    badge:'📊 Live Dashboard',
-    desc:`<p><strong>LumenOps 360</strong> models a fictional Dutch OEM LED manufacturer (LumenTech BV, Eindhoven) from order intake to dispatch, quantifying where time, material, and money are lost on the shop floor. Built on real production engineering experience.</p>
-<p>The project addresses five operational pain points — <strong>OEE at 68.2%</strong> (vs. 85% world-class), On-Time Delivery at 80.6%, First Pass Yield at 96.7% with a statistically unstable process, staffing fill rate at 83.1% reflecting the Dutch labor shortage, and €127K in annual overtime costs. Each pain point validated against <strong>Signify's 2024 Annual Report</strong>.</p>
-<p>The data pipeline generates 14 tables (~16,400 rows) through a seeded Python generator, loads into DuckDB, and transforms through <strong>27 dbt models with 61 passing tests</strong> across staging, intermediate, and mart layers. Output feeds a six-page Power BI dashboard and three Jupyter notebooks covering EDA, SPC control charts, and hypothesis testing.</p>
-<p><strong>Five hypotheses tested</strong> using Mann-Whitney U, Kruskal-Wallis, and Chi-Square tests — all rejected at α = 0.05. Largest finding: changeover shifts lose <strong>8.56 OEE percentage points</strong> (r = 0.571, €42,348/month). Combined with staffing optimization and shift standardization, total addressable opportunity is <strong>~€66,500/month (~€798K/year)</strong>.</p>
-<p>Six operational frameworks applied: DMAIC, TPM/OEE, Theory of Constraints, Lean, SPC, and Root Cause Analysis — each mapped to a specific deliverable.</p>`,
+  { id:'lumenops', tier:'ap', data:'sim', folder:'lumenops-360', slides:['thumb.png','slide1.png','slide2.png'],
+    title:'LumenOps 360',
+    hook:L('Where does a factory lose ~€798K a year?','Waar verliest een fabriek ~€798K per jaar?'),
+    ans:L('Mostly at changeovers between production runs.','Vooral bij omstellingen tussen productieruns.'),
+    kpi:'~€798K', kpiLabel:L('a year in losses found in a modelled LED factory','per jaar aan verliezen gevonden in een gemodelleerde LED-fabriek'),
+    root:L('Rooted in: 4.5 years in LED production at Techno Electromech','Gebaseerd op: 4,5 jaar in LED-productie bij Techno Electromech'),
+    stack:['Python','DuckDB','dbt','SQL','Power BI','Jupyter'],
+    desc:`<p><strong>LumenOps 360</strong> models a fictional Dutch OEM LED manufacturer (LumenTech BV, Eindhoven) from order intake to dispatch, to find where time, material and money are lost on the shop floor. It is built on my own production engineering experience.</p>
+<p>Five pain points: <strong>OEE (Overall Equipment Effectiveness) at 68.2%</strong> vs 85% world-class, on-time delivery at 80.6%, first-pass yield at 96.7% with an unstable process, staffing fill rate at 83.1%, and €127K a year in overtime. Each one is benchmarked against Signify's 2024 Annual Report.</p>
+<p>A seeded Python generator creates 14 tables (~16,400 rows), loaded into DuckDB and transformed through <strong>27 dbt models with 61 passing tests</strong>. Output feeds a six-page Power BI dashboard and three Jupyter notebooks (EDA, SPC control charts, hypothesis tests).</p>
+<p>Largest finding: changeover shifts lose <strong>8.56 OEE points</strong> (€42,348 a month). With staffing and shift standardisation, the modelled opportunity is <strong>~€66,500 a month (~€798K a year)</strong>.</p>`,
     github:'https://github.com/HP85-NL/LumenOps-360',
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_lumenops360pdf-ugcPost-7470024768537198594-PhhN',
     youtube:'https://youtu.be/cirn6wvQV3I',
-    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiODcwMWMyM2UtZmJlZC00Y2ZmLTgyNjEtOGJhODFiYmJiMzk3IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9'
-  },
-  {
-    id:'demandiq', folder:'demandiq-nl', cat:'ap',
-    slides:['thumb.png','slide1.png','slide2.png'],
-    eyebrow:'Supply Chain · Predictive Analytics',
-    title:'DemandIQ NL — Predictive Supply Chain Intelligence',
-    short:'PostgreSQL + XGBoost forecasting + live Power BI. €593K holding cost savings.',
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiODcwMWMyM2UtZmJlZC00Y2ZmLTgyNjEtOGJhODFiYmJiMzk3IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
+  { id:'demandiq', tier:'ap', data:'pub', dataNote:'Walmart M5 (Kaggle)', folder:'demandiq-nl', slides:['thumb.png','slide1.png','slide2.png','slide3.png'],
+    title:'DemandIQ NL',
+    hook:L('How much stock is too much?','Hoeveel voorraad is te veel?'),
+    ans:L('€593K a year too much, across 23,311 product-store combinations.','€593K per jaar te veel, over 23.311 product-winkelcombinaties.'),
+    kpi:'€593K', kpiLabel:L('projected holding-cost savings a year','verwachte besparing op voorraadkosten per jaar'),
+    root:L('Builds on: capacity planning at Techno Electromech and forecasting at Bever','Bouwt voort op: capaciteitsplanning bij Techno Electromech en forecasting bij Bever'),
     stack:['PostgreSQL','Python','XGBoost','Prophet','Power BI'],
-    badge:'📊 Live Dashboard',
-    desc:`<p><strong>DemandIQ NL</strong> — end-to-end FMCG demand analytics on a simulated Dutch distributor dataset. Built star schema warehouse, explored Class A SKUs and seasonal patterns. Utrecht emerged as top region at €21.8M revenue.</p>
-<p>XGBoost outperformed Prophet on both RMSE and MAPE. Inventory engine built composite stockout risk score (0–100), identifying <strong>€593K in projected annual holding cost savings</strong> across 23,311 SKU-store combinations.</p>
-<p>Final deliverable: 5-page Power BI dashboard (Executive Summary, Stockout Risk, Inventory Health, Regional Performance, Forecast vs Actual) connected live to PostgreSQL.</p>`,
+    desc:`<p><strong>DemandIQ NL</strong> is end-to-end FMCG demand analytics built on the public Walmart M5 sales dataset (Kaggle), framed as a Dutch distributor. A star-schema warehouse in PostgreSQL feeds the forecasting and inventory models.</p>
+<p>XGBoost outperformed Prophet on both RMSE and MAPE (forecast error measures). An inventory engine builds a stockout risk score (0–100) across <strong>23,311 SKU-store combinations</strong> and identifies <strong>€593K in projected annual holding-cost savings</strong>.</p>
+<p>Delivered as a 5-page Power BI dashboard (Executive Summary, Stockout Risk, Inventory Health, Regional Performance, Forecast vs Actual) connected live to PostgreSQL.</p>`,
     github:'https://github.com/HP85-NL/demandiq-nl',
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_demandiqnllinkedinpdf-activity-7455141627809079296-o15q',
     youtube:'https://youtu.be/gM0MevjftUg',
-    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiMmIyY2MxYjUtZjhkYS00MTcxLWIzYzMtM2Q0N2E4Mzk2YjRkIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9'
-  },
-  {
-    id:'patel-mart', folder:'supply-chain-ai', cat:'ap',
-    slides:['thumb.png','slide1.png','slide2.png'],
-    eyebrow:'AI · Supply Chain Automation',
-    title:'Patel Mart Supply Chain Intelligence',
-    short:'n8n + Supabase + Quadratic AI. 53-point OTIF gap detected in week one.',
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiMmIyY2MxYjUtZjhkYS00MTcxLWIzYzMtM2Q0N2E4Mzk2YjRkIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
+  { id:'lastmile', tier:'ap', data:'sim', folder:'last-mile-co2', slides:['thumb.png','slide1.png','slide2.png'],
+    title:'Last-Mile Delivery Analytics',
+    hook:L('Why do half of all failed deliveries fail?','Waarom mislukt de helft van alle mislukte bezorgingen?'),
+    ans:L('Nobody was home. It is a scheduling problem, not a driver problem.','Er was niemand thuis. Het is een planningsprobleem, geen chauffeursprobleem.'),
+    kpi:'50.1%', kpiLabel:L('of failures: customer not home','van mislukkingen: klant niet thuis'),
+    root:L('Rooted in: my own last-mile delivery work','Gebaseerd op: mijn eigen last-mile bezorgwerk'),
+    stack:['Python','MySQL','SQL','Power BI'],
+    desc:`<p><strong>SwiftRoute NL</strong> is a simulated Dutch last-mile startup with 24,923 shipments across 5 cities. Complete analytics platform: Python ETL → MySQL star schema → 6-page live Power BI dashboard.</p>
+<p><strong>Key findings:</strong> 50.1% of failures come from "customer not home", which makes it a scheduling problem, not an operational one. Rotterdam has the worst fail rate at 11.6%. Vehicle type has no effect on fail rate, so fleet electrification carries no performance risk.</p>
+<p><strong>Recommendations:</strong> parcel lockers, predictive dispatch and fleet electrification.</p>`,
+    github:'https://github.com/HP85-NL/Last-Mile-Delivery-Analytics-',
+    linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_lastmile-delivery-analysis-in-netherlandpptx-activity-7447176549742718977-Mjtd',
+    youtube:'https://youtu.be/ycfmIJZhGf8',
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiNTM0NzhjZDAtNGY1NS00MzRmLWFjMDItNzg3OTJiYzcwNjg1IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
+  { id:'patelmart', tier:'ap', data:'sim', folder:'supply-chain-ai', slides:['thumb.png','slide1.png','slide2.png','slide3.png'],
+    title:'AI in Supply Chain: Patel Mart',
+    hook:L('How on-time is "on time"?','Hoe op tijd is "op tijd"?'),
+    ans:L('28.9% OTIF (on time, in full), against a 70% target.','28,9% OTIF (op tijd, compleet), tegenover een doel van 70%.'),
+    kpi:'28.9%', kpiLabel:L('OTIF vs a 70%+ benchmark','OTIF tegenover een benchmark van 70%+'),
+    root:L('Builds on: order-to-dispatch work at Techno Electromech','Bouwt voort op: order-tot-verzending bij Techno Electromech'),
     stack:['n8n','Docker','Supabase','PostgreSQL','Quadratic AI'],
-    badge:'',
-    desc:`<p>Patel Mart — simulated organic food manufacturer expanding into US. Built an end-to-end AI-powered pipeline: n8n on Docker polls Gmail every 15 minutes, extracts CSVs, writes into Supabase PostgreSQL (40,000+ rows).</p>
-<p>Quadratic AI runs live KPIs: OTIF, On Time %, In Full %, Line Fill Rate, customer-specific targets. Surfaced <strong>OTIF at 28.89% vs 70%+ benchmark</strong>, 3.79% revenue at risk, and a <strong>53-point OTIF gap</strong> on the largest US customer. Manual reporting replaced by real-time dashboards.</p>`,
+    desc:`<p>Patel Mart is a simulated organic food manufacturer expanding into the US. I built an automated pipeline: n8n on Docker polls Gmail every 15 minutes, extracts CSVs and writes them into Supabase PostgreSQL (40,000+ rows).</p>
+<p>Quadratic AI runs live KPIs: OTIF, On Time %, In Full %, line fill rate and customer-specific targets. It surfaced <strong>OTIF at 28.89% vs a 70%+ benchmark</strong>, 3.79% of revenue at risk, and a <strong>53-point OTIF gap</strong> on the largest US customer. Manual reporting was replaced by real-time dashboards.</p>`,
     github:'https://github.com/HP85-NL/Supply-chain-intelligence-',
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_ai-in-supplychain-activity-7452248531622588417-aTZN',
-    youtube:'https://youtu.be/DSeFxvGSeaQ',
-    dashboard:''
-  },
-  {
-    id:'bi360', folder:'business-insight-360', cat:'fo',
-    slides:['thumb.jpg','slide1.jpg','slide2.jpg'],
-    eyebrow:'Power BI · Enterprise BI',
+    youtube:'https://youtu.be/DSeFxvGSeaQ' },
+  { id:'commercial', tier:'ap', data:'sim', folder:'commercial-performance-diagnostic', slides:['thumb.png','Slide1.png','slide2.png','slide3.png'],
+    title:'Hoogland Commercial Diagnostic',
+    hook:L('Can promotions lose money?','Kunnen acties geld kosten?'),
+    ans:L('€40.5M of margin, in this modelled outdoor retailer.','€40,5M aan marge, bij deze gemodelleerde outdoorretailer.'),
+    kpi:'€53.6M', kpiLabel:L('margin uplift found across 55 modelled stores','margeverbetering gevonden in 55 gemodelleerde winkels'),
+    root:L('Rooted in: Bever, The North Face stores','Gebaseerd op: Bever, The North Face-winkels'),
+    stack:['dbt','DuckDB','Python','Power BI','MotherDuck'],
+    desc:`<p><strong>Hoogland</strong> is a fictional Dutch outdoor retailer modelled on the A.S. Adventure / Decathlon type: 55 stores, €379M net revenue, 80K loyalty members, 620 SKUs and two years of transactions.</p>
+<p>A three-layer <strong>dbt warehouse</strong> (13 staging, 5 intermediate, 5 mart models) in DuckDB feeds a six-page Power BI dashboard through MotherDuck. A Python notebook tested six hypotheses with Difference-in-Differences, OLS regression, correlation and RFM/CLV segmentation.</p>
+<p><strong>Five of six hypotheses confirmed:</strong> promotions destroy €40.5M in margin; a €7.1M revenue gap between top and bottom quartile stores; <strong>€116M of working capital tied up</strong> in long-tail SKUs; top-tier loyalty members are worth 17.2× more but get identical treatment; weather explains €1.7M of demand variance. In this modelled business: <strong>€53.6M margin uplift + €116M capital release</strong>.</p>`,
+    github:'https://github.com/HP85-NL/Project-Hoogland-',
+    youtube:'https://www.youtube.com/watch?v=UokNXfdN9Rk',
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiYTg1Yzc5NTktY2M0Ny00NGQ1LWFhMjctZjE1NjI0YzEyODc3IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
+  { id:'fieldnotes', tier:'si', data:'own', dataNote:'Uber GDPR export', folder:'how-it-all-began', slides:['thumb.png'],
+    title:'Field Notes: 3,215 deliveries',
+    hook:L('What was I actually paid for?','Waarvoor werd ik eigenlijk betaald?'),
+    ans:L("The biggest share wasn't distance. Seven chapters, all from my own data.","Het grootste deel was niet de afstand. Zeven hoofdstukken, allemaal uit mijn eigen data."),
+    kpi:'3,215', kpiLabel:L('real deliveries, €18,658 tracked over 441 days','echte bezorgingen, €18.658 over 441 dagen'),
+    root:L('Rooted in: my own delivery work through Patel Delivers','Gebaseerd op: mijn eigen bezorgwerk via Patel Delivers'),
+    stack:['GDPR export','Python','Data storytelling'],
+    desc:`<p>Fourteen months on a bike, three Dutch cities and <strong>3,215 orders</strong>. Seven chapters test every belief I had as a delivery rider against the GDPR export of my own Uber account: <strong>23,486 line items over 441 days</strong>.</p>
+<p>Sometimes the data agreed with me. Often it did not. This is the one project built entirely on real data, collected while doing the work myself.</p>`,
+    fieldNotes:'how-it-all-began.html' },
+  { id:'bi360', tier:'fo', data:'course', dataNote:'Codebasics', folder:'business-insight-360', slides:['thumb.jpg','slide1.jpg','slide2.jpg'],
     title:'Business Insight 360',
-    short:'MySQL → star schema → 50+ DAX measures → 5 dashboards. $4.97B revenue data.',
+    hook:L('One view of finance, sales and supply?','Eén overzicht van finance, sales en supply?'),
+    ans:L('5 dashboards built on 50+ DAX measures.','5 dashboards op basis van 50+ DAX-measures.'),
+    kpi:'50+', kpiLabel:L('DAX measures behind 5 dashboards','DAX-measures achter 5 dashboards'),
+    root:L('Core tools: Power BI, DAX, MySQL','Kerntools: Power BI, DAX, MySQL'),
     stack:['Power BI','MySQL','DAX','Power Query'],
-    badge:'📊 Live Dashboard',
-    desc:`<p><strong>Business Insight 360</strong> for AtliQ Hardware — global PC company across APAC, EU, North America, Latin America. Complete pipeline: MySQL → Power Query → star schema (2 fact, 8 dimension tables) → 50+ DAX measures.</p>
-<p>5 interactive dashboards: Finance (P&L benchmarking), Sales (scatter matrix), Marketing (bookmark toggles), Supply Chain (forecast accuracy, OOS risk), Executive (KPI sparklines, market share).</p>
-<p><strong>Key findings:</strong> $522M operational expense gap, 45.67% gross margin premium channel opportunity, critical OOS risk in Peripherals and Accessories.</p>`,
+    desc:`<p><strong>Business Insight 360</strong> for AtliQ Hardware, a global PC company. Complete pipeline: MySQL → Power Query → star schema (2 fact, 8 dimension tables) → 50+ DAX measures.</p>
+<p>Five interactive dashboards: Finance (P&amp;L benchmarking), Sales, Marketing, Supply Chain (forecast accuracy, out-of-stock risk) and Executive.</p>
+<p><strong>Key findings:</strong> a $522M operational expense gap, a 45.67% gross margin premium-channel opportunity, and critical out-of-stock risk in Peripherals and Accessories.</p>`,
     github:'https://github.com/HP85-NL/Business-Insight-360',
     linkedin:'https://www.linkedin.com/feed/update/urn:li:activity:7439929611007840256/',
     youtube:'https://youtu.be/4g0ii0hK_hY',
-    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiZjQwZWNmMDUtZDVlOS00MTM1LWE2YzQtYzExMmM0NjEzMWFmIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9'
-  },
-  {
-    id:'hospitality', folder:'hospitality-eda', cat:'fo',
-    slides:['thumb.png','slide1.jpg','slide2.jpg'],
-    eyebrow:'Python · EDA',
-    title:'Hospitality Performance Analytics',
-    short:'134,590 bookings analyzed across 25 properties. ₹410–480M opportunity identified.',
-    stack:['Python','Pandas','Matplotlib','Seaborn'],
-    badge:'',
-    desc:`<p>Python EDA on 134,590 hotel bookings across 25 properties in 4 Indian cities — identifying why a 20-year hotel group is losing market share. Used outlier removal, feature engineering (Occupancy %, RevPAR, Cancellation Rate).</p>
-<p><strong>Key findings:</strong> 22-point weekday occupancy gap (missed corporate demand), Delhi pricing paradox, 25% cancellation rate across platforms. Concluded with 6 recommendations and <strong>₹410–480M revenue opportunity.</strong></p>`,
-    github:'https://github.com/HP85-NL/Hospitality-EDA-Python',
-    linkedin:'https://www.linkedin.com/feed/update/urn:li:activity:7442926254191730688/',
-    youtube:'https://youtu.be/fMtLjwLNZ24',
-    dashboard:''
-  },
-  {
-    id:'sales-finance', folder:'sales-finance-analytics', cat:'fo',
-    slides:['thumb.png','slide1.png','slide2.png'],
-    eyebrow:'Excel BI · Power Pivot',
-    title:'Sales & Finance Analytics',
-    short:'83% reporting time cut. $180K+ margin leakage prevented via discount governance.',
-    stack:['Excel','Power Pivot','Power Query','DAX'],
-    badge:'',
-    desc:`<p>Unified AtliQ Hardware's fragmented Excel reporting. <strong>Cut monthly reporting time 83%</strong> (12 hrs → 2 hrs) and prevented <strong>$180K+ margin leakage</strong> through automated discount governance.</p>
-<p>Built star-schema model using Power Pivot + Power Query + DAX. Delivered P&L reporting, Target vs. Actual, and Discount Scenario Tool with approval tiers (10%/20%). Led full BA lifecycle — interviews, Mini-BRD, RACI, KPI Dictionary, UAT. Zero reconciliation issues, 100% report adoption.</p>`,
-    github:'https://github.com/HP85-NL/Excel-Business-Intelligence_Sales_and_Finance_Reporting_Pack',
-    linkedin:'https://www.linkedin.com/feed/update/urn:li:activity:7429426983283052545/',
-    youtube:'https://youtu.be/DF-YzhhnYzY',
-    dashboard:''
-  },
-  {
-    id:'sql-adhoc', folder:'ad-hoc-analysis-sql', cat:'fo',
-    slides:['thumb.png','slide1.png','slide2.png'],
-    eyebrow:'SQL · Ad-Hoc BI',
+    dashboard:'https://app.powerbi.com/view?r=eyJrIjoiZjQwZWNmMDUtZDVlOS00MTM1LWE2YzQtYzExMmM0NjEzMWFmIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
+  { id:'sql', tier:'fo', data:'course', dataNote:'Codebasics', folder:'ad-hoc-analysis-sql', slides:['thumb.png','slide1.png','slide2.png','slide3.png','slide4.png','slide5.png','slide6.png','slide7.png'],
     title:'SQL Ad-Hoc Business Intelligence',
-    short:'10 leadership questions answered. Portfolio imbalance, discount risk, channel dependency surfaced.',
+    hook:L('Who depends on whom?','Wie is afhankelijk van wie?'),
+    ans:L('73% of gross sales ran through retailers. 10 leadership questions, answered in SQL.','73% van de bruto-omzet liep via retailers. 10 managementvragen, beantwoord met SQL.'),
+    kpi:'10', kpiLabel:L('leadership questions answered in SQL','managementvragen beantwoord met SQL'),
+    root:L('Core tools: SQL, MySQL','Kerntools: SQL, MySQL'),
     stack:['SQL','MySQL','Excel','PowerPoint'],
-    badge:'',
-    desc:`<p>Executive ad-hoc analysis for <strong>AtliQ Hardware (FY2020–FY2021)</strong>. Converted 10 business questions into decision-grade SQL insights with executive dashboard and management presentation.</p>
-<p><strong>Key findings:</strong> Portfolio growth 36.33% (245→334) with uneven expansion. Top India customers at ~29–31% discount risk. Seasonality: Q1 33.72% vs Q3 9.99% of annual volume. Retailer dependency: 73.21% of gross sales.</p>`,
+    desc:`<p>Executive ad-hoc analysis for <strong>AtliQ Hardware (FY2020–FY2021)</strong>: 10 business questions turned into decision-grade SQL insights, with an executive dashboard and management presentation.</p>
+<p><strong>Key findings:</strong> product portfolio growth of 36.33% (245 → 334) with uneven expansion; top India customers at about 29–31% discount risk; seasonality with Q1 at 33.72% vs Q3 at 9.99% of annual volume; and retailers at 73.21% of gross sales.</p>`,
     github:'https://github.com/HP85-NL/SQL-Portfolio-AtliQ-Hardware',
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_sql-ad-hoc-business-insight-activity-7432688500841369600-j2wD',
-    youtube:'https://youtu.be/Jj_ZFce7xbU',
-    dashboard:''
-  }
+    youtube:'https://youtu.be/Jj_ZFce7xbU' },
+  { id:'salesfin', tier:'fo', data:'course', dataNote:'Codebasics', folder:'sales-finance-analytics', slides:['thumb.png','slide1.png','slide2.png','slide3.jpg'],
+    title:'Sales & Finance Analytics',
+    hook:L('12 hours of monthly reporting?','12 uur maandrapportage?'),
+    ans:L('Now 2. Plus $180K+ of margin leakage closed.','Nu 2. Plus $180K+ aan margelek gedicht.'),
+    kpi:'−83%', kpiLabel:L('monthly reporting time','maandelijkse rapportagetijd'),
+    root:L('Core tools: Excel, Power Pivot, Power Query','Kerntools: Excel, Power Pivot, Power Query'),
+    stack:['Excel','Power Pivot','Power Query','DAX'],
+    desc:`<p>Unified AtliQ Hardware's fragmented Excel reporting. <strong>Cut monthly reporting time by 83%</strong> (12 hours → 2 hours) and closed <strong>$180K+ of margin leakage</strong> through automated discount governance.</p>
+<p>Star-schema model in Power Pivot + Power Query + DAX, with P&amp;L reporting, Target vs Actual, and a discount scenario tool with approval tiers (10% / 20%). Full business analysis lifecycle: interviews, mini-BRD, RACI, KPI dictionary and UAT.</p>`,
+    github:'https://github.com/HP85-NL/Excel-Business-Intelligence_Sales_and_Finance_Reporting_Pack',
+    linkedin:'https://www.linkedin.com/feed/update/urn:li:activity:7429426983283052545/',
+    youtube:'https://youtu.be/DF-YzhhnYzY' }
 ];
+const byId = id => PROJECTS.find(p => p.id === id);
 
-/* =========================================================
-   RENDER PROJECT CARDS
-   ========================================================= */
-const grid = document.getElementById('projectsGrid');
-const CAT_LABELS = {ap:'Applied',fo:'Foundational',si:'Self-initiated'};
-const CAT_COLORS = {ap:'#1a2a3a',fo:'#5e6e4e',si:'#d97757'};
-PROJECTS.forEach(p => {
-  const card = document.createElement('div');
-  card.className = 'project-card';
-  card.dataset.cat = p.cat;
-  card.innerHTML = `
-    <img src="assets/projects/${p.folder}/${p.slides[0]}" alt="${p.title}" class="project-thumb" loading="lazy">
-    <div class="project-body">
-      ${p.badge ? `<div class="project-badge">${p.badge}</div>` : ''}
-      <div style="display:inline-block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:${CAT_COLORS[p.cat]||'#888'};margin-bottom:6px;padding:2px 8px;border-radius:4px;background:${p.cat==='ap'?'rgba(26,42,58,0.06)':p.cat==='fo'?'rgba(94,110,78,0.08)':'rgba(217,119,87,0.1)'}">${CAT_LABELS[p.cat]||''}</div>
-      <h3 class="project-title">${p.title}</h3>
-      <p class="project-desc">${p.short}</p>
-      <div class="tags">${p.stack.map(s => `<span class="tag">${s}</span>`).join('')}</div>
-    </div>`;
-  card.style.borderLeft = `3px solid ${CAT_COLORS[p.cat]||'var(--border)'}`;
-  card.addEventListener('click', () => openModal(p));
-  grid.appendChild(card);
-});
+/* ============ STATIONS (S-road) ============ */
+const STATIONS = [
+  { id:'source', x:160, y:90, lab:'below', name:L('Supplier','Leverancier'), stage:'Source',
+    q:L('Do the right materials arrive on time?','Komen de juiste materialen op tijd binnen?'),
+    projects:[], next:L('Coming next: Hoogland Zuivelcoöperatie, a dairy cooperative supply chain case.','Volgt binnenkort: Hoogland Zuivelcoöperatie, een supply chain-case voor een zuivelcoöperatie.'),
+    job:L('<b>Real job:</b> managed raw-material intake through to dispatch for a 30–40 operator unit · Techno Electromech','<b>Echte functie:</b> beheerde grondstofontvangst tot verzending voor een afdeling van 30–40 operators · Techno Electromech') },
+  { id:'make', x:480, y:90, lab:'below', name:L('Factory','Fabriek'), stage:'Make',
+    q:L('Where does the plant lose time, material and money?','Waar verliest de fabriek tijd, materiaal en geld?'),
+    projects:['lumenops'],
+    job:L('<b>Real job:</b> defects cut from 3.5% to under 2.5%; output scaled 8× · Techno Electromech','<b>Echte functie:</b> fouten verlaagd van 3,5% naar onder 2,5%; output 8× opgeschaald · Techno Electromech') },
+  { id:'plan', x:800, y:90, lab:'below', name:L('Warehouse','Magazijn'), stage:'Plan',
+    q:L('How much stock should we hold, and where?','Hoeveel voorraad houden we aan, en waar?'),
+    projects:['demandiq'],
+    job:L('<b>Real job:</b> forecasting store demand and planning inventory · Bever','<b>Echte functie:</b> vraagvoorspelling en voorraadplanning per winkel · Bever') },
+  { id:'deliver', x:700, y:230, lab:'below', name:L('Transport','Transport'), stage:'Deliver',
+    q:L('Do orders arrive on time and in full?','Komen orders op tijd en compleet aan?'),
+    projects:['lastmile','patelmart'],
+    job:L('<b>Real job:</b> order-to-dispatch lead time cut by 2 days · Techno Electromech','<b>Echte functie:</b> doorlooptijd van order tot verzending 2 dagen korter · Techno Electromech') },
+  { id:'sell', x:300, y:230, lab:'below', name:L('Store','Winkel'), stage:'Sell',
+    q:L('Where does commercial value leak?','Waar lekt commerciële waarde weg?'),
+    projects:['commercial'],
+    job:L("<b>Real job:</b> conversion from 6–8% to 15–20%+; sourcing from the warehouse so customers don't leave empty-handed · Bever","<b>Echte functie:</b> conversie van 6–8% naar 15–20%+; artikelen uit het magazijn halen zodat klanten niet met lege handen vertrekken · Bever") },
+  { id:'home', x:560, y:370, lab:'below', name:L("Customer's home","Bij de klant thuis"), stage:'Last mile',
+    q:L('What does the last mile really cost?','Wat kost de laatste kilometer echt?'),
+    projects:['fieldnotes'],
+    job:L('<b>Real work:</b> my own Uber Eats deliveries in Apeldoorn, Amersfoort and Utrecht · Patel Delivers','<b>Echt werk:</b> mijn eigen Uber Eats-bezorgingen in Apeldoorn, Amersfoort en Utrecht · Patel Delivers') }
+];
+const LAYER = ['bi360','sql','salesfin'];
 
-/* =========================================================
-   CATEGORY FILTER
-   ========================================================= */
-const catSubtitles = {
-  ap:  {en:'Real business problems from my work in Dutch retail and freelance.', nl:'Echte zakelijke problemen uit mijn werk in Nederlandse retail en freelance.'},
-  fo:  {en:'Industry-standard tools and techniques, built through structured programs.', nl:'Industriestandaard tools en technieken, opgebouwd via gestructureerde programma\'s.'}
-};
-let currentCat = 'ap';
-let currentLang = 'en';
-
-function filterProjects(cat) {
-  currentCat = cat;
-
-  document.querySelectorAll('.cat-tab').forEach(t => {
-    t.classList.toggle('active', t.dataset.cat === cat);
-  });
-
-  const sub = document.getElementById('catSubtitle');
-  const texts = catSubtitles[cat];
-  if (sub && texts) sub.innerHTML = texts[currentLang] || texts.en;
-
-  const cards = document.querySelectorAll('.project-card');
-  const gridEl = document.getElementById('projectsGrid');
-
-  gridEl.style.display = '';
-  cards.forEach(c => {
-    const match = c.dataset.cat === cat;
-    c.classList.toggle('card-hidden', !match);
+function projButton(p) {
+  return `<button class="proj" data-id="${p.id}">
+    <span class="proj__hook" style="display:block">${tr(p.hook)}</span>
+    <span class="proj__ans" style="display:block">${tr(p.ans)}</span>
+    <span class="proj__meta"><span class="proj__name">${p.title}</span>${p.tier==='si'?`<span class="tag si">${tr(TIER.si)}</span>`:''}<span class="tag${p.data==='own'?' own':''}">${tr(DATA[p.data])}</span><span class="proj__open">${p.fieldNotes ? tr(L('Read →','Lees →')) : tr(L('Open →','Open →'))}</span></span>
+  </button>`;
+}
+function renderRoad() {
+  const g = document.getElementById('roadStations');
+  g.innerHTML = STATIONS.map((s, i) => {
+    const has = s.projects.length > 0;
+    const disc = has
+      ? `<circle class="disc" cx="${s.x}" cy="${s.y}" r="26" fill="#1C2B4A" stroke="#E05C2A" stroke-width="3"/>`
+      : `<circle class="disc" cx="${s.x}" cy="${s.y}" r="26" fill="#FFFFFF" stroke="#A9AFBA" stroke-width="2" stroke-dasharray="5 4"/>`;
+    const num = `<text x="${s.x}" y="${s.y + 6}" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="17" fill="${has ? '#FFFFFF' : '#5A6475'}">${i + 1}</text>`;
+    const job = `<circle cx="${s.x + 22}" cy="${s.y - 22}" r="8" fill="#FFFFFF" stroke="#3F7D5C" stroke-width="3.5"/>`;
+    const label = `<text x="${s.x}" y="${s.y + 54}" text-anchor="middle" font-family="Montserrat,sans-serif" font-weight="700" font-size="16" fill="#1C2B4A">${tr(s.name)}</text>
+      <text x="${s.x}" y="${s.y + 72}" text-anchor="middle" font-family="Inter,sans-serif" font-size="13" fill="#5A6475">${s.stage}${has ? ' · ' + s.projects.length + ' ' + tr(L(s.projects.length > 1 ? 'projects' : 'project', s.projects.length > 1 ? 'projecten' : 'project')) : ''}</text>`;
+    return `<g class="st" tabindex="0" role="button" data-id="${s.id}" aria-label="${i + 1}. ${tr(s.name)}, ${s.stage}">${disc}${num}${job}${label}</g>`;
+  }).join('');
+  g.querySelectorAll('.st').forEach(el => {
+    const go = () => jumpTo(el.dataset.id);
+    el.addEventListener('click', go);
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); } });
   });
 }
+function renderStations() {
+  document.getElementById('stations').innerHTML = STATIONS.map((s, i) => {
+    const has = s.projects.length > 0;
+    return `<li class="station${has ? '' : ' next'}" id="st-${s.id}">
+      <div class="station__head"><span class="station__no">${i + 1}</span><span class="station__name">${tr(s.name)}<small>${s.stage}</small></span></div>
+      <p class="station__q">${tr(s.q)}</p>
+      ${has ? s.projects.map(id => projButton(byId(id))).join('') : `<p class="next-note">${tr(s.next)}</p>`}
+      <p class="job-proof">${tr(s.job)}</p>
+    </li>`;
+  }).join('');
+  document.getElementById('layerGrid').innerHTML = LAYER.map(id => projButton(byId(id))).join('');
+  document.querySelectorAll('.proj').forEach(b => b.addEventListener('click', () => openModal(byId(b.dataset.id))));
+}
+function jumpTo(id) {
+  const el = document.getElementById('st-' + id);
+  if (!el) return;
+  el.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
+  el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+  setTimeout(() => el.classList.remove('flash'), 1800);
+}
 
-// Initialize: show Applied projects on page load
-filterProjects('ap');
-
-/* =========================================================
-   MODAL — FIXED carousel using stored folder
-   ========================================================= */
-let slideIndex = 0;
-let activeSlides = [];
-let activeFolder = '';
-
+/* ============ POP-UP ============ */
+let slideIndex = 0, activeSlides = [], activeFolder = '', lastFocus = null;
 function openModal(p) {
-  activeFolder = p.folder;   // ← FIX: store folder per project
-  activeSlides = p.slides;
-  slideIndex = 0;
-
-  document.getElementById('modalEyebrow').textContent = p.eyebrow;
+  lastFocus = document.activeElement;
+  activeFolder = p.folder; activeSlides = p.slides; slideIndex = 0;
+  document.getElementById('modalHook').textContent = tr(p.hook);
   document.getElementById('modalTitle').textContent = p.title;
+  document.getElementById('modalTags').innerHTML =
+    (p.tier === 'si' ? `<span class="tag si">${tr(TIER.si)}</span>` : '') +
+    `<span class="tag${p.data==='own'?' own':''}">${tr(DATA[p.data])}${p.dataNote ? ' · ' + p.dataNote : ''}</span>`;
+  document.getElementById('modalKpi').innerHTML = `<span class="num">${p.kpi}</span><span>${tr(p.kpiLabel)}</span>`;
+  document.getElementById('modalRoot').textContent = tr(p.root);
   document.getElementById('modalDesc').innerHTML = p.desc;
-  document.getElementById('modalStack').innerHTML = p.stack.map(s => `<span class="chip">${s}</span>`).join('');
-
-  // Build dots
-  const dotsEl = document.getElementById('cDots');
-  dotsEl.innerHTML = activeSlides.map((_,i) =>
-    `<div class="c-dot${i===0?' active':''}" data-i="${i}"></div>`).join('');
-
+  document.getElementById('modalStack').innerHTML = p.stack.map(s => `<span class="tag">${s}</span>`).join('');
+  const many = activeSlides.length > 1;
+  ['cPrev','cNext','cDots'].forEach(id => document.getElementById(id).style.display = many ? '' : 'none');
+  document.getElementById('cDots').innerHTML = activeSlides.map((_, i) => `<div class="c-dot${i===0?' active':''}" data-i="${i}"></div>`).join('');
   renderSlide();
-
-  // Action buttons
   let acts = '';
-  if (p.fieldNotes) acts += `<a href="${p.fieldNotes}" target="_blank" class="act-btn act-btn-live">📖 Enter the Story →</a>`;
-  if (p.dashboard) acts += `<a href="${p.dashboard}" target="_blank" class="act-btn act-btn-live">📊 Live Dashboard</a>`;
-  if (p.github)    acts += `<a href="${p.github}" target="_blank" class="act-btn">GitHub</a>`;
-  if (p.linkedin)  acts += `<a href="${p.linkedin}" target="_blank" class="act-btn">LinkedIn</a>`;
-  if (p.youtube)   acts += `<a href="${p.youtube}" target="_blank" class="act-btn">▶ YouTube</a>`;
+  if (p.fieldNotes) acts += `<a href="${p.fieldNotes}" class="act live">${tr(L('Read the Field Notes →','Lees de Field Notes →'))}</a>`;
+  if (p.dashboard) acts += `<a href="${p.dashboard}" target="_blank" rel="noopener" class="act live">${tr(L('Live dashboard','Live dashboard'))}</a>`;
+  if (p.github) acts += `<a href="${p.github}" target="_blank" rel="noopener" class="act">GitHub</a>`;
+  if (p.youtube) acts += `<a href="${p.youtube}" target="_blank" rel="noopener" class="act">YouTube</a>`;
+  if (p.linkedin) acts += `<a href="${p.linkedin}" target="_blank" rel="noopener" class="act">LinkedIn</a>`;
   document.getElementById('modalActions').innerHTML = acts;
-
   document.getElementById('modalBg').classList.add('active');
   document.body.style.overflow = 'hidden';
+  document.getElementById('modalClose').focus();
 }
-
 function renderSlide() {
-  document.getElementById('carouselImg').src =
-    `assets/projects/${activeFolder}/${activeSlides[slideIndex]}`;
-  document.querySelectorAll('.c-dot').forEach((d,i) =>
-    d.classList.toggle('active', i === slideIndex));
+  const img = document.getElementById('carouselImg');
+  img.src = `assets/projects/${activeFolder}/${activeSlides[slideIndex]}`;
+  img.alt = document.getElementById('modalTitle').textContent + ' — ' + (slideIndex + 1) + '/' + activeSlides.length;
+  document.querySelectorAll('.c-dot').forEach((d, i) => d.classList.toggle('active', i === slideIndex));
 }
-
 function closeModal() {
   document.getElementById('modalBg').classList.remove('active');
   document.body.style.overflow = '';
+  if (lastFocus) lastFocus.focus();
 }
-
 document.getElementById('modalClose').addEventListener('click', closeModal);
-document.getElementById('modalBg').addEventListener('click', e => { if(e.target.id==='modalBg') closeModal(); });
-document.addEventListener('keydown', e => { if(e.key==='Escape') closeModal(); });
-document.getElementById('cPrev').addEventListener('click', () => { slideIndex=(slideIndex-1+activeSlides.length)%activeSlides.length; renderSlide(); });
-document.getElementById('cNext').addEventListener('click', () => { slideIndex=(slideIndex+1)%activeSlides.length; renderSlide(); });
-document.getElementById('cDots').addEventListener('click', e => {
-  if(e.target.classList.contains('c-dot')) { slideIndex=parseInt(e.target.dataset.i); renderSlide(); }
+document.getElementById('modalBg').addEventListener('click', e => { if (e.target.id === 'modalBg') closeModal(); });
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('modalBg').classList.contains('active')) return;
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowRight' && activeSlides.length > 1) document.getElementById('cNext').click();
+  if (e.key === 'ArrowLeft' && activeSlides.length > 1) document.getElementById('cPrev').click();
 });
+document.getElementById('cPrev').addEventListener('click', () => { slideIndex = (slideIndex - 1 + activeSlides.length) % activeSlides.length; renderSlide(); });
+document.getElementById('cNext').addEventListener('click', () => { slideIndex = (slideIndex + 1) % activeSlides.length; renderSlide(); });
+document.getElementById('cDots').addEventListener('click', e => { if (e.target.classList.contains('c-dot')) { slideIndex = +e.target.dataset.i; renderSlide(); } });
 
-/* =========================================================
-   LANGUAGE TOGGLE — FULLY WORKING
-   ========================================================= */
-
+/* ============ LANGUAGE ============ */
 function setLang(lang) {
   currentLang = lang;
-
-  // Toggle button states
-  document.getElementById('btnEN').classList.toggle('active', lang==='en');
-  document.getElementById('btnNL').classList.toggle('active', lang==='nl');
+  ['EN','NL'].forEach(k => {
+    const b = document.getElementById('btn' + k), on = lang === k.toLowerCase();
+    b.classList.toggle('active', on); b.setAttribute('aria-pressed', on);
+  });
   document.documentElement.lang = lang;
-
-  // Swap all translatable elements
-  document.querySelectorAll('.t').forEach(el => {
-    const val = el.dataset[lang];
-    if (val !== undefined) el.innerHTML = val;
-  });
-
-  // Update category subtitle if visible
-  const catSub = document.getElementById('catSubtitle');
-  if (catSub && catSubtitles && catSubtitles[currentCat]) {
-    catSub.innerHTML = catSubtitles[currentCat][lang] || catSubtitles[currentCat].en;
-  }
-
-  // Update nudge banner
-  const nudge = document.getElementById('langNudge');
-  if (!nudge.classList.contains('hidden')) {
-    if (lang === 'en') {
-      document.getElementById('nudgeFlag').textContent = '🇳🇱';
-      document.getElementById('nudgeText').textContent = 'Ook beschikbaar in het Nederlands';
-      document.getElementById('nudgeBtn').textContent = 'Switch to NL';
-    } else {
-      document.getElementById('nudgeFlag').textContent = '🇬🇧';
-      document.getElementById('nudgeText').textContent = 'Also available in English';
-      document.getElementById('nudgeBtn').textContent = 'Switch to EN';
-    }
-  }
+  document.querySelectorAll('.t').forEach(el => { const v = el.dataset[lang]; if (v !== undefined) el.innerHTML = v; });
+  renderRoad(); renderStations();
+  try { localStorage.setItem('hp-lang', lang); } catch (e) {}
 }
-
-// Nudge banner
-document.getElementById('nudgeBtn').addEventListener('click', () => {
-  const next = currentLang === 'en' ? 'nl' : 'en';
-  setLang(next);
-});
-document.getElementById('nudgeClose').addEventListener('click', () => {
-  document.getElementById('langNudge').classList.add('hidden');
-});
-
-/* =========================================================
-   SIDEBAR NAVIGATION — FIXED (no more e.preventDefault)
-   ========================================================= */
-const navLinks = document.querySelectorAll('.nav-link');
-
-navLinks.forEach(link => {
-  link.addEventListener('click', function(e) {
-    e.preventDefault(); // prevent jump, use smooth scroll instead
-    const targetId = this.getAttribute('href').replace('#','');
-    const target = document.getElementById(targetId);
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-    // Update active state
-    navLinks.forEach(l => l.classList.remove('active'));
-    this.classList.add('active');
-    // Close sidebar on mobile
-    document.getElementById('sidebar').classList.remove('open');
-    document.getElementById('overlay').classList.remove('active');
-  });
-});
-
-// Update active nav on scroll
-const sections = document.querySelectorAll('section[id], .hero, .home-hero');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const id = entry.target.id;
-      navLinks.forEach(l => {
-        l.classList.toggle('active', l.getAttribute('href') === `#${id}`);
-      });
-    }
-  });
-}, { rootMargin: '-20% 0px -70% 0px' });
-sections.forEach(s => observer.observe(s));
-
-/* =========================================================
-   MOBILE SIDEBAR
-   ========================================================= */
-const hamburger = document.getElementById('hamburger');
-const sidebar   = document.getElementById('sidebar');
-const overlay   = document.getElementById('overlay');
-
-hamburger.addEventListener('click', () => {
-  sidebar.classList.toggle('open');
-  overlay.classList.toggle('active');
-});
-overlay.addEventListener('click', () => {
-  sidebar.classList.remove('open');
-  overlay.classList.remove('active');
-});
+let startLang = 'en';
+try { if (localStorage.getItem('hp-lang') === 'nl') startLang = 'nl'; } catch (e) {}
+setLang(startLang);
 </script>
 </body>
 </html>
