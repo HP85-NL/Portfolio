@@ -118,6 +118,9 @@ section.block{padding:72px 0 0}
 .tag.own{background:#E7F2EC;color:#2E6447}
 .tag.si{background:#FBE7DE;color:#8F3412}
 .proj__open{margin-left:auto;font-weight:600;color:var(--ember-text)}
+.tag.dm{display:inline-flex;align-items:center;gap:5px;background:var(--navy);color:#fff}
+.tag.dm svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.layer .tag.dm{background:#fff;color:var(--navy)}
 .job-proof{font-size:13px;line-height:1.5;color:var(--ink);border-left:3px solid var(--ok);padding-left:10px}
 .job-proof b{color:var(--ok);font-weight:600}
 .next-note{font-size:14px;color:var(--ink-3)}
@@ -254,6 +257,12 @@ section.block{padding:72px 0 0}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="d-electronics" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="d-fmcg" viewBox="0 0 24 24"><path d="M3 9h18l-2 11H5z"/><path d="M8 9l4-6 4 6"/><path d="M9 13v4M15 13v4"/></symbol>
+  <symbol id="d-fashion" viewBox="0 0 24 24"><path d="M8 3l-5 3 2 5 3-1v11h8V10l3 1 2-5-5-3a4 4 0 0 1-8 0z"/></symbol>
+  <symbol id="d-ecom" viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/></symbol>
+</svg>
 
 <header class="topbar">
   <div class="wrap">
@@ -459,11 +468,18 @@ let currentLang = 'en';
 const L = (en, nl) => ({en, nl});
 const tr = v => (v && typeof v === 'object' && 'en' in v) ? (v[currentLang] || v.en) : v;
 const DATA = { own:L('My own data','Mijn eigen data'), pub:L('Public data','Publieke data'), sim:L('Simulated data','Gesimuleerde data'), course:L('Course data','Cursusdata') };
+const DOMAIN = {
+  electronics:{icon:'d-electronics', t:L('Consumer electronics','Consumentenelektronica')},
+  fmcg:{icon:'d-fmcg', t:L('FMCG','FMCG')},
+  fashion:{icon:'d-fashion', t:L('Fashion & outdoor','Mode & outdoor')},
+  ecom:{icon:'d-ecom', t:L('E-commerce & last mile','E-commerce & last mile')}
+};
+const domTag = p => { const d = DOMAIN[p.domain]; return d ? `<span class="tag dm"><svg aria-hidden="true"><use href="#${d.icon}"/></svg>${tr(d.t)}</span>` : ''; };
 const TIER = { si:L('Self-initiated','Eigen initiatief') };
 
 /* ============ PROJECTS ============ */
 const PROJECTS = [
-  { id:'lumenops', tier:'ap', data:'sim', folder:'lumenops-360', slides:['thumb.png','slide1.png','slide2.png'],
+  { id:'lumenops', domain:'electronics', tier:'ap', data:'sim', folder:'lumenops-360', slides:['thumb.png','slide1.png','slide2.png'],
     title:'LumenOps 360',
     hook:L('Where does a factory lose ~€798K a year?','Waar verliest een fabriek ~€798K per jaar?'),
     ans:L('Mostly at changeovers between production runs.','Vooral bij omstellingen tussen productieruns.'),
@@ -478,7 +494,7 @@ const PROJECTS = [
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_lumenops360pdf-ugcPost-7470024768537198594-PhhN',
     youtube:'https://youtu.be/cirn6wvQV3I',
     dashboard:'https://app.powerbi.com/view?r=eyJrIjoiODcwMWMyM2UtZmJlZC00Y2ZmLTgyNjEtOGJhODFiYmJiMzk3IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
-  { id:'demandiq', tier:'ap', data:'pub', dataNote:'Walmart M5 (Kaggle)', folder:'demandiq-nl', slides:['thumb.png','slide1.png','slide2.png','slide3.png'],
+  { id:'demandiq', domain:'fmcg', tier:'ap', data:'pub', dataNote:'Walmart M5 (Kaggle)', folder:'demandiq-nl', slides:['thumb.png','slide1.png','slide2.png','slide3.png'],
     title:'DemandIQ NL',
     hook:L('How much stock is too much?','Hoeveel voorraad is te veel?'),
     ans:L('€593K a year too much, across 23,311 product-store combinations.','€593K per jaar te veel, over 23.311 product-winkelcombinaties.'),
@@ -492,7 +508,7 @@ const PROJECTS = [
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_demandiqnllinkedinpdf-activity-7455141627809079296-o15q',
     youtube:'https://youtu.be/gM0MevjftUg',
     dashboard:'https://app.powerbi.com/view?r=eyJrIjoiMmIyY2MxYjUtZjhkYS00MTcxLWIzYzMtM2Q0N2E4Mzk2YjRkIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
-  { id:'lastmile', tier:'ap', data:'sim', folder:'last-mile-co2', slides:['thumb.png','slide1.png','slide2.png'],
+  { id:'lastmile', domain:'ecom', tier:'ap', data:'sim', folder:'last-mile-co2', slides:['thumb.png','slide1.png','slide2.png'],
     title:'Last-Mile Delivery Analytics',
     hook:L('Why do half of all failed deliveries fail?','Waarom mislukt de helft van alle mislukte bezorgingen?'),
     ans:L('Nobody was home. It is a scheduling problem, not a driver problem.','Er was niemand thuis. Het is een planningsprobleem, geen chauffeursprobleem.'),
@@ -506,7 +522,7 @@ const PROJECTS = [
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_lastmile-delivery-analysis-in-netherlandpptx-activity-7447176549742718977-Mjtd',
     youtube:'https://youtu.be/ycfmIJZhGf8',
     dashboard:'https://app.powerbi.com/view?r=eyJrIjoiNTM0NzhjZDAtNGY1NS00MzRmLWFjMDItNzg3OTJiYzcwNjg1IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
-  { id:'patelmart', tier:'ap', data:'sim', folder:'supply-chain-ai', slides:['thumb.png','slide1.png','slide2.png','slide3.png'],
+  { id:'patelmart', domain:'fmcg', tier:'ap', data:'sim', folder:'supply-chain-ai', slides:['thumb.png','slide1.png','slide2.png','slide3.png'],
     title:'AI in Supply Chain: Patel Mart',
     hook:L('How on-time is "on time"?','Hoe op tijd is "op tijd"?'),
     ans:L('28.9% OTIF (on time, in full), against a 70% target.','28,9% OTIF (op tijd, compleet), tegenover een doel van 70%.'),
@@ -518,7 +534,7 @@ const PROJECTS = [
     github:'https://github.com/HP85-NL/Supply-chain-intelligence-',
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_ai-in-supplychain-activity-7452248531622588417-aTZN',
     youtube:'https://youtu.be/DSeFxvGSeaQ' },
-  { id:'commercial', tier:'ap', data:'sim', folder:'commercial-performance-diagnostic', slides:['thumb.png','Slide1.png','slide2.png','slide3.png'],
+  { id:'commercial', domain:'fashion', tier:'ap', data:'sim', folder:'commercial-performance-diagnostic', slides:['thumb.png','Slide1.png','slide2.png','slide3.png'],
     title:'Hoogland Commercial Diagnostic',
     hook:L('Can promotions lose money?','Kunnen acties geld kosten?'),
     ans:L('€40.5M of margin, in this modelled outdoor retailer.','€40,5M aan marge, bij deze gemodelleerde outdoorretailer.'),
@@ -531,7 +547,7 @@ const PROJECTS = [
     github:'https://github.com/HP85-NL/Project-Hoogland-',
     youtube:'https://www.youtube.com/watch?v=UokNXfdN9Rk',
     dashboard:'https://app.powerbi.com/view?r=eyJrIjoiYTg1Yzc5NTktY2M0Ny00NGQ1LWFhMjctZjE1NjI0YzEyODc3IiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
-  { id:'fieldnotes', tier:'si', data:'own', dataNote:'Uber GDPR export', folder:'how-it-all-began', slides:['thumb.png'],
+  { id:'fieldnotes', domain:'ecom', tier:'si', data:'own', dataNote:'Uber GDPR export', folder:'how-it-all-began', slides:['thumb.png'],
     title:'Field Notes: 3,215 deliveries',
     hook:L('What was I actually paid for?','Waarvoor werd ik eigenlijk betaald?'),
     ans:L("The biggest share wasn't distance. Seven chapters, all from my own data.","Het grootste deel was niet de afstand. Zeven hoofdstukken, allemaal uit mijn eigen data."),
@@ -541,7 +557,7 @@ const PROJECTS = [
     desc:`<p>Fourteen months on a bike, three Dutch cities and <strong>3,215 orders</strong>. Seven chapters test every belief I had as a delivery rider against the GDPR export of my own Uber account: <strong>23,486 line items over 441 days</strong>.</p>
 <p>Sometimes the data agreed with me. Often it did not. This is the one project built entirely on real data, collected while doing the work myself.</p>`,
     fieldNotes:'how-it-all-began.html' },
-  { id:'bi360', tier:'fo', data:'course', dataNote:'Codebasics', folder:'business-insight-360', slides:['thumb.jpg','slide1.jpg','slide2.jpg'],
+  { id:'bi360', domain:'electronics', tier:'fo', data:'course', dataNote:'Codebasics', folder:'business-insight-360', slides:['thumb.jpg','slide1.jpg','slide2.jpg'],
     title:'Business Insight 360',
     hook:L('One view of finance, sales and supply?','Eén overzicht van finance, sales en supply?'),
     ans:L('5 dashboards built on 50+ DAX measures.','5 dashboards op basis van 50+ DAX-measures.'),
@@ -555,7 +571,7 @@ const PROJECTS = [
     linkedin:'https://www.linkedin.com/feed/update/urn:li:activity:7439929611007840256/',
     youtube:'https://youtu.be/4g0ii0hK_hY',
     dashboard:'https://app.powerbi.com/view?r=eyJrIjoiZjQwZWNmMDUtZDVlOS00MTM1LWE2YzQtYzExMmM0NjEzMWFmIiwidCI6ImM2ZTU0OWIzLTVmNDUtNDAzMi1hYWU5LWQ0MjQ0ZGM1YjJjNCJ9' },
-  { id:'sql', tier:'fo', data:'course', dataNote:'Codebasics', folder:'ad-hoc-analysis-sql', slides:['thumb.png','slide1.png','slide2.png','slide3.png','slide4.png','slide5.png','slide6.png','slide7.png'],
+  { id:'sql', domain:'electronics', tier:'fo', data:'course', dataNote:'Codebasics', folder:'ad-hoc-analysis-sql', slides:['thumb.png','slide1.png','slide2.png','slide3.png','slide4.png','slide5.png','slide6.png','slide7.png'],
     title:'SQL Ad-Hoc Business Intelligence',
     hook:L('Who depends on whom?','Wie is afhankelijk van wie?'),
     ans:L('73% of gross sales ran through retailers. 10 leadership questions, answered in SQL.','73% van de bruto-omzet liep via retailers. 10 managementvragen, beantwoord met SQL.'),
@@ -567,7 +583,7 @@ const PROJECTS = [
     github:'https://github.com/HP85-NL/SQL-Portfolio-AtliQ-Hardware',
     linkedin:'https://www.linkedin.com/posts/harshil-patel-188b2274_sql-ad-hoc-business-insight-activity-7432688500841369600-j2wD',
     youtube:'https://youtu.be/Jj_ZFce7xbU' },
-  { id:'salesfin', tier:'fo', data:'course', dataNote:'Codebasics', folder:'sales-finance-analytics', slides:['thumb.png','slide1.png','slide2.png','slide3.jpg'],
+  { id:'salesfin', domain:'electronics', tier:'fo', data:'course', dataNote:'Codebasics', folder:'sales-finance-analytics', slides:['thumb.png','slide1.png','slide2.png','slide3.jpg'],
     title:'Sales & Finance Analytics',
     hook:L('12 hours of monthly reporting?','12 uur maandrapportage?'),
     ans:L('Now 2. Plus $180K+ of margin leakage closed.','Nu 2. Plus $180K+ aan margelek gedicht.'),
@@ -615,7 +631,7 @@ function projButton(p) {
   return `<button class="proj" data-id="${p.id}">
     <span class="proj__hook" style="display:block">${tr(p.hook)}</span>
     <span class="proj__ans" style="display:block">${tr(p.ans)}</span>
-    <span class="proj__meta"><span class="proj__name">${p.title}</span>${p.tier==='si'?`<span class="tag si">${tr(TIER.si)}</span>`:''}<span class="tag${p.data==='own'?' own':''}">${tr(DATA[p.data])}</span><span class="proj__open">${p.fieldNotes ? tr(L('Read →','Lees →')) : tr(L('Open →','Open →'))}</span></span>
+    <span class="proj__meta"><span class="proj__name">${p.title}</span>${domTag(p)}${p.tier==='si'?`<span class="tag si">${tr(TIER.si)}</span>`:''}<span class="tag${p.data==='own'?' own':''}">${tr(DATA[p.data])}</span><span class="proj__open">${p.fieldNotes ? tr(L('Read →','Lees →')) : tr(L('Open →','Open →'))}</span></span>
   </button>`;
 }
 function renderRoad() {
@@ -733,6 +749,7 @@ function openModal(p) {
   document.getElementById('modalHook').textContent = tr(p.hook);
   document.getElementById('modalTitle').textContent = p.title;
   document.getElementById('modalTags').innerHTML =
+    domTag(p) +
     (p.tier === 'si' ? `<span class="tag si">${tr(TIER.si)}</span>` : '') +
     `<span class="tag${p.data==='own'?' own':''}">${tr(DATA[p.data])}${p.dataNote ? ' · ' + p.dataNote : ''}</span>`;
   document.getElementById('modalKpi').innerHTML = `<span class="num">${p.kpi}</span><span>${tr(p.kpiLabel)}</span>`;
