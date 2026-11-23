@@ -294,7 +294,7 @@ section.block{padding:72px 0 0}
       <div class="result"><div class="result__num"><span class="cu" data-from="1" data-to="8" data-dec="0" data-suf="×">8×</span></div><div class="result__txt t" data-en="Factory output, from 250 to 2,000+ units per customer a month" data-nl="Fabrieksoutput, van 250 naar 2.000+ eenheden per klant per maand">Factory output, from 250 to 2,000+ units per customer a month</div><div class="result__src">Techno Electromech</div></div>
       <div class="result"><div class="result__num"><span class="cu" data-from="0" data-to="2" data-dec="0" data-pre="−">−2</span> <span class="t" data-en="days" data-nl="dagen">days</span></div><div class="result__txt t" data-en="Order-to-dispatch lead time" data-nl="Doorlooptijd van order tot verzending">Order-to-dispatch lead time</div><div class="result__src">Techno Electromech</div></div>
       <div class="result"><div class="result__num"><span class="cu" data-from="3.5" data-to="2.5" data-dec="1" data-suf="%">&lt;2.5%</span></div><div class="result__txt t" data-en="Production defects, down from 3.5%" data-nl="Productiefouten, omlaag van 3,5%">Production defects, down from 3.5%</div><div class="result__src">Techno Electromech</div></div>
-      <div class="result"><div class="result__num"><span class="cu" data-from="6" data-to="20" data-dec="0" data-suf="%">15–20%+</span></div><div class="result__txt t" data-en="Store conversion, up from 6–8%" data-nl="Winkelconversie, omhoog van 6–8%">Store conversion, up from 6–8%</div><div class="result__src">Bever · The North Face</div></div>
+      <div class="result"><div class="result__num"><span class="cu" data-from="6" data-to="20" data-dec="0" data-suf="%">15–20%+</span></div><div class="result__txt t" data-en="Conversion rate, up from 6–8%" data-nl="Conversieratio, omhoog van 6–8%">Conversion rate, up from 6–8%</div><div class="result__src">Bever · The North Face</div></div>
     </div>
     <p class="results-cap t" data-en="Results from real jobs, not portfolio projects." data-nl="Resultaten uit echte functies, geen portfolioprojecten.">Results from real jobs, not portfolio projects.</p>
   </div>
@@ -347,7 +347,7 @@ section.block{padding:72px 0 0}
           <li class="t" data-en="Forecast store demand and plan inventory, aligning stock levels with sales targets." data-nl="Voorspel de vraag per winkel en plan voorraad, afgestemd op verkoopdoelen.">Forecast store demand and plan inventory, aligning stock levels with sales targets.</li>
           <li class="t" data-en="Brief store managers on stock levels and incoming new SKUs (stock-keeping units)." data-nl="Informeer winkelmanagers over voorraadniveaus en nieuwe SKU's (artikelnummers) die binnenkomen.">Brief store managers on stock levels and incoming new SKUs (stock-keeping units).</li>
           <li class="t" data-en="Prevent lost sales by sourcing out-of-stock items from warehouse inventory, so customers don't leave empty-handed." data-nl="Voorkom misgelopen verkoop door artikelen die niet in de winkel liggen uit het magazijn te halen, zodat klanten niet met lege handen vertrekken.">Prevent lost sales by sourcing out-of-stock items from warehouse inventory, so customers don't leave empty-handed.</li>
-          <li class="t" data-en="Raised store conversion from 6–8% to &lt;strong&gt;15–20%+&lt;/strong&gt;." data-nl="Winkelconversie verhoogd van 6–8% naar &lt;strong&gt;15–20%+&lt;/strong&gt;.">Raised store conversion from 6–8% to <strong>15–20%+</strong>.</li>
+          <li class="t" data-en="Conversion rate raised from 6–8% to &lt;strong&gt;15–20%+&lt;/strong&gt;." data-nl="Conversieratio verhoogd van 6–8% naar &lt;strong&gt;15–20%+&lt;/strong&gt;.">Conversion rate raised from 6–8% to <strong>15–20%+</strong>.</li>
         </ul>
         <div class="tl__role prev">Sales Associate <span>2021 – 2023</span></div>
       </li>
@@ -600,10 +600,10 @@ const STATIONS = [
     q:L('Do orders arrive on time and in full?','Komen orders op tijd en compleet aan?'),
     projects:['lastmile','patelmart'],
     job:L('<b>Real job:</b> order-to-dispatch lead time cut by 2 days · Techno Electromech','<b>Echte functie:</b> doorlooptijd van order tot verzending 2 dagen korter · Techno Electromech') },
-  { id:'sell', x:300, y:230, lab:'below', name:L('Store','Winkel'), stage:'Sell',
+  { id:'sell', x:300, y:230, lab:'below', name:L('Store','Winkel'), stage:'Retail',
     q:L('Where does commercial value leak?','Waar lekt commerciële waarde weg?'),
     projects:['commercial'],
-    job:L("<b>Real job:</b> conversion from 6–8% to 15–20%+; sourcing from the warehouse so customers don't leave empty-handed · Bever","<b>Echte functie:</b> conversie van 6–8% naar 15–20%+; artikelen uit het magazijn halen zodat klanten niet met lege handen vertrekken · Bever") },
+    job:L("<b>Real job:</b> stock availability, sourcing from the warehouse so customers don't leave empty-handed; conversion rate from 6–8% to 15–20%+ · Bever","<b>Echte functie:</b> voorraadbeschikbaarheid, artikelen uit het magazijn halen zodat klanten niet met lege handen vertrekken; conversieratio van 6–8% naar 15–20%+ · Bever") },
   { id:'home', x:560, y:370, lab:'below', name:L("Customer's home","Bij de klant thuis"), stage:'Last mile',
     q:L('What does the last mile really cost?','Wat kost de laatste kilometer echt?'),
     projects:['fieldnotes'],
@@ -641,14 +641,13 @@ function renderRoad() {
 let roadView = 'career', roadSeen = false;
 const CAREER_SEGS = [
   {d:'M160 90 H860 C960 90 960 230 860 230 H700', c:'#3F7D5C'},
-  {d:'M740 90 H860', c:'#2F67C8'},
-  {d:'M360 230 H240', c:'#2F67C8'},
+  {d:'M740 90 H860 C960 90 960 230 860 230 H240', c:'#2F67C8'},
   {d:'M480 370 H640', c:'#E05C2A'}
 ];
 const CAREER_CHIPS = [
   {x:320, y:14, bg:'#E7F2EC', fg:'#2E6447', t:L('Techno Electromech: intake → production → dispatch','Techno Electromech: ontvangst → productie → verzending')},
-  {x:800, y:14, bg:'#E6EEFB', fg:'#1F4F9E', t:L('Bever: forecasting and inventory','Bever: forecasting en voorraad')},
-  {x:300, y:168, bg:'#E6EEFB', fg:'#1F4F9E', t:L('Bever: store sales','Bever: winkelverkoop')},
+  {x:800, y:14, bg:'#E6EEFB', fg:'#1F4F9E', t:L('Bever: demand forecasting and inventory','Bever: vraagvoorspelling en voorraad')},
+  {x:300, y:168, bg:'#E6EEFB', fg:'#1F4F9E', t:L('Bever: stock availability','Bever: voorraadbeschikbaarheid')},
   {x:560, y:310, bg:'#FBE7DE', fg:'#8F3412', t:L('Patel Delivers: 3,215 deliveries','Patel Delivers: 3.215 bezorgingen')}
 ];
 const KPI_CHIPS = [
@@ -672,7 +671,7 @@ function renderLayers(animate) {
     : '';
   document.getElementById('chipLayer').innerHTML = (career ? CAREER_CHIPS : KPI_CHIPS).map((c, i) => chipSvg(c, i, animate)).join('');
   document.getElementById('roadCap').innerHTML = career
-    ? tr(L('<b>My career on this road:</b> production and dispatch at Techno Electromech, forecasting and store sales at Bever, and 3,215 deliveries of my own.','<b>Mijn loopbaan op deze weg:</b> productie en verzending bij Techno Electromech, forecasting en winkelverkoop bij Bever, en 3.215 eigen bezorgingen.'))
+    ? tr(L('<b>My career on this road:</b> production and dispatch at Techno Electromech, demand forecasting and stock availability at Bever, and 3,215 deliveries of my own.','<b>Mijn loopbaan op deze weg:</b> productie en verzending bij Techno Electromech, vraagvoorspelling en voorraadbeschikbaarheid bij Bever, en 3.215 eigen bezorgingen.'))
     : tr(L('<b>What I found with data:</b> the key number at each stop. Red is far off target, amber needs attention, green is a saving found.','<b>Wat ik met data vond:</b> het belangrijkste getal bij elke stop. Rood ligt ver van het doel, oranje vraagt aandacht, groen is een gevonden besparing.'));
   const sw = document.getElementById('roadSwitch');
   sw.textContent = career ? tr(L('See what I found with data →','Bekijk wat ik met data vond →')) : tr(L('← See my career','← Bekijk mijn loopbaan'));
