@@ -152,7 +152,9 @@ section.block{padding:72px 0 0}
 .tl li strong{color:var(--ink);font-weight:600}
 .tl p{font-size:15px;color:var(--ink-2);margin-top:6px;max-width:760px}
 .tl a{color:var(--ember-text);text-decoration:underline;text-underline-offset:3px;font-weight:500}
-.edu{margin-top:10px;padding:18px 0 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:6px 22px}
+.edu{margin-top:10px;padding:18px 0 0;border-top:1px solid var(--line);font-size:15px;color:var(--ink-2);display:grid;grid-template-columns:auto 1fr;gap:6px 22px}
+.edu b{grid-row:1 / span 2}
+@media (max-width:640px){.edu{grid-template-columns:1fr}.edu b{grid-row:auto}}
 .edu b{font-family:var(--f-head);color:var(--ink)}
 .edu strong{color:var(--ink);font-weight:600}
 
