@@ -431,8 +431,57 @@
     .chapter-nav a span.label-full { display: none; }
   }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style id="fn-light">
+/* ===== Light Field Notes layer (portfolio redesign, Nov 2026) ===== */
+:root{--bg-deep:#F7F6F2;--bg-card:#1C2B4A;--text-primary:#1C2B4A;--text-muted:#3D4657;--text-dim:#5A6475;--divider:#E3E1DA;--accent:#B8441A;--accent-cool:#2F67C8;--uber:#2F67C8;--deliveroo:#00796F;--apeldoorn:#2F67C8;--amersfoort:#9A6B00;--utrecht:#00796F;--amsterdam:#C9302C;--positive:#3A7D2C;--partial:#B95A14;--negative:#C9302C;--lockdown:#C9302C;--curfew:#B95A14;--confirmed:#9A6B00;--busted:#C9302C;--reframed:#2F67C8;--reopen:#3A7D2C;}
+html{scroll-padding-top:64px}
+body{background:#F7F6F2!important;color:#1C2B4A}
+.fnbar{position:fixed;top:0;left:0;right:0;height:56px;z-index:1000;background:#FFFFFF;border-bottom:1px solid #E3E1DA;display:flex;align-items:center;gap:16px;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));font-family:'Inter',system-ui,sans-serif}
+.fnbar a{text-decoration:none}
+.fnbar .back{font-weight:600;font-size:14px;color:#1C2B4A;white-space:nowrap;padding:8px 0}
+.fnbar .back:hover{color:#B8441A}
+.fnbar .ttl{font-family:'Montserrat',system-ui,sans-serif;font-weight:700;font-size:14px;color:#1C2B4A;margin-right:auto;white-space:nowrap}
+.fnbar .of{font-size:12px;color:#5A6475;white-space:nowrap}
+.fnstrip{display:flex;gap:4px}
+.fnstrip a{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;border:1px solid #D6D3CA;color:#3D4657;background:#FFFFFF}
+.fnstrip a.done{background:#EFEDE6}
+.fnstrip a.cur{background:#C2481B;border-color:#C2481B;color:#FFFFFF}
+.fnstrip a:hover{border-color:#1C2B4A}
+.hud{top:56px!important;background:linear-gradient(to bottom,rgba(247,246,242,.95) 0%,rgba(247,246,242,0) 100%)!important}
+.chapter-nav,.platform-bar,.total-bar,.city-bar,.footer-bar,.phase-bar,.timeline-bar,.verdict-bar{background:rgba(255,255,255,.96)!important;border-color:#E3E1DA!important}
+.chapter-nav a{color:#1C2B4A!important}
+.chapter-nav a:hover{color:#B8441A!important}
+@media(max-width:700px){.fnbar{gap:10px}.fnbar .ttl,.fnbar .of{display:none}.fnbar .back{margin-right:auto}.fnstrip a{width:26px;height:26px;font-size:11px}}
+@media(max-width:380px){.fnstrip{gap:2px}.fnstrip a{width:24px}}
+
+.fnov{min-height:auto!important;display:block!important;padding:72px 20px!important;background:#F7F6F2}
+.fnov__in{max-width:1080px;margin:0 auto;font-family:'Inter',system-ui,sans-serif;color:#1C2B4A}
+.fnov__eye{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#B8441A}
+.fnov__h{font-family:'Montserrat',system-ui,sans-serif;font-weight:800;font-size:clamp(26px,4vw,40px);line-height:1.15;margin-top:8px;color:#1C2B4A}
+.fnov__p{font-size:17px;color:#3D4657;margin-top:10px;max-width:640px;line-height:1.6}
+.fnov__facts{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1px;background:#E3E1DA;border:1px solid #E3E1DA;border-radius:8px;overflow:hidden;margin-top:22px}
+.fnov__facts div{background:#FFFFFF;padding:14px 16px}
+.fnov__facts dt{font-size:12px;color:#5A6475}
+.fnov__facts dd{font-family:'IBM Plex Mono',ui-monospace,monospace;font-weight:600;font-size:22px;color:#1C2B4A;margin:2px 0 0}
+.fnov__src{font-size:12px;color:#5A6475;margin-top:8px}
+.fnov__why{margin-top:20px;background:#1C2B4A;color:#FFFFFF;border-radius:10px;padding:18px 20px;font-size:15px;line-height:1.55}
+.fnov__why-l{font-size:12px;font-weight:600;color:#F4A27F;margin-bottom:4px}
+.fnov__grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:22px}
+.fnov__card{display:block;background:#FFFFFF;border:1px solid #E3E1DA;border-radius:10px;padding:14px 16px;text-decoration:none;color:#1C2B4A;transition:border-color .2s}
+.fnov__card:hover{border-color:#1C2B4A}
+.fnov__card .n{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;color:#B8441A}
+.fnov__card b{display:block;font-family:'Montserrat',system-ui,sans-serif;font-weight:700;font-size:15px;margin-top:4px}
+.fnov__card small{display:block;font-size:13px;color:#5A6475;margin-top:4px}
+.fnov__card.key{border:2px solid #C2481B}
+.fnov__cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.fnov__btn{display:inline-flex;align-items:center;min-height:46px;padding:0 20px;border-radius:6px;font-weight:600;font-size:15px;text-decoration:none;background:#1C2B4A;color:#FFFFFF}
+.fnov__btn--2{background:transparent;color:#1C2B4A;border:1.5px solid #1C2B4A}
+@media(max-width:600px){.fnov__facts{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
 </head>
 <body>
+<nav class="fnbar" aria-label="Field Notes"><a class="back" href="index.html#work">← Back to portfolio</a><span class="ttl">Field Notes · My delivery data</span><span class="of">Overview · 7 chapters</span><span class="fnstrip"><a href="chapter-1-how-i-got-here.html" class="" aria-label="Chapter 1: How I got here">1</a><a href="chapter-2-three-cities.html" class="" aria-label="Chapter 2: Three cities">2</a><a href="chapter-3-the-economics.html" class="" aria-label="Chapter 3: The economics">3</a><a href="chapter-4-uber-vs-deliveroo.html" class="" aria-label="Chapter 4: Uber vs Deliveroo">4</a><a href="chapter-5-through-the-pandemic.html" class="" aria-label="Chapter 5: Through the pandemic">5</a><a href="chapter-6-memory-scoreboard.html" class="" aria-label="Chapter 6: Memory scoreboard">6</a><a href="chapter-7-why-data-analyst.html" class="" aria-label="Chapter 7: Why this made me a data analyst">7</a></span></nav>
 <div class="chapter-nav">
   <span></span>
   <div class="spacer"></div>
@@ -475,6 +524,33 @@
   <div class="scroll-hint">Scroll ↓</div>
 </section>
 
+<section class="fnov" id="chapters">
+  <div class="fnov__in">
+    <p class="fnov__eye">Self-initiated · My own data</p>
+    <h2 class="fnov__h">Seven chapters. One dataset: my own.</h2>
+    <p class="fnov__p">Fourteen months of delivery work in three Dutch cities, tested against the GDPR export of my own Uber account.</p>
+    <dl class="fnov__facts">
+      <div><dt>Trips</dt><dd>3,215</dd></div>
+      <div><dt>Line items</dt><dd>23,486</dd></div>
+      <div><dt>Earnings</dt><dd>€18,658</dd></div>
+      <div><dt>Days active</dt><dd>441</dd></div>
+    </dl>
+    <p class="fnov__src">Source: GDPR data export of my own Uber rider account</p>
+    <div class="fnov__why"><p class="fnov__why-l">Why this matters to your team</p><p>I've done last-mile delivery myself, then analysed every euro of it. I know where delivery operations lose time and money.</p></div>
+    <div class="fnov__grid">
+      <a class="fnov__card" href="chapter-1-how-i-got-here.html"><span class="n">01</span><b>How I got here</b><small>Why a student started riding</small></a>
+      <a class="fnov__card" href="chapter-2-three-cities.html"><span class="n">02</span><b>Three cities</b><small>Apeldoorn: 60% of trips had surge pricing</small></a>
+      <a class="fnov__card" href="chapter-3-the-economics.html"><span class="n">03</span><b>The economics</b><small>Pickup fees: 43% of all pay</small></a>
+      <a class="fnov__card" href="chapter-4-uber-vs-deliveroo.html"><span class="n">04</span><b>Uber vs Deliveroo</b><small>3,215 trips vs 483 orders</small></a>
+      <a class="fnov__card" href="chapter-5-through-the-pandemic.html"><span class="n">05</span><b>Through the pandemic</b><small>My busiest month was the hardest</small></a>
+      <a class="fnov__card" href="chapter-6-memory-scoreboard.html"><span class="n">06</span><b>Memory scoreboard</b><small>5 beliefs tested against the data</small></a>
+      <a class="fnov__card key" href="chapter-7-why-data-analyst.html"><span class="n">07 · Short on time? Start here</span><b>Why this made me a data analyst</b><small>How a question became a career</small></a>
+    </div>
+    <div class="fnov__cta"><a class="fnov__btn" href="chapter-1-how-i-got-here.html">Start with Chapter 1</a><a class="fnov__btn fnov__btn--2" href="mailto:harshil.patel150@gmail.com?subject=CV%20request">Request CV</a><a class="fnov__btn fnov__btn--2" href="index.html#work">Back to portfolio</a></div>
+  </div>
+</section>
+
+
 <!-- ─── Section 2: The First Order ─── -->
 <section data-trips="1" data-city="apeldoorn">
   <div class="container">
@@ -509,11 +585,11 @@
     <div class="stats fade-up delay-2">
       <div class="stat">
         <div class="label">Trips</div>
-        <div class="value" data-count="425">0</div>
+        <div class="value" data-count="425">425</div>
       </div>
       <div class="stat">
         <div class="label">Days active</div>
-        <div class="value" data-count="63">0</div>
+        <div class="value" data-count="63">63</div>
       </div>
       <div class="stat">
         <div class="label">Window</div>
@@ -539,11 +615,11 @@
     <div class="stats fade-up delay-3">
       <div class="stat">
         <div class="label">Trips</div>
-        <div class="value" data-count="1104">0</div>
+        <div class="value" data-count="1104">1,104</div>
       </div>
       <div class="stat">
         <div class="label">Days active</div>
-        <div class="value" data-count="137">0</div>
+        <div class="value" data-count="137">137</div>
       </div>
       <div class="stat">
         <div class="label">Best hourly</div>
@@ -569,11 +645,11 @@
     <div class="stats fade-up delay-3">
       <div class="stat">
         <div class="label">Trips</div>
-        <div class="value" data-count="1686">0</div>
+        <div class="value" data-count="1686">1,686</div>
       </div>
       <div class="stat">
         <div class="label">Days active</div>
-        <div class="value" data-count="241">0</div>
+        <div class="value" data-count="241">241</div>
       </div>
       <div class="stat">
         <div class="label">Share of total</div>
@@ -595,19 +671,19 @@
     <div class="numbers" style="margin-top: 56px;">
       <div class="big-num headline fade-up delay-2">
         <div class="label">Total trips</div>
-        <div class="value" data-count="3215">0</div>
+        <div class="value" data-count="3215">3,215</div>
       </div>
       <div class="big-num fade-up delay-2">
         <div class="label">Line items in the GDPR export</div>
-        <div class="value" data-count="23486">0</div>
+        <div class="value" data-count="23486">23,486</div>
       </div>
       <div class="big-num fade-up delay-3">
         <div class="label">Gross earnings</div>
-        <div class="value">€<span data-count="18658">0</span></div>
+        <div class="value">€<span data-count="18658">18,658</span></div>
       </div>
       <div class="big-num fade-up delay-3">
         <div class="label">Days active</div>
-        <div class="value" data-count="441">0</div>
+        <div class="value" data-count="441">441</div>
       </div>
     </div>
   </div>

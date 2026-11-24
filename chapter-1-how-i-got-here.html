@@ -470,8 +470,36 @@
     .chapter-nav a span.label-full { display: none; }
   }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style id="fn-light">
+/* ===== Light Field Notes layer (portfolio redesign, Nov 2026) ===== */
+:root{--bg-deep:#F7F6F2;--bg-card:#1C2B4A;--text-primary:#1C2B4A;--text-muted:#3D4657;--text-dim:#5A6475;--divider:#E3E1DA;--accent:#B8441A;--accent-cool:#2F67C8;--uber:#2F67C8;--deliveroo:#00796F;--apeldoorn:#2F67C8;--amersfoort:#9A6B00;--utrecht:#00796F;--amsterdam:#C9302C;--positive:#3A7D2C;--partial:#B95A14;--negative:#C9302C;--lockdown:#C9302C;--curfew:#B95A14;--confirmed:#9A6B00;--busted:#C9302C;--reframed:#2F67C8;--reopen:#3A7D2C;}
+html{scroll-padding-top:64px}
+body{background:#F7F6F2!important;color:#1C2B4A}
+.fnbar{position:fixed;top:0;left:0;right:0;height:56px;z-index:1000;background:#FFFFFF;border-bottom:1px solid #E3E1DA;display:flex;align-items:center;gap:16px;padding:0 max(16px,env(safe-area-inset-right,0px)) 0 max(16px,env(safe-area-inset-left,0px));font-family:'Inter',system-ui,sans-serif}
+.fnbar a{text-decoration:none}
+.fnbar .back{font-weight:600;font-size:14px;color:#1C2B4A;white-space:nowrap;padding:8px 0}
+.fnbar .back:hover{color:#B8441A}
+.fnbar .ttl{font-family:'Montserrat',system-ui,sans-serif;font-weight:700;font-size:14px;color:#1C2B4A;margin-right:auto;white-space:nowrap}
+.fnbar .of{font-size:12px;color:#5A6475;white-space:nowrap}
+.fnstrip{display:flex;gap:4px}
+.fnstrip a{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12px;border:1px solid #D6D3CA;color:#3D4657;background:#FFFFFF}
+.fnstrip a.done{background:#EFEDE6}
+.fnstrip a.cur{background:#C2481B;border-color:#C2481B;color:#FFFFFF}
+.fnstrip a:hover{border-color:#1C2B4A}
+.hud{top:56px!important;background:linear-gradient(to bottom,rgba(247,246,242,.95) 0%,rgba(247,246,242,0) 100%)!important}
+.chapter-nav,.platform-bar,.total-bar,.city-bar,.footer-bar,.phase-bar,.timeline-bar,.verdict-bar{background:rgba(255,255,255,.96)!important;border-color:#E3E1DA!important}
+.chapter-nav a{color:#1C2B4A!important}
+.chapter-nav a:hover{color:#B8441A!important}
+@media(max-width:700px){.fnbar{gap:10px}.fnbar .ttl,.fnbar .of{display:none}.fnbar .back{margin-right:auto}.fnstrip a{width:26px;height:26px;font-size:11px}}
+@media(max-width:380px){.fnstrip{gap:2px}.fnstrip a{width:24px}}
+
+.lens-card,.offer-card,.platform-tile,.rest-tag{--bg-card:#1C2B4A;--text-primary:#EBE7DF;--text-muted:#C9D2E0;--text-dim:#9AA8BD;--divider:#3A4C70;--accent:#ffc940;--accent-cool:#6aa8ff;--uber:#6aa8ff;--deliveroo:#00ccbc;--apeldoorn:#6aa8ff;--amersfoort:#ffc940;--utrecht:#00ccbc;--amsterdam:#ff5252;--positive:#7ed957;--partial:#ff9548;--negative:#ff5252;--lockdown:#ff5252;--curfew:#ff9548;--confirmed:#ffc940;--busted:#ff5252;--reframed:#6aa8ff;--reopen:#7ed957;background:#1C2B4A!important;color:#EBE7DF;border-color:#3A4C70!important}
+.dom-track{background:#3A4C70!important}
+</style>
 </head>
 <body>
+<nav class="fnbar" aria-label="Field Notes"><a class="back" href="index.html#work">← Back to portfolio</a><span class="ttl">Field Notes · My delivery data</span><span class="of">Chapter 1 of 7</span><span class="fnstrip"><a href="chapter-1-how-i-got-here.html" class="cur" aria-label="Chapter 1: How I got here" aria-current="page">1</a><a href="chapter-2-three-cities.html" class="" aria-label="Chapter 2: Three cities">2</a><a href="chapter-3-the-economics.html" class="" aria-label="Chapter 3: The economics">3</a><a href="chapter-4-uber-vs-deliveroo.html" class="" aria-label="Chapter 4: Uber vs Deliveroo">4</a><a href="chapter-5-through-the-pandemic.html" class="" aria-label="Chapter 5: Through the pandemic">5</a><a href="chapter-6-memory-scoreboard.html" class="" aria-label="Chapter 6: Memory scoreboard">6</a><a href="chapter-7-why-data-analyst.html" class="" aria-label="Chapter 7: Why this made me a data analyst">7</a></span></nav>
 <div class="chapter-nav">
   <a href="how-it-all-began.html">&larr; <span class="label-full">Beginning</span></a>
   <div class="spacer"></div>
