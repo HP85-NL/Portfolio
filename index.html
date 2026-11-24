@@ -325,7 +325,7 @@ section.block{padding:72px 0 0}
       </div>
       <svg viewBox="0 0 1000 450" role="img" aria-labelledby="roadT roadD" id="roadSvg">
         <title id="roadT">Supply chain road</title>
-        <desc id="roadD">An S-shaped road with six stops: supplier, manufacturing, warehouse, transport, store and customer's home. One view shows where Harshil worked along the road; the other shows the key KPI he found at each stop. Select a stop to jump to its projects.</desc>
+        <desc id="roadD">An S-shaped road with six stops: supplier, manufacturing, warehouse, transport, store and last mile. One view shows where Harshil worked along the road; the other shows the key KPI he found at each stop. Select a stop to jump to its projects.</desc>
         <g id="careerLayer" aria-hidden="true"></g>
         <path d="M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940" fill="none" stroke="#E3E1DA" stroke-width="30" stroke-linecap="round" opacity=".9"/>
         <path d="M60 90 H860 C960 90 960 230 860 230 H140 C40 230 40 370 140 370 H940" fill="none" stroke="#1C2B4A" stroke-width="2" stroke-dasharray="10 10"/>
@@ -616,15 +616,15 @@ const STATIONS = [
     job:L('<b>Work experience:</b> forecasting store demand and planning inventory · Bever','<b>Werkervaring:</b> vraagvoorspelling en voorraadplanning per winkel · Bever') },
   { id:'deliver', x:700, y:230, lab:'below', name:L('Transport','Transport'), stage:'Deliver',
     q:L('Do orders arrive on time and in full?','Komen orders op tijd en compleet aan?'),
-    projects:['lastmile','patelmart'],
+    projects:['patelmart'],
     job:L('<b>Work experience:</b> order-to-dispatch lead time cut by 2 days · Techno Electromech','<b>Werkervaring:</b> doorlooptijd van order tot verzending 2 dagen korter · Techno Electromech') },
   { id:'sell', x:300, y:230, lab:'below', name:L('Store','Winkel'), stage:'Retail',
     q:L('Where does commercial value leak?','Waar lekt commerciële waarde weg?'),
     projects:['commercial'],
     job:L("<b>Work experience:</b> stock availability, sourcing from the warehouse so customers don't leave empty-handed; conversion rate from 6–8% to 15–20%+ · Bever","<b>Werkervaring:</b> voorraadbeschikbaarheid, artikelen uit het magazijn halen zodat klanten niet met lege handen vertrekken; conversieratio van 6–8% naar 15–20%+ · Bever") },
-  { id:'home', x:560, y:370, lab:'below', name:L("Customer's home","Bij de klant thuis"), stage:'Last mile',
+  { id:'home', x:560, y:370, lab:'below', name:L('Last mile','Laatste kilometer'), stage:'Customer delivery',
     q:L('What does the last mile really cost?','Wat kost de laatste kilometer echt?'),
-    projects:['fieldnotes'],
+    projects:['lastmile','fieldnotes'],
     job:L('<b>Work experience:</b> my own Uber Eats deliveries in Apeldoorn, Amersfoort and Utrecht · Patel Delivers','<b>Werkervaring:</b> mijn eigen Uber Eats-bezorgingen in Apeldoorn, Amersfoort en Utrecht · Patel Delivers') }
 ];
 const LAYER = ['bi360','sql','salesfin'];
@@ -674,7 +674,7 @@ const KPI_CHIPS = [
   {x:800, y:14, bg:'#E7F2EC', fg:'#2E6447', st:'#3F7D5C', t:L('€593K stock savings found','€593K voorraadbesparing gevonden')},
   {x:700, y:168, bg:'#FCE8E6', fg:'#8E1F1A', st:'#C9302C', t:L('OTIF 28.9% · target 70%','OTIF 28,9% · doel 70%')},
   {x:300, y:168, bg:'#FFF3DC', fg:'#7A4E05', st:'#C98A2B', t:L('€40.5M margin lost to promotions','€40,5M marge verloren aan acties')},
-  {x:560, y:310, bg:'#E6EEFB', fg:'#1F4F9E', st:'#2F67C8', t:L('3,215 real deliveries analysed','3.215 echte bezorgingen geanalyseerd')}
+  {x:560, y:310, bg:'#FCE8E6', fg:'#8E1F1A', st:'#C9302C', t:L('50.1% failed: customer not home','50,1% mislukt: klant niet thuis')}
 ];
 function chipSvg(c, i, animate) {
   const txt = tr(c.t), w = Math.round(txt.length * 7.1 + 30), x = c.x - w / 2;
