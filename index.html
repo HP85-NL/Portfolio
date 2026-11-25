@@ -118,6 +118,8 @@ section.block{padding:72px 0 0}
 .tag.own{background:#E7F2EC;color:#2E6447}
 .tag.si{background:#FBE7DE;color:#8F3412}
 .proj__open{margin-left:auto;font-weight:600;color:var(--ember-text)}
+.proj-hint{display:flex;align-items:flex-start;gap:8px;margin:28px 0 0;font-size:15px;color:var(--ink-3)}
+.proj-hint svg{flex:none;margin-top:2px}
 .tag.dm{display:inline-flex;align-items:center;gap:5px;background:var(--navy);color:#fff}
 .tag.dm svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .layer .tag.dm{background:#fff;color:var(--navy)}
@@ -342,6 +344,7 @@ section.block{padding:72px 0 0}
       <p class="road__hint t" data-en="Select a stop to jump to its projects" data-nl="Kies een stop om naar de projecten te gaan">Select a stop to jump to its projects</p>
     </div>
 
+    <p class="proj-hint"><svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#E05C2A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 7-6 2-2 6z"/><path d="M13 13l6 6"/></svg><span class="t" data-en="Click any project to see the slides, key findings and links (GitHub, dashboard, video)." data-nl="Klik op een project voor de slides, belangrijkste bevindingen en links (GitHub, dashboard, video).">Click any project to see the slides, key findings and links (GitHub, dashboard, video).</span></p>
     <ol class="stations" id="stations"></ol>
 
     <div class="layer">
@@ -661,7 +664,7 @@ function projButton(p) {
   return `<button class="proj" data-id="${p.id}">
     <span class="proj__hook" style="display:block">${tr(p.hook)}</span>
     <span class="proj__ans" style="display:block">${tr(p.ans)}</span>
-    <span class="proj__meta"><span class="proj__name">${p.title}</span>${domTag(p)}${p.tier==='si'?`<span class="tag si">${tr(TIER.si)}</span>`:''}<span class="tag${p.data==='own'?' own':''}">${tr(DATA[p.data])}</span><span class="proj__open">${p.fieldNotes ? tr(L('Read →','Lees →')) : tr(L('Open →','Open →'))}</span></span>
+    <span class="proj__meta"><span class="proj__name">${p.title}</span>${domTag(p)}${p.tier==='si'?`<span class="tag si">${tr(TIER.si)}</span>`:''}<span class="tag${p.data==='own'?' own':''}">${tr(DATA[p.data])}</span><span class="proj__open">${p.fieldNotes ? tr(L('Read →','Lees →')) : tr(L('View project →','Bekijk project →'))}</span></span>
   </button>`;
 }
 function renderRoad() {
